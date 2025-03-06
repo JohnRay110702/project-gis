@@ -1,0 +1,25 @@
+{
+"type": "FeatureCollection",
+"name": "Cuenca_BarangayHalls",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Balagbag" }, "geometry": { "type": "Point", "coordinates": [ 121.065099066058139, 13.930723418489837 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Barangay 1" }, "geometry": { "type": "Point", "coordinates": [ 121.050839239075728, 13.893826370377859 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Barangay 2" }, "geometry": { "type": "Point", "coordinates": [ 121.049968381403161, 13.899469609624548 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Barangay 3" }, "geometry": { "type": "Point", "coordinates": [ 121.052872512093742, 13.899685650685347 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Barangay 4" }, "geometry": { "type": "Point", "coordinates": [ 121.051666196748471, 13.901743480326321 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Barangay 6" }, "geometry": { "type": "Point", "coordinates": [ 121.04891173907582, 13.903684832943062 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Barangay 7" }, "geometry": { "type": "Point", "coordinates": [ 121.049599883257486, 13.906733844970871 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Barangay 8" }, "geometry": { "type": "Point", "coordinates": [ 121.045988439075771, 13.90102448120037 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Calumayin" }, "geometry": { "type": "Point", "coordinates": [ 121.059406193312654, 13.942088974382109 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Dalapit East" }, "geometry": { "type": "Point", "coordinates": [ 121.031986639075413, 13.868697368683018 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Dalapit West" }, "geometry": { "type": "Point", "coordinates": [ 121.027370979167756, 13.86841254631549 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Dita" }, "geometry": { "type": "Point", "coordinates": [ 121.072685149879348, 13.92048356769218 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Don Juan" }, "geometry": { "type": "Point", "coordinates": [ 121.033221074248772, 13.909668218237295 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Emmanuel" }, "geometry": { "type": "Point", "coordinates": [ 121.051730056702297, 13.883778002400421 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Ibabao" }, "geometry": { "type": "Point", "coordinates": [ 121.070728911109654, 13.908586829008962 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Labac" }, "geometry": { "type": "Point", "coordinates": [ 121.059635125584691, 13.896612382814221 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Pinagkaisahan" }, "geometry": { "type": "Point", "coordinates": [ 121.052790471692845, 13.908043593787458 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "San Felipe" }, "geometry": { "type": "Point", "coordinates": [ 121.042163652566515, 13.890839163412457 ] } }
+]
+}

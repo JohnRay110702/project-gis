@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+"name": "MataasNaKahoy_BarangayHalls",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Bayorbor" }, "geometry": { "type": "Point", "coordinates": [ 121.095607440930735, 13.980119918460883 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Bubuyan" }, "geometry": { "type": "Point", "coordinates": [ 121.108384121002643, 13.984241690195832 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Calingatan" }, "geometry": { "type": "Point", "coordinates": [ 121.120799281403876, 13.961720395377315 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "District I" }, "geometry": { "type": "Point", "coordinates": [ 121.110179364650193, 13.955330742984728 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "District II" }, "geometry": { "type": "Point", "coordinates": [ 121.115010899694482, 13.955963192253375 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Lumang Lipa" }, "geometry": { "type": "Point", "coordinates": [ 121.083466424338056, 13.970026701057732 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Manggahan" }, "geometry": { "type": "Point", "coordinates": [ 121.090284986012506, 13.965706501160245 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "San Sebastian" }, "geometry": { "type": "Point", "coordinates": [ 121.155342034424663, 13.938607656724377 ] } }
+]
+}

@@ -1,0 +1,26 @@
+{
+"type": "FeatureCollection",
+"name": "Agoncillo_Barangay_Hall",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Adia" }, "geometry": { "type": "Point", "coordinates": [ 120.92836538107494, 13.942699843215868 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Balangon" }, "geometry": { "type": "Point", "coordinates": [ 120.913272946762447, 13.918173605763267 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Bangin" }, "geometry": { "type": "Point", "coordinates": [ 120.925096509910375, 13.92773904134131 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Banyaga" }, "geometry": { "type": "Point", "coordinates": [ 120.950421554089559, 14.009737312586742 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Barigon" }, "geometry": { "type": "Point", "coordinates": [ 120.924578612114061, 13.983885673928331 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Bilibinwang" }, "geometry": { "type": "Point", "coordinates": [ 120.95008032525368, 13.991439607693417 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Coral na Munti" }, "geometry": { "type": "Point", "coordinates": [ 120.916028162741299, 13.936897033134708 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Guitna" }, "geometry": { "type": "Point", "coordinates": [ 120.936071467581925, 13.934772827025755 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Mabini" }, "geometry": { "type": "Point", "coordinates": [ 120.915080069364308, 13.931736497765604 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Pamiga" }, "geometry": { "type": "Point", "coordinates": [ 120.926224638746135, 13.935909021286479 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Panhulan" }, "geometry": { "type": "Point", "coordinates": [ 120.941754867581892, 13.941487003955658 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Pansipit" }, "geometry": { "type": "Point", "coordinates": [ 120.941715136896462, 13.928136154400899 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion" }, "geometry": { "type": "Point", "coordinates": [ 120.931860633368672, 13.935934448750034 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Pook" }, "geometry": { "type": "Point", "coordinates": [ 120.930250803228759, 13.931214586869007 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "San Jacinto" }, "geometry": { "type": "Point", "coordinates": [ 120.916423988308182, 13.94542761447256 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "San Teodoro" }, "geometry": { "type": "Point", "coordinates": [ 120.944876792712137, 13.935073245629372 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Santo Tomas" }, "geometry": { "type": "Point", "coordinates": [ 120.940126882567156, 13.938878106694979 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Subic Ibaba" }, "geometry": { "type": "Point", "coordinates": [ 120.944036462177749, 13.949369196947345 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Subic Ilaya" }, "geometry": { "type": "Point", "coordinates": [ 120.941023332826319, 13.95739346252889 ] } }
+]
+}

@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "Saimsim_Sta_Teresita",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null }, "geometry": { "type": "Point", "coordinates": [ 120.978184377569221, 13.901461472274752 ] } },
+{ "type": "Feature", "properties": { "id": null }, "geometry": { "type": "Point", "coordinates": [ 120.977437265879516, 13.900463559681723 ] } },
+{ "type": "Feature", "properties": { "id": null }, "geometry": { "type": "Point", "coordinates": [ 120.977329003802069, 13.900183315324414 ] } },
+{ "type": "Feature", "properties": { "id": null }, "geometry": { "type": "Point", "coordinates": [ 120.979169459117941, 13.9006387122294 ] } }
+]
+}

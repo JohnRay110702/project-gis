@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rainfall Data and Location Search</title>
+    <link rel="stylesheet" href="./CSS/crud.css">
+    
+    <!-- Include Leaflet CSS and JS files -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="icon" type="image/png" href="img_src/admin.png">
+
+</head>
+<body>
+      <form action="#">
+        <div class="container">
+            <div class="inputData">
+                <div class="calendar">
+                    <input type="date" id="PickerDate" class="flatpickr-input" placeholder="Select Date">
+                </div>
+                <div class="time">
+                    <input type="text" id="timeInput" class="flatpickr-input" placeholder="Select Time">
+                </div>
+                <div class="rainfall">
+                    
+                    <label for="rainfallInput">Enter Rainfall Data:</label>
+                    <input type="number" id="rainfallInput" placeholder="Enter rainfall data">
+                </div>
+                <div class="latitude">
+                    <label for="latitudeInput">Latitude:</label>
+                    <input type="number" id="latitudeInput" readonly>
+                </div>
+                <div class="longitude">
+                    <label for="longitudeInput">Longitude:</label>
+                    <input type="number" id="longitudeInput" readonly>
+                </div>
+                <button class="addBtn" id="addBtn">Add</button>
+                <button class="deleteBtn" id="deleteBtn">Delete</button>
+                <button class="updateBtn" id="updateBtn">Update</button>
+                </div>
+            
+            <div id="searchLocationInput">
+                <label for="locationSearchInput">Search:</label>
+                <input type="text" id="locationSearchInput" placeholder="Enter location">
+            
+            <button id="searchLocation" class="searchBtn">Search Location</button>
+            <div id="map"></div>
+        </div>
+        <button id= "logoutBtn" type="submit" class="logoutBtn">Logout</button>
+        
+    </div>
+    </form>    
+    <script type="module" src="./JS/crud.js"></script>
+    <script type="module" src="./JS/index.js"></script>
+</body>
+</html>
