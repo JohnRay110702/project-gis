@@ -1,0 +1,17 @@
+{
+"type": "FeatureCollection",
+"name": "Municipal_Hall",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null, "Municipal": "Agoncillo" }, "geometry": { "type": "Point", "coordinates": [ 120.928416831975284, 13.934597003580116 ] } },
+{ "type": "Feature", "properties": { "id": null, "Municipal": "Balete" }, "geometry": { "type": "Point", "coordinates": [ 121.094311755311054, 14.018830494341156 ] } },
+{ "type": "Feature", "properties": { "id": null, "Municipal": "Talisay" }, "geometry": { "type": "Point", "coordinates": [ 121.021053870866069, 14.093416666393299 ] } },
+{ "type": "Feature", "properties": { "id": null, "Municipal": "Alitagtag" }, "geometry": { "type": "Point", "coordinates": [ 121.0059004675567, 13.866424077615099 ] } },
+{ "type": "Feature", "properties": { "id": null, "Municipal": "San Nicholas" }, "geometry": { "type": "Point", "coordinates": [ 120.952699018137821, 13.929978776307371 ] } },
+{ "type": "Feature", "properties": { "id": null, "Municipal": "Laurel" }, "geometry": { "type": "Point", "coordinates": [ 120.932859679701536, 14.050543841062369 ] } },
+{ "type": "Feature", "properties": { "id": null, "Municipal": "Cuenca" }, "geometry": { "type": "Point", "coordinates": [ 121.050300646120689, 13.902520473311908 ] } },
+{ "type": "Feature", "properties": { "id": null, "Municipal": "Tanauan" }, "geometry": { "type": "Point", "coordinates": [ 121.125669368451327, 14.087366925547817 ] } },
+{ "type": "Feature", "properties": { "id": null, "Municipal": "Mataas na Kahoy" }, "geometry": { "type": "Point", "coordinates": [ 121.11459247107932, 13.961476532222985 ] } },
+{ "type": "Feature", "properties": { "id": null, "Municipal": "Santa Teresita" }, "geometry": { "type": "Point", "coordinates": [ 120.977863357251991, 13.87236001451288 ] } }
+]
+}

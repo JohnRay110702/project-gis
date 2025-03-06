@@ -1,0 +1,20 @@
+{
+"type": "FeatureCollection",
+"name": "SantaTeresita_BarangayHalls",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Bihis" }, "geometry": { "type": "Point", "coordinates": [ 120.965874107000118, 13.878713107747144 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Calumala" }, "geometry": { "type": "Point", "coordinates": [ 120.979105636802558, 13.889150093111692 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Cuta East" }, "geometry": { "type": "Point", "coordinates": [ 120.989602350676492, 13.866289291576445 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Irukan" }, "geometry": { "type": "Point", "coordinates": [ 120.948270040929685, 13.865827710501074 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Pacifico" }, "geometry": { "type": "Point", "coordinates": [ 120.961922538870397, 13.861021188654073 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion I" }, "geometry": { "type": "Point", "coordinates": [ 120.974886329507257, 13.871213743972834 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion II" }, "geometry": { "type": "Point", "coordinates": [ 120.979499729124015, 13.867859783388555 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion III" }, "geometry": { "type": "Point", "coordinates": [ 120.969800861092523, 13.868693070047023 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Saimsim" }, "geometry": { "type": "Point", "coordinates": [ 120.978154243894735, 13.905314602749762 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Sampa" }, "geometry": { "type": "Point", "coordinates": [ 120.961922538870397, 13.861021188654073 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Sinipian" }, "geometry": { "type": "Point", "coordinates": [ 120.96947268213458, 13.877068365877664 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Tambo Ibaba" }, "geometry": { "type": "Point", "coordinates": [ 120.976253138026635, 13.897044831369252 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Tambo Ilaya" }, "geometry": { "type": "Point", "coordinates": [ 120.972672341690895, 13.899754903351887 ] } }
+]
+}
