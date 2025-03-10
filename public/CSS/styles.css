@@ -388,6 +388,11 @@ iframe {
 }
 
 /*================= ABOUT ==================*/
+.pagdaloy-container {
+  display: flex;
+  flex-grow: 1;
+}
+
 .about_Content h1{
   margin-left: 1%;
   margin-top: 2rem;
