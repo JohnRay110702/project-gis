@@ -347,6 +347,26 @@ main aside .sidebar h4{
   padding:0;
 }
 
+.chart-container {
+  width: 800px; /* Fixed width to prevent shrinking */
+  height: 400px; /* Fixed height */
+  max-width: 100%; /* Ensures responsiveness */
+  margin: 20px auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevents unwanted stretching */
+}
+
+canvas {
+  width: 80% !important; 
+  height: 80% !important;
+  background: none;
+}
+
 /*================= MAP ==================*/
 h2{
   text-align: center; 
