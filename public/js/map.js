@@ -171,10 +171,10 @@ var map = L.map('map', {
                                     var farm_marker = getMarkerByResidentName(item.resident_id);
                                     var barangay_marker = getMarkerByBarangay(item.barangay);
                                     if (farm_marker) {
-                                        marker.openPopup();
+                                        farm_marker.openPopup();
                                     }
                                     if (barangay_marker) {
-                                        marker.openPopup();
+                                        barangay_marker.openPopup();
                                     }
                                     // Fetch and display the corresponding barangay shapefile and piggery markers
                                     fetchAndDisplayBarangayShape(item.municipality_code, item.barangay, map);
