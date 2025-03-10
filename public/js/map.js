@@ -144,8 +144,10 @@ var map = L.map('map', {
                     data.forEach(function(item) {
                         // Ensure each item has the expected structure
                         if (item && typeof item === 'object' && item.hasOwnProperty('resident_id') && item.hasOwnProperty('municipality_code')) {
-                            var residentID = item.resident_id|| municipality; // Use municipality if farmName is undefined
+                            var residentID = item.resident_id|| municipality;
+                            var barangayItem = item.barangay|| municipality; // Use municipality if farmName is undefined
                             residentID = residentID || "Unknown"; // Default to "Unknown" if both farm_name and municipality are undefined
+                            barangayItem = barangayItem || "Unknown";
         
                             // Construct the text content of the list item
                             var listItemText = residentID;
@@ -166,9 +168,13 @@ var map = L.map('map', {
                                     map.flyTo([item.latitude, item.longitude], 17);
                                     filterMarkers(item, map);
                                     // Open popup after flying to the location
-                                    var marker = getMarkerByResidentName(item.residentID);
-                                    if (marker) {
-                                        marker.openPopup();
+                                    var farm_marker = getMarkerByResidentName(item.resident_id);
+                                    var barangay_marker = getMarkerByBarangay(item.barangay);
+                                    if (farm_marker) {
+                                        farm_marker.openPopup();
+                                    }
+                                    if (barangay_marker) {
+                                        barangay_marker.openPopup();
                                     }
                                     // Fetch and display the corresponding barangay shapefile and piggery markers
                                     fetchAndDisplayBarangayShape(item.municipality_code, item.barangay, map);
@@ -367,18 +373,25 @@ var map = L.map('map', {
     
     // Modify filterMarkers function to show/hide markers based on search criteria
     function filterMarkers(clickedItem, map) {
-        // Iterate over all markers
+        var selectedBarangay = clickedItem.barangay; // Get the barangay of the selected pig farm
+    
+        // Iterate over all markers (both pig farms and barangay markers)
         allMarkers.forEach(function(marker) {
             var markerData = marker.getPopup().getContent();
-            // Check if the marker matches the search criteria
-            if (markerData.includes(clickedItem.farm_name)) {
-                marker.addTo(map); // Show the marker on the map
-                // Open popup if it matches exactly
-                if (markerData === clickedItem.farm_name) {
+    
+            // Check if this marker is the searched pig farm
+            if (markerData.includes(clickedItem.resident_id)) {
+                marker.addTo(map); // Show the searched pig farm marker
+                if (markerData === clickedItem.resident_id) {
                     marker.openPopup();
                 }
-            } else {
-                map.removeLayer(marker); // Hide the marker from the map
+            } 
+            // Check if this marker belongs to the same barangay
+            else if (markerData.includes(selectedBarangay)) {
+                marker.addTo(map); // Keep the barangay marker visible
+            } 
+            else {
+                map.removeLayer(marker); // Hide all other markers
             }
         });
     
@@ -386,9 +399,17 @@ var map = L.map('map', {
         currentlyShownMarker = clickedItem;
     }
     
+    
+    
     function getMarkerByResidentName(residentID) {
         return allMarkers.find(function(marker) {
             return marker.getPopup().getContent().includes(residentID);
+        });
+    }
+
+    function getMarkerByBarangay(barangay) {
+        return allMarkers.find(function(marker) {
+            return marker.getPopup().getContent().includes(barangay);
         });
     }
     
@@ -623,7 +644,7 @@ var map = L.map('map', {
                     // Filter piggery data for the selected municipality and barangay
                     const municipalityBarangayPiggeries = data.filter(piggery => piggery.municipality_code === municipality_code && piggery.barangay === barangay);
                     const piggerymarker = L.icon({
-                        iconUrl: '../yellow-round-pushpin.png',
+                        iconUrl: '../green-round-pushpin.png',
                         iconSize: [30, 30],
                         iconAnchor: [15, 30],
                         popupAnchor: [3.5, -21.5]
@@ -711,7 +732,7 @@ var map = L.map('map', {
         // Filter piggery data for the selected municipality
         const municipalityPiggeries = piggeryData.filter(piggery => piggery.municipality === municipality);
         const piggerymarker = L.icon({
-            iconUrl: '../img/yellow-round-pushpin.png',
+            iconUrl: '../img/green-round-pushpin.png',
             iconSize: [30, 30],
             iconAnchor: [15, 30],
             popupAnchor: [3.5, -21.5]

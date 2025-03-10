@@ -347,59 +347,6 @@ main aside .sidebar h4{
   padding:0;
 }
 
-.chart-container {
-  width: 800px; 
-  height: 400px; 
-  max-width: 100%;
-  margin: 20px auto;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-  
-canvas {
-  width: 80% !important;
-  height: 80% !important;
-  background: none;
-}
-
-.input-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.input-container label {
-  font-size: 16px;
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.input-container input {
-  width: 60px;
-  padding: 5px;
-  font-size: 16px;
-  text-align: center;
-}
-
-.input-container button {
-  padding: 8px 15px;
-  font-size: 16px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.input-container button:hover {
-  background: #0056b3;
-}
-
-
 /*================= MAP ==================*/
 h2{
   text-align: center; 
@@ -441,6 +388,11 @@ iframe {
 }
 
 /*================= ABOUT ==================*/
+.pagdaloy-container {
+  display: flex;
+  flex-grow: 1;
+}
+
 .about_Content h1{
   margin-left: 1%;
   margin-top: 2rem;
