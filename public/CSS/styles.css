@@ -348,9 +348,9 @@ main aside .sidebar h4{
 }
 
 .chart-container {
-  width: 800px; /* Fixed width to prevent shrinking */
-  height: 400px; /* Fixed height */
-  max-width: 100%; /* Ensures responsiveness */
+  width: 800px; 
+  height: 400px; 
+  max-width: 100%;
   margin: 20px auto;
   background: white;
   border-radius: 8px;
@@ -358,14 +358,47 @@ main aside .sidebar h4{
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Prevents unwanted stretching */
+  overflow: hidden;
 }
-
+  
 canvas {
-  width: 80% !important; 
+  width: 80% !important;
   height: 80% !important;
   background: none;
 }
+
+.input-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.input-container label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.input-container input {
+  width: 60px;
+  padding: 5px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.input-container button {
+  padding: 8px 15px;
+  font-size: 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.input-container button:hover {
+  background: #0056b3;
+}
+
 
 /*================= MAP ==================*/
 h2{
