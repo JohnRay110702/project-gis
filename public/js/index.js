@@ -907,7 +907,7 @@ document.getElementById("municipalityFilter").addEventListener("click", function
 });
 
 async function fetchRainData(tributaryName) {
-    let url = `/project-gis/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
+    let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
 
     try {
         const response = await fetch(url);
@@ -1679,7 +1679,7 @@ function formatDate(dateString, includeTime = false) {
 
 
 function fetchAllRainfallData() {
-    fetch('/project-gis/public/php/get_rainfall_monitoring.php')
+    fetch('/public/php/get_rainfall_monitoring.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error("Network response was not ok");
