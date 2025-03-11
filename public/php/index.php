@@ -40,7 +40,7 @@ include('database.php');
 
 
 <body>
-  <div class="mapContainer">
+  <div class="mapContainer"> 
   
     <div id="map"></div>
 
