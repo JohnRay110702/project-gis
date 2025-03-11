@@ -38,12 +38,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js"
     integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  
 
     <link rel="icon" type="image/png" href="img_src/icon.png">
+  
 
   
 </head>
 <body>
+  <!-- <script> window.location.href = "login.html"</script> -->
   <!-- <div id="loaderWrapper">
     <div class="scene">
       <div class="forest">
@@ -212,10 +216,20 @@
             <img src="img_src\planet-earth-global-svgrepo-com.png">
           </div>
         </div>
-        <div class="chart">
-          <canvas id="chart"></canvas>
-        </div>
+        <div class="forecast-section">
+          <div class="chart-container">
+              <h2>Forecast Data</h2>
+              <canvas id="forecastChart"></canvas>
+          </div>
+          <div class="input-container">
+              <label for="forecastPeriod">Enter Forecast Period (days):</label>
+              <input type="number" id="forecastPeriod" min="1" value="30">
+              <button id="forecastButton">Generate Forecast</button>
+          </div>
       </div>
+    </div>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="js/script.js"></script> <!-- External JavaScript -->
 
   
       <!-- Content for MAP -->
@@ -310,7 +324,7 @@
         <main class="container">
           <div class="home-main-container">
             <div class="home-container">
-              <div class="pagdaloy-header p-4 p-md-5 mb-4 rounded text-body-emphasis" style="background-color: #05161a;">
+              <div class="pagdaloy-header  rounded text-body-emphasis" style="background-color: #05161a;">
                 <div class="col-lg-6 px-0">
                   <h1 id="pagdaloy-text" class="custom-font fst-italic text-white">PAGDALOY</h1>
                   <p class="my-3 text-white fs-6">DISCOVERING THE WAY TO
