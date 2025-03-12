@@ -42,6 +42,12 @@
   
 
     <link rel="icon" type="image/png" href="img_src/icon.png">
+    <script>
+      // Check if the user is already logged in (based on session/local storage)
+      if (!sessionStorage.getItem("loggedIn")) {
+          window.location.href = "login.html";
+      }
+    </script>
   
 
   
