@@ -907,7 +907,7 @@ document.getElementById("municipalityFilter").addEventListener("click", function
 });
 
 async function fetchRainData(tributaryName) {
-    let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
+    let url = `/project-gis/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
 
     try {
         const response = await fetch(url);
@@ -1081,105 +1081,6 @@ function plotRainChart(rainData, tributaryName) {
 //         })
 //     })
 // })
-
-
-// async function fetchDataContaining(location) {
-//     var filtered = []
-//     try {
-//         // Define the query
-//         const q = query(collection(db, 'rainfall'));
-
-//         // Execute the query
-//         const querySnapshot = await getDocs(q);
-
-//         // Filter the documents client-side
-//         const filteredDocs = [];
-//         querySnapshot.forEach((doc) => {
-//             const data = doc.data();
-//             if (data.locationName.includes(location)) {
-//                 filteredDocs.push({ id: doc.id, data });
-//             }
-//         });
-
-//         // Process the filtered results
-//         filteredDocs.forEach((doc) => {
-//             doc.data.timestamp = unixToDate(doc.data.timestamp["seconds"])
-//             // console.log(doc.data.timestamp)
-//             filtered.push(doc.data)
-//         });
-//         return filtered
-//     } catch (error) {
-//         // console.log('Error fetching data: ', error);
-//     }
-
-// }
-
-// const dbLive = getDatabase();
-
-// async function fetchDataFromDatabase(location) {
-//     var filteredData = []
-//     try {
-//         // Reference to the location in the database
-//         const databaseRef = ref(dbLive, 'Rain Gauge 1');
-//         const snapshot = await get(databaseRef);
-//         const data = snapshot.val();
-//         const dataArray = Object.values(data);
-//         dataArray.forEach(v=>{
-//             if ((v.locationName).includes(location)){
-//                 filteredData.push(v)
-//             }
-//         })
-//     } catch (error) {
-//         // console.error("Error fetching data:", error);
-//     }
-
-//     try {
-//         // Reference to the location in the database
-//         const databaseRef = ref(dbLive, 'Rain Gauge 2');
-//         const snapshot = await get(databaseRef);
-//         const data = snapshot.val();
-//         const dataArray = Object.values(data);
-//         dataArray.forEach(v => {
-//             if ((v.locationName).includes(location)) {
-//                 filteredData.push(v)
-//             }
-//         })
-//     } catch (error) {
-//         // console.error("Error fetching data:", error);
-//     }
-
-//     try {
-//         // Reference to the location in the database
-//         const databaseRef = ref(dbLive, 'Rain Gauge 3');
-//         const snapshot = await get(databaseRef);
-//         const data = snapshot.val();
-//         const dataArray = Object.values(data);
-//         dataArray.forEach(v => {
-//             if ((v.locationName).includes(location)) {
-//                 filteredData.push(v)
-//             }
-//         })
-//     } catch (error) {
-//         // console.error("Error fetching data:", error);
-//     }
-
-//     try {
-//         // Reference to the location in the database
-//         const databaseRef = ref(dbLive, 'Rain Gauge 4');
-//         const snapshot = await get(databaseRef);
-//         const data = snapshot.val();
-//         const dataArray = Object.values(data);
-//         dataArray.forEach(v => {
-//             if ((v.locationName).includes(location)) {
-//                 filteredData.push(v)
-//             }
-//         })
-//         return filteredData
-//     } catch (error) {
-//         // console.error("Error fetching data:", error);
-//     }
-//     // console.log(filteredData)
-// }
 
 
 // function unixToDate(unixTimestamp) {
@@ -1679,7 +1580,7 @@ function formatDate(dateString, includeTime = false) {
 
 
 function fetchAllRainfallData() {
-    fetch('/public/php/get_rainfall_monitoring.php')
+    fetch('/project-gis/public/php/get_rainfall_monitoring.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error("Network response was not ok");
