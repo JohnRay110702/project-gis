@@ -44,7 +44,7 @@ html{
 }
 
 body{
-  background: var(--color-light);
+  background: #FAF9F6;
   font-family: poppins, sans-serif;
   min-height: 100vh;
   color: var(--color-dark);
@@ -209,6 +209,14 @@ nav .theme-btn .active{
   font-size: 20px; /* Adjust icon size */
   margin-right: 8px; /* Add some space between icon and text */
 }
+
+/* .logout-bttn {
+  display: flex;
+  padding-left: 10px;
+} */
+
+
+
 .notifications-icon {
   margin-left: 1000px; /* Add some space between bell icon and logo */
   margin-right: 8px;
@@ -239,7 +247,7 @@ main aside{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 88vh;
+  height: 79vh;
 }
 
 /*will display only on mobile and tablets*/
@@ -287,6 +295,11 @@ main aside .sidebar a.active:hover span {
 }
 
 main aside .sidebar h4{
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.logout-bttn {
   font-weight: 500;
   font-size: 20px;
 }

@@ -188,7 +188,7 @@
             <h4>Map</h4>
           </a>
           <a href="#municipalitiesContent" class="sidebar-link ">
-            <span class="material-icons-sharp">location_city</span>
+            <span class="material-icons-sharp">water</span>
             <h4>Tributary</h4>
           </a>
           <a href="#settingsContent" class="sidebar-link">
@@ -199,9 +199,19 @@
             <span class="material-icons-sharp">info</span>
             <h4>About</h4>
           </a>
+          
+          <!-- <a href="php/logout.php" class ="logout-bttn"><i class="sidebar-link"></i>
+            <span class="material-icons-sharp" target="_blank">logout</span>Logout
+          </a> -->
+
+          <a href="php/logout.php" class="logout-bttn" target="_blank">
+            <span class="material-icons-sharp">logout</span>
+            <h4>Logout</h4>
+          </a>
         </div>
       </aside>
-  
+    
+   
       <!-- Content for DASHBOARD -->
   
       <div id="dashboardContent" class="middle content-section dashboardContent">
@@ -225,13 +235,14 @@
         <div class="forecast-section">
           <div class="chart-container">
               <h2>Forecast Data</h2>
-              <canvas id="forecastChart"></canvas>
+              <canvas id="forecastChart"></canvas>\
           </div>
           <div class="input-container">
-              <label for="forecastPeriod">Enter Forecast Period (days):</label>
-              <input type="number" id="forecastPeriod" min="1" value="30">
-              <button id="forecastButton">Generate Forecast</button>
-          </div>
+            <label for="forecastPeriod">Enter Forecast Period (days):</label>
+            <input type="number" id="forecastPeriod" min="1" value="30">
+            <button id="forecastButton">Generate Forecast</button>
+        </div>
+          
       </div>
     </div>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -751,12 +762,18 @@
     </main>
     <div class="footer-container">
       <footer class="footerContent py-5 text-center text-body-secondary bg-body-secondary">
-        <p>PAGDALOY by <a href="https://batstateu.edu.ph/" target="_blank" rel="noopener noreferrer">BATANGAS STATE UNIVERSITY - TNEU</a></p>
-        <p class="mb-0">
-          <a href="#">Back to top</a>
-        </p>
+          <p>PAGDALOY by 
+              <a href="https://batstateu.edu.ph/" target="_blank" rel="noopener noreferrer">
+                  BATANGAS STATE UNIVERSITY - TNEU
+              </a>
+          </p>
+          <p class="mb-0">
+              <a href="privacyPolicy.html">Privacy Policy</a> | 
+              <a href="mailto:rainfallwebanalyzer@gmail.com">Send us Feedback</a> | 
+              <a href="#">Back to top</a>
+          </p>
       </footer>
-    </div>
+  </div>
   
   
   <!-- Your other scripts -->
