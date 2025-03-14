@@ -1710,5 +1710,90 @@ function displayIntervals(intervals) {
     console.log("Rainfall data displayed in 6-hour intervals.");
 }
 
+// $(document).ready(function () {
+//     // Fetch user data
+//     $.ajax({
+//         url: './php/userdata.php',
+//         method: 'GET',
+//         dataType: 'json',
+//         success: function (response) {
+//             if (!response.error) {
+//                 $("#userDropdown").text(response.username);
+//             } else {
+//                 $("#userDropdown").text("Guest");
+//             }
+//         },
+//         error: function () {
+//             $("#userDropdown").text("Error fetching user");
+//         }
+//     });
+
+//     // Toggle dropdown on click
+//     $("#userDropdown").click(function () {
+//         $(".dropdown-content").toggle();
+//     });
+
+//     // Close dropdown when clicking outside
+//     $(document).click(function (event) {
+//         if (!$(event.target).closest(".dropdown").length) {
+//             $(".dropdown-content").hide();
+//         }
+//     });
+// });
+
+$(document).ready(function () {
+    // Function to format text to sentence case
+    function toSentenceCase(text) {
+        return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    }
+
+    // Fetch user data
+    $.ajax({
+        url: './php/userdata.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            if (!response.error) {
+                let formattedUsername = toSentenceCase(response.username);
+                $("#userDropdown").text(formattedUsername);
+            } else {
+                $("#userDropdown").text("Guest");
+            }
+        },
+        error: function () {
+            $("#userDropdown").text("Error fetching user");
+        }
+    });
+
+    // Toggle dropdown on click
+    $("#userDropdown").click(function () {
+        $(".dropdown-content").toggle();
+    });
+
+    // Close dropdown when clicking outside
+    $(document).click(function (event) {
+        if (!$(event.target).closest(".dropdown").length) {
+            $(".dropdown-content").hide();
+        }
+    });
+
+    $(document).ready(function () {
+        // Ensure dropdown is hidden on page load
+        $(".dropdown-content").hide(); 
+        // Close dropdown when clicking outside
+        $(document).on("click", function (event) {
+            if (!$(event.target).closest(".dropdown").length) {
+                $(".dropdown-content").slideUp(200); // Smoothly hide
+            }
+        });
+    });
+
+    
+});
+
+
+
+
+
 // Run the function when the page loads
 document.addEventListener("DOMContentLoaded", fetchAllRainfallData);
