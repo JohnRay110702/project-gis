@@ -6,7 +6,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rainfall Analyzer</title>
+  <title>Project GIS</title>
   
   <!--ICON CDN MATERIALS-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -199,19 +199,22 @@
             <span class="material-icons-sharp">info</span>
             <h4>About</h4>
           </a>
-          
-          <!-- <a href="php/logout.php" class ="logout-bttn"><i class="sidebar-link"></i>
-            <span class="material-icons-sharp" target="_blank">logout</span>Logout
-          </a> -->
 
-          <a href="php/logout.php" class="logout-bttn" target="_blank">
-            <span class="material-icons-sharp">logout</span>
-            <h4>Logout</h4>
-          </a>
+           
+          <div class="dropdown">
+            <span class="material-icons-sharp">person</span>
+            <button id="userDropdown">Loading...</button>
+            <div class="dropdown-content">
+                <!-- <a href="profile.php">Profile</a> -->
+                <a href="php/logout.php" class="logout-bttn" target="_blank">
+                  <span class="material-icons-sharp">logout</span>
+                  <h4>Logout</h4>
+                </a>
+            </div>
+          </div>
         </div>
-      </aside>
-    
-   
+      </aside> 
+
       <!-- Content for DASHBOARD -->
   
       <div id="dashboardContent" class="middle content-section dashboardContent">
@@ -242,7 +245,6 @@
             <input type="number" id="forecastPeriod" min="1" value="30">
             <button id="forecastButton">Generate Forecast</button>
         </div>
-          
       </div>
     </div>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
