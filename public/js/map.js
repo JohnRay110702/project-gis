@@ -144,10 +144,8 @@ var map = L.map('map', {
                     data.forEach(function(item) {
                         // Ensure each item has the expected structure
                         if (item && typeof item === 'object' && item.hasOwnProperty('resident_id') && item.hasOwnProperty('municipality_code')) {
-                            var residentID = item.resident_id|| municipality;
-                            var barangayItem = item.barangay|| municipality; // Use municipality if farmName is undefined
+                            var residentID = item.resident_id|| municipality; // Use municipality if farmName is undefined
                             residentID = residentID || "Unknown"; // Default to "Unknown" if both farm_name and municipality are undefined
-                            barangayItem = barangayItem || "Unknown";
         
                             // Construct the text content of the list item
                             var listItemText = residentID;
@@ -169,12 +167,12 @@ var map = L.map('map', {
                                     filterMarkers(item, map);
                                     // Open popup after flying to the location
                                     var farm_marker = getMarkerByResidentName(item.resident_id);
-                                    var barangay_marker = getMarkerByBarangay(item.barangay);
                                     if (farm_marker) {
                                         farm_marker.openPopup();
                                     }
                                     if (barangay_marker) {
                                         barangay_marker.openPopup();
+
                                     }
                                     // Fetch and display the corresponding barangay shapefile and piggery markers
                                     fetchAndDisplayBarangayShape(item.municipality_code, item.barangay, map);
@@ -263,10 +261,7 @@ var map = L.map('map', {
                         color: randomColor,
                         weight: 4
                     }
-                }).addTo(barangayLayerGroup);
-                
-
-                
+                }).addTo(barangayLayerGroup);    
             });
     
         
@@ -407,11 +402,6 @@ var map = L.map('map', {
         });
     }
 
-    function getMarkerByBarangay(barangay) {
-        return allMarkers.find(function(marker) {
-            return marker.getPopup().getContent().includes(barangay);
-        });
-    }
     
     
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
