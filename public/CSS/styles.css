@@ -44,7 +44,7 @@ html{
 }
 
 body{
-  background: var(--color-light);
+  background: #FAF9F6;
   font-family: poppins, sans-serif;
   min-height: 100vh;
   color: var(--color-dark);
@@ -209,6 +209,14 @@ nav .theme-btn .active{
   font-size: 20px; /* Adjust icon size */
   margin-right: 8px; /* Add some space between icon and text */
 }
+
+/* .logout-bttn {
+  display: flex;
+  padding-left: 10px;
+} */
+
+
+
 .notifications-icon {
   margin-left: 1000px; /* Add some space between bell icon and logo */
   margin-right: 8px;
@@ -249,15 +257,16 @@ main aside{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 88vh;
+  height: 79vh;
 }
 
 /*will display only on mobile and tablets*/
-main aside button#close-btn{
+main aside button #close-btn{
   display: none;
 }
 
-main aside .sidebar a{
+main aside .sidebar a, 
+main aside .sidebar div{
   display: flex;
   align-items: center;
   gap: .8rem;
@@ -266,19 +275,40 @@ main aside .sidebar a{
   position: relative;
   text-decoration: none;
 }
-main aside .sidebar a span{
+
+#userDropdown {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  height: 6rem;
+  color: var(--color-gray-light);
+  position: relative;
+  text-decoration: none;
+
+  font-weight: 500;
+  font-size: 20px;
+  background-color: var(--color-white);
+}
+#userDropdown:hover {
+  color: #7fb8e0;
+}
+
+main aside .sidebar a span, 
+main aside .sidebar div span{
   font-size: 1.7rem;
   margin-left: 3rem;
   transition: all 300ms ease;
 }
 
-main aside .sidebar a.active {
+main aside .sidebar a.active, 
+main aside .sidebar div.active{
   border-radius: var(--border-raidus-1);
   background: var(--color-white);
   color:#7fb8e0;
 }
 
-main aside .sidebar a.active::before {
+main aside .sidebar a.active::before,
+main aside .sidebar div.active::before {
   content: "";
   width: 6px;
   height: 100%;
@@ -287,19 +317,21 @@ main aside .sidebar a.active::before {
 }
 
 main aside .sidebar a:hover,
-main aside .sidebar a.active:hover {
+main aside .sidebar a.active:hover,
+main aside .sidebar span:hover {
   color:#7fb8e0;
 }
 
-main aside .sidebar a:hover span,
-main aside .sidebar a.active:hover span {
+main aside .sidebar-link:hover span,
+main aside .sidebar-link.active:hover span{
   margin-left: 2rem;
 }
 
-main aside .sidebar h4{
+
+/* .logout-bttn {
   font-weight: 500;
   font-size: 20px;
-}
+} */
 /*================= DASHBOARD ==================*/
 .dashboardContent .calendar {
   display: flex;
@@ -357,6 +389,109 @@ main aside .sidebar h4{
   padding:0;
 }
 
+.chart-container {
+  width: 800px; 
+  height: 400px; 
+  max-width: 100%;
+  margin: 20px auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+  
+canvas {
+  width: 80% !important;
+  height: 80% !important;
+  background: none;
+}
+
+.input-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.input-container label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.input-container input {
+  width: 60px;
+  padding: 5px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.input-container button {
+  padding: 8px 15px;
+  font-size: 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.input-container button:hover {
+  background: #0056b3;
+}
+
+/*================= username ==================*/
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  padding: 0px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logout-bttn {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem; /* Adjust spacing between icon and text */
+  text-decoration: none;
+  color: #7fb8e0;
+  width: 100%;
+  padding: 10px;
+}
+
+.logout-bttn span {
+  font-size: 18px;
+}
+
+.logout-bttn h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+}
+
+/* .dropdown-content a:hover {
+  background-color: #ddd;
+} */
+
+/* .dropdown:hover {
+  display: block;
+} */
+
 /*================= MAP ==================*/
 h2{
   text-align: center; 
@@ -398,6 +533,7 @@ iframe {
 }
 
 /*================= ABOUT ==================*/
+
 .about_Content h1{
   margin-left: 0%;
   margin-top: 2rem;

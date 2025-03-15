@@ -170,6 +170,10 @@ var map = L.map('map', {
                                     if (farm_marker) {
                                         farm_marker.openPopup();
                                     }
+                                    if (barangay_marker) {
+                                        barangay_marker.openPopup();
+
+                                    }
                                     // Fetch and display the corresponding barangay shapefile and piggery markers
                                     fetchAndDisplayBarangayShape(item.municipality_code, item.barangay, map);
                                 });

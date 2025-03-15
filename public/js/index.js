@@ -1083,105 +1083,6 @@ function plotRainChart(rainData, tributaryName) {
 // })
 
 
-// async function fetchDataContaining(location) {
-//     var filtered = []
-//     try {
-//         // Define the query
-//         const q = query(collection(db, 'rainfall'));
-
-//         // Execute the query
-//         const querySnapshot = await getDocs(q);
-
-//         // Filter the documents client-side
-//         const filteredDocs = [];
-//         querySnapshot.forEach((doc) => {
-//             const data = doc.data();
-//             if (data.locationName.includes(location)) {
-//                 filteredDocs.push({ id: doc.id, data });
-//             }
-//         });
-
-//         // Process the filtered results
-//         filteredDocs.forEach((doc) => {
-//             doc.data.timestamp = unixToDate(doc.data.timestamp["seconds"])
-//             // console.log(doc.data.timestamp)
-//             filtered.push(doc.data)
-//         });
-//         return filtered
-//     } catch (error) {
-//         // console.log('Error fetching data: ', error);
-//     }
-
-// }
-
-// const dbLive = getDatabase();
-
-// async function fetchDataFromDatabase(location) {
-//     var filteredData = []
-//     try {
-//         // Reference to the location in the database
-//         const databaseRef = ref(dbLive, 'Rain Gauge 1');
-//         const snapshot = await get(databaseRef);
-//         const data = snapshot.val();
-//         const dataArray = Object.values(data);
-//         dataArray.forEach(v=>{
-//             if ((v.locationName).includes(location)){
-//                 filteredData.push(v)
-//             }
-//         })
-//     } catch (error) {
-//         // console.error("Error fetching data:", error);
-//     }
-
-//     try {
-//         // Reference to the location in the database
-//         const databaseRef = ref(dbLive, 'Rain Gauge 2');
-//         const snapshot = await get(databaseRef);
-//         const data = snapshot.val();
-//         const dataArray = Object.values(data);
-//         dataArray.forEach(v => {
-//             if ((v.locationName).includes(location)) {
-//                 filteredData.push(v)
-//             }
-//         })
-//     } catch (error) {
-//         // console.error("Error fetching data:", error);
-//     }
-
-//     try {
-//         // Reference to the location in the database
-//         const databaseRef = ref(dbLive, 'Rain Gauge 3');
-//         const snapshot = await get(databaseRef);
-//         const data = snapshot.val();
-//         const dataArray = Object.values(data);
-//         dataArray.forEach(v => {
-//             if ((v.locationName).includes(location)) {
-//                 filteredData.push(v)
-//             }
-//         })
-//     } catch (error) {
-//         // console.error("Error fetching data:", error);
-//     }
-
-//     try {
-//         // Reference to the location in the database
-//         const databaseRef = ref(dbLive, 'Rain Gauge 4');
-//         const snapshot = await get(databaseRef);
-//         const data = snapshot.val();
-//         const dataArray = Object.values(data);
-//         dataArray.forEach(v => {
-//             if ((v.locationName).includes(location)) {
-//                 filteredData.push(v)
-//             }
-//         })
-//         return filteredData
-//     } catch (error) {
-//         // console.error("Error fetching data:", error);
-//     }
-//     // console.log(filteredData)
-// }
-
-
 // function unixToDate(unixTimestamp) {
 //     // Create a new Date object with the Unix timestamp multiplied by 1000 to convert it to milliseconds
 //     const date = new Date(unixTimestamp * 1000);
@@ -1808,6 +1709,91 @@ function displayIntervals(intervals) {
 
     console.log("Rainfall data displayed in 6-hour intervals.");
 }
+
+// $(document).ready(function () {
+//     // Fetch user data
+//     $.ajax({
+//         url: './php/userdata.php',
+//         method: 'GET',
+//         dataType: 'json',
+//         success: function (response) {
+//             if (!response.error) {
+//                 $("#userDropdown").text(response.username);
+//             } else {
+//                 $("#userDropdown").text("Guest");
+//             }
+//         },
+//         error: function () {
+//             $("#userDropdown").text("Error fetching user");
+//         }
+//     });
+
+//     // Toggle dropdown on click
+//     $("#userDropdown").click(function () {
+//         $(".dropdown-content").toggle();
+//     });
+
+//     // Close dropdown when clicking outside
+//     $(document).click(function (event) {
+//         if (!$(event.target).closest(".dropdown").length) {
+//             $(".dropdown-content").hide();
+//         }
+//     });
+// });
+
+$(document).ready(function () {
+    // Function to format text to sentence case
+    function toSentenceCase(text) {
+        return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    }
+
+    // Fetch user data
+    $.ajax({
+        url: './php/userdata.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            if (!response.error) {
+                let formattedUsername = toSentenceCase(response.username);
+                $("#userDropdown").text(formattedUsername);
+            } else {
+                $("#userDropdown").text("Guest");
+            }
+        },
+        error: function () {
+            $("#userDropdown").text("Error fetching user");
+        }
+    });
+
+    // Toggle dropdown on click
+    $("#userDropdown").click(function () {
+        $(".dropdown-content").toggle();
+    });
+
+    // Close dropdown when clicking outside
+    $(document).click(function (event) {
+        if (!$(event.target).closest(".dropdown").length) {
+            $(".dropdown-content").hide();
+        }
+    });
+
+    $(document).ready(function () {
+        // Ensure dropdown is hidden on page load
+        $(".dropdown-content").hide(); 
+        // Close dropdown when clicking outside
+        $(document).on("click", function (event) {
+            if (!$(event.target).closest(".dropdown").length) {
+                $(".dropdown-content").slideUp(200); // Smoothly hide
+            }
+        });
+    });
+
+    
+});
+
+
+
+
 
 // Run the function when the page loads
 document.addEventListener("DOMContentLoaded", fetchAllRainfallData);

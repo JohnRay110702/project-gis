@@ -19,7 +19,7 @@ html {
 
 <?php session_start();
 if(empty($_SESSION['id'])):
-    header('Location:../html/login.html');
+    header('Location: ../login.html');
 endif;
 ?>
 <!DOCTYPE html>
@@ -44,7 +44,7 @@ endif;
                     }
             }).then(function() {
                // Redirect to login page after popup closes
-               document.location = '../html/login.html';
+               document.location = '../login.html';
             });
             });
             </script>";
