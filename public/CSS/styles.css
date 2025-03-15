@@ -224,8 +224,8 @@ nav .theme-btn .active{
 
 main{
   flex: 1;
-  display: grid;
-  grid-template-columns: 18rem auto 15rem;
+  display: flex;
+  /* grid-template-columns: 18rem auto 15rem; */
   gap: 2rem;
   width: 96%;
   /* max-height: 100%; */
@@ -233,7 +233,17 @@ main{
 
 }
 
+.sidebar-container {
+  width: 18rem;
+}
 
+.mainContent-container {
+  flex: 1;
+}
+
+.rightContent-container {
+  width: 15rem;
+}
 
 main aside{
   display: flex;
@@ -389,16 +399,19 @@ iframe {
 
 /*================= ABOUT ==================*/
 .about_Content h1{
-  margin-left: 1%;
+  margin-left: 0%;
   margin-top: 2rem;
   font-size: 30px;
 }
 .aboutContent{
   margin-top: 10%;
   margin-left: 10%;
-  width: 35%;
+  width: 100%;
   height: 35%;
   position: relative;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 .content {
   position: absolute;
@@ -456,8 +469,21 @@ iframe {
 
 
 /* home */
+.aboutContainer {
+  flex: 1;
+}
+
+.home-main-container {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+}
+
 .pagdaloy-header {
-  width: 83.5rem;
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 #pagdaloy-text {
@@ -501,8 +527,10 @@ iframe {
 
 .municipality-container {
   display: flex;
-  width: 85rem;
+  flex-direction: row;
+  /* width: 85rem; */
 }
+
 
 .municipality-img {
   width: 17rem;
@@ -515,19 +543,28 @@ iframe {
   display: flex;
   flex-direction: column;
   width: auto;
+  flex: 1;
 }
 
 .more-info-text {
-  width: 50rem;
+  display: flex;
+  /* width: 50rem; */
+  flex: 1;
 }
 
 .gis-container {
-  width: 50rem;
+  /* width: 50rem; */
+}
+
+.browse-more {
+  display: flex;
+  flex: 1;
+  /* width: 100%; */
 }
 
 .taal-lake-container {
-  width: 25rem;
-  margin-left:40rem;
+  /* width: 25rem; */
+  /* margin-left:40rem; */
 }
 
 

@@ -86,6 +86,7 @@ if(isset($_POST['login'])) {
                 popup: 'custom-popup'
             }
             }).then(function() {
+                sessionStorage.setItem('loggedIn', 'true');
                 document.location = '../index.html';
             });
             });
