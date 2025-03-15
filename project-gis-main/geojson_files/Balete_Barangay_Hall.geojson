@@ -1,0 +1,18 @@
+{
+"type": "FeatureCollection",
+"name": "Balete_Barangay_Hall",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Alangilan" }, "geometry": { "type": "Point", "coordinates": [ 121.117591751804653, 14.000967001403911 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Looc" }, "geometry": { "type": "Point", "coordinates": [ 121.085100280898757, 14.028115425658946 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Magapi" }, "geometry": { "type": "Point", "coordinates": [ 121.097081757660021, 14.028913969008723 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Makina" }, "geometry": { "type": "Point", "coordinates": [ 121.102439594446736, 14.020261302061471 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Malabanan" }, "geometry": { "type": "Point", "coordinates": [ 121.124325871281783, 14.011476098246332 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Paligawan" }, "geometry": { "type": "Point", "coordinates": [ 121.139450717838756, 14.002698092557692 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Palsara" }, "geometry": { "type": "Point", "coordinates": [ 121.110670221389015, 14.007965968898722 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion" }, "geometry": { "type": "Point", "coordinates": [ 121.156442511685427, 14.04646624047955 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Sampalocan" }, "geometry": { "type": "Point", "coordinates": [ 121.089363802084108, 14.032569561358077 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "San Sebastian" }, "geometry": { "type": "Point", "coordinates": [ 121.068704187296333, 14.029729576613855 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Solis" }, "geometry": { "type": "Point", "coordinates": [ 121.099653296418538, 14.03610615030262 ] } }
+]
+}

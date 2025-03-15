@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "Poblacion_San_Nicholas",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null }, "geometry": { "type": "Point", "coordinates": [ 120.952424177820603, 13.924275320563865 ] } },
+{ "type": "Feature", "properties": { "id": null }, "geometry": { "type": "Point", "coordinates": [ 120.952090775663422, 13.924090147866456 ] } },
+{ "type": "Feature", "properties": { "id": null }, "geometry": { "type": "Point", "coordinates": [ 120.948962765062134, 13.92360083078359 ] } },
+{ "type": "Feature", "properties": { "id": null }, "geometry": null }
+]
+}

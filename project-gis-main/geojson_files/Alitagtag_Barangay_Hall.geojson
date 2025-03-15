@@ -1,0 +1,22 @@
+{
+"type": "FeatureCollection",
+"name": "Alitagtag_Barangay_Hall",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Balagbag" }, "geometry": { "type": "Point", "coordinates": [ 121.023705393515527, 13.870589202989503 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Concepcion" }, "geometry": { "type": "Point", "coordinates": [ 121.017082190597307, 13.867607176608637 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Concordia" }, "geometry": { "type": "Point", "coordinates": [ 121.021380825252209, 13.849708558826199 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Dalipit East" }, "geometry": { "type": "Point", "coordinates": [ 121.032018825252564, 13.868614040153746 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Dalipit West" }, "geometry": { "type": "Point", "coordinates": [ 121.02737394950536, 13.868129209061163 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Dominador West" }, "geometry": { "type": "Point", "coordinates": [ 121.02389155616153, 13.870875785654183 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Munlawin Norte" }, "geometry": { "type": "Point", "coordinates": [ 121.029194260939121, 13.862256384927182 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Munlawin Sur" }, "geometry": { "type": "Point", "coordinates": [ 121.03880143066786, 13.856987838715931 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Pinagkurusan" }, "geometry": { "type": "Point", "coordinates": [ 121.021787305582592, 13.865302784158073 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Ping-as" }, "geometry": { "type": "Point", "coordinates": [ 121.025637067581428, 13.884703047470069 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion East" }, "geometry": { "type": "Point", "coordinates": [ 121.014542438745409, 13.867162490020849 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion West" }, "geometry": { "type": "Point", "coordinates": [ 121.003404483470234, 13.873685998008462 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "San Jose" }, "geometry": { "type": "Point", "coordinates": [ 120.99718537217008, 13.865185152217844 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "San Juan" }, "geometry": { "type": "Point", "coordinates": [ 121.006297810344634, 13.850680289373692 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Sta Cruz" }, "geometry": { "type": "Point", "coordinates": [ 120.99450480420029, 13.864771569608161 ] } }
+]
+}

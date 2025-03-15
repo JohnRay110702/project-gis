@@ -1,0 +1,580 @@
+.mapContainer {
+  position: relative;
+  width: 100%; /* Set the width to 100% of the parent container */
+  /* max-width: 950px; */
+  height: 650px; /* Set a fixed height for the map container */
+  overflow: visible !important; /* Hide any overflow content */
+  border-radius: 10px;
+  margin-top: 0rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+  /* transition: all 0.3s ease-in-out; */
+}
+
+/* .controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.controls button {
+  padding: 5px 10px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+}
+.minimized {
+  width: 300px;
+  height: 200px;
+} */
+/* Style for the map element */
+#map {
+  width: 100%; /* Set the width to 100% of the map container */
+  height: 100vh; /* Set the height to 100% of the map container */
+  
+}
+
+#toggler {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 8px 12px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 1000;
+  margin-top: 580px;
+        
+}
+
+#toggler:hover {
+  background-color: white;
+  color: black;
+}
+
+.isfullscreen {
+  position: absolute;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: white;
+  color: black;
+  padding: 20px;
+  padding-top: 20px;
+  z-index: 9999;
+  bottom: 10px;
+  right: 10px;
+}
+
+#getStartedBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 15px 30px;
+  font-size: 18px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: none;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* #getStartedBtn:hover {
+  background-color: #0056b3;
+} */
+
+/* #home img {
+  height: 3px;
+  width: 3px;
+} */
+
+#home {
+  position: fixed;
+  z-index: 9999;
+  bottom: 10px;
+  left: 10px;
+  margin: 20px; /* Add more margin to the container */
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align the items to the right */
+  
+}
+
+.tooltip {
+  position: relative;
+  display: flex;
+  opacity: 1;
+}
+
+.tooltip .tooltiptext {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  width: 80px;
+  height: 30px;
+  background-color: #fff;
+  color: black;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  margin-top: 15px;
+  margin-left: 5px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  left: 100%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.7s;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 100%; /* To the right of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent black;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+visibility: visible;
+opacity: 0.5;
+}
+
+
+
+#header-logo,
+#custom-modal,
+#clearme,
+#flow-acc { /* Apply margin and adjust size to all items */
+  margin-bottom: 20px; /* Add more margin to the bottom of each item */
+  height: 60px; /* Increase the height of the logos */
+  width: auto; /* Ensure the logos maintain their aspect ratio */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#header-logo:hover,
+#custom-modal:hover,
+#clearme:hover,
+#flow-acc:hover { /* Apply hover effect to all items */
+  transform: scale(1.2);
+  transition: .4s;
+}
+
+#legend {
+  background-color: #fff;
+  position: absolute;
+  z-index: 2002;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  top: 10px; /* Adjusted to be at the top */
+  left: 10px; /* Adjusted to be at the left */
+  border-radius: 15px;
+  width: 250px;
+  max-height: 350px;
+  /* overflow-y: auto; */
+}
+
+#legend > h1 {
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+  font-size: 22px;
+  color: #ed9c9c;
+}
+
+#classification-1 > h2 {
+  font-size: 20px;
+  text-align: justify;
+  padding-left: 15px;
+}
+#classification-2 > h2 {
+  font-size: 20px;
+  text-align: justify;
+  padding-left: 15px;
+}
+
+.legend-contents {
+  text-align: left;
+  font-family: 'Raleway', sans-serif;
+  color: #000;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-around; */
+  font-weight: light;
+  padding-left: 15px;
+  font-size: 15px;
+}
+
+.legend-text {
+  font-size: 15px;
+}
+
+.sanitation-legend-contents {
+  text-align: left;
+  /* font-family: 'Raleway', sans-serif;
+  color: #000; */
+  /* padding: 0.5rem; */
+  display: flex;
+  /* gap: 0.5rem; */
+  align-items: center;
+  /* justify-content: space-around; */
+  font-weight: bold;
+  /* padding-left: 15px; */
+}
+
+
+.legend-contents > img {
+  width: 50px;
+}
+
+#markericonlegend,
+#pigfarmlegend,
+#nearestpoint {
+  height: 40px;
+  width: 40px;
+}
+
+#green-dropdown {
+  height: 40px;
+  width: 20px;
+}
+
+.legend-contents:hover {
+
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+  transform: scale(1.2);
+  width: max-content;
+  /* background-color: rgba(200, 200, 200, 0.3); */
+}
+
+
+
+.sanitationlegends {
+  z-index: 2002;
+  height: 30px;
+  width: auto;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.pig-farm-main-container {
+  display: flex;
+  align-items: start;
+}
+
+/* Pig Farm Container to Keep Subcategories Visible */
+#pig-farm-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+/* Pig Farm Subcategories */
+#pig-farm-subcategories {
+  display: none;
+  position: absolute; /* Position relative to #classification-2 */
+  left: 105%; /* Moves it outside to the right of the legend */
+  top: 35px; /* Adjust this value to perfectly align with Pig Farm */
+  margin-top: 23%;
+  
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  z-index: 3000;
+  /* font-family: 'Raleway', sans-serif; */
+  font-size: 14px;
+  font-weight: bolder;
+}
+
+
+#pig-farm-subcategories p {
+  margin: 10px 30px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+
+#pig-farm-subcategories p:hover {
+  color: #ed9c9c;
+}
+
+#classification-2 {
+  position: relative;
+  size: 15px; /* Ensure subcategories position relative to this */
+}
+
+
+#classification-2 p {
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+
+.inputbox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  width: 350px;
+  justify-content: center;
+}
+
+#farmname {
+  height: 38px;
+}
+
+#sanitation {
+  font-size: 18px;
+  height: 38px;
+}
+
+.info-main-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-inputbox {
+  flex-direction: column;
+  justify-content: space-between;
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  width: 50%;
+}
+
+.info-type {
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+}
+
+
+.info-type input {
+  width: 70px;
+  height: 38px;
+  margin: 5px;
+}
+
+
+.native {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.native input {
+  width: 70px;
+}
+
+option {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+input {
+  padding: 0.5rem;
+  /* font-family: 'Roboto', sans-serif; */
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  color: #05161A;
+  /* background-color: #fffefe; */
+}
+
+label {
+  font-weight: bold;
+  color: #05161A;
+}
+
+#save-btn {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: #294D61;
+  color: white;
+  border-radius: 10px;
+  width: 120px;
+
+}
+
+#save-btn:hover {
+  transform: scale(1.2);
+  transition: .4s;
+  color: white;
+  background-color: #072E33;
+}
+
+#custommarker-pic {
+  height: 50px;
+  width: auto;
+}
+
+#close {
+  height: 30px;
+  width: auto;
+  position: absolute;
+  top: 22px;
+  right: 20px;
+  cursor: pointer;
+  background-color: rgb(253, 74, 74);
+  border-radius: 50%;
+  padding: 4px;
+}
+
+#close:hover {
+  transform: scale(1.2);
+  transition: .4s;
+  color: #000;
+  background-color: rgb(255, 35, 35);
+}
+
+.modal-parent {
+  position: relative;
+  z-index: 2000; /* Ensure the modal parent is behind the modal container */
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background to overlay the entire screen */
+  display: none; /* Initially hide the modal container */
+  justify-content: center;
+  align-items: center;
+  z-index: 2005; /* Ensure the modal container appears above other elements */
+}
+
+#modal-popup {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  gap: 2rem;
+  background-color: #6DA5C0;
+  border-radius: 20px;
+  position: relative;
+  z-index: 2006; /* Ensure the modal popup appears above other elements */
+  width: 430px;
+  height: 520px;
+}
+
+.modal-header {
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff; /* Set header text color */
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.search-results {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-results li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.search-results li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Add this to your stylesheet or style tag */
+.hidden {
+  display: none;
+}
+
+.search-container {
+  background-color: white;
+  border: 1px solid #ccc;
+  overflow-y: auto; /* Enable vertical scrollbar if needed */
+  margin-top: 5px; /* Add space above the container */
+  max-height: 120px; /* Maximum height of the container */
+  height: auto; /* Set height to auto so it adjusts based on content */
+}
+
+/* Dropdown */
+select {
+  padding: 0.5rem;
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer; /* Add pointer cursor */
+  background-color: #fff; /* Set background color */
+}
+
+select:hover {
+  background-color: #f0f0f0; /* Change background color on hover */
+}
+
+select:focus {
+  outline: none; /* Remove outline on focus */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add shadow on focus */
+}
+
+/* Style the dropdown arrow */
+select::-ms-expand {
+  display: none; /* Hide default arrow on IE */
+}
+
+select::-webkit-outer-spin-button,
+select::-webkit-inner-spin-button {
+  appearance: none; /* Remove spin buttons on WebKit */
+  margin: 0; /* Remove default margin */
+}
+
+/* Add custom arrow icon */
+.select-arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Ensure the arrow does not interfere with clicking the dropdown */
+}
+
+/* Add hover effect to the arrow */
+select:hover + .select-arrow {
+  color: #000; /* Change arrow color on hover */
+}

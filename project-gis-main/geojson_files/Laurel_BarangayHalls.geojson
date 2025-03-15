@@ -1,0 +1,27 @@
+{
+"type": "FeatureCollection",
+"name": "Laurel_BarangayHalls",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null, "Barangay": "As-Is" }, "geometry": { "type": "Point", "coordinates": [ 120.919983202229034, 14.056242974325947 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Balakilong" }, "geometry": { "type": "Point", "coordinates": [ 120.934004393487243, 14.067346247663171 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion 1" }, "geometry": { "type": "Point", "coordinates": [ 120.931886139077392, 14.053978048049373 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion 2" }, "geometry": { "type": "Point", "coordinates": [ 120.931449210240942, 14.051982934368295 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion 3" }, "geometry": { "type": "Point", "coordinates": [ 120.933790659915559, 14.04983286157602 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion 4" }, "geometry": { "type": "Point", "coordinates": [ 120.933747983258954, 14.053804725082546 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Poblacion 5" }, "geometry": { "type": "Point", "coordinates": [ 120.928339626448022, 14.045873131193297 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Bugaan East" }, "geometry": { "type": "Point", "coordinates": [ 120.940005512094999, 14.043550033481887 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Bugaan West" }, "geometry": { "type": "Point", "coordinates": [ 120.935992375306057, 14.041209472485662 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Buso-Buso" }, "geometry": { "type": "Point", "coordinates": [ 120.947952041503825, 14.024312900806056 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Dayap Itaas" }, "geometry": { "type": "Point", "coordinates": [ 120.851683341454901, 14.056058094605778 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Gulod" }, "geometry": { "type": "Point", "coordinates": [ 120.940882405161133, 14.034255355662765 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "J. Leviste" }, "geometry": { "type": "Point", "coordinates": [ 120.941654654422905, 14.070959011018525 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Molinete" }, "geometry": { "type": "Point", "coordinates": [ 120.923911203527709, 14.063461636894854 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Niyugan" }, "geometry": { "type": "Point", "coordinates": [ 120.889538338346156, 14.070114337447281 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Paliparan" }, "geometry": { "type": "Point", "coordinates": [ 120.898684913645369, 14.055625845602298 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "San Gabriel" }, "geometry": { "type": "Point", "coordinates": [ 120.90441175442264, 14.04082539382442 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "San Gregorio" }, "geometry": { "type": "Point", "coordinates": [ 120.872808481817586, 14.029372780137649 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Santa Maria" }, "geometry": { "type": "Point", "coordinates": [ 120.893026652568324, 14.045648764090677 ] } },
+{ "type": "Feature", "properties": { "id": null, "Barangay": "Ticub" }, "geometry": { "type": "Point", "coordinates": [ 120.909915011755842, 14.030934141299495 ] } }
+]
+}
