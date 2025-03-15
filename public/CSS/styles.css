@@ -347,9 +347,21 @@ main aside .sidebar h4{
   padding:0;
 }
 
+
+.forecast-section {
+  text-align: center;
+  margin: 20px auto;
+}
+
+.forecast-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
 .chart-container {
-  width: 800px; 
-  height: 400px; 
+  width: 1000px; /* Increased width */
+  height: 500px; /* Increased height */
   max-width: 100%;
   margin: 20px auto;
   background: white;
@@ -358,13 +370,12 @@ main aside .sidebar h4{
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  padding: 20px;
 }
-  
+
 canvas {
-  width: 80% !important;
-  height: 80% !important;
-  background: none;
+  width: 90% !important;
+  height: 90% !important;
 }
 
 .input-container {
@@ -386,7 +397,7 @@ canvas {
 }
 
 .input-container button {
-  padding: 8px 15px;
+  padding: 10px 20px;
   font-size: 16px;
   background: #007bff;
   color: white;

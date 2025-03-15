@@ -57,7 +57,6 @@ function fetchForecastData(periods) {
     });
 }
 
-
 function updateForecastChart(forecastData) {
     const canvas = document.getElementById("forecastChart");
 
@@ -73,7 +72,12 @@ function updateForecastChart(forecastData) {
         window.myChart.destroy();
     }
 
-    const labels = forecastData.map(entry => entry.ds);
+    // Format date labels to show only Month & Day
+    const labels = forecastData.map(entry => {
+        const date = new Date(entry.ds);
+        return date.toLocaleDateString("en-US", { month: "short", day: "numeric" }); // Example: "Mar 15"
+    });
+
     const predictions = forecastData.map(entry => entry.yhat);
 
     window.myChart = new Chart(ctx, {
@@ -92,9 +96,31 @@ function updateForecastChart(forecastData) {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                x: { title: { display: true, text: "Date" } },
-                y: { title: { display: true, text: "Distance of Effluence travelled in meters" } }
+                x: {
+                    title: { 
+                        display: true, 
+                        text: "Date",
+                        font: { weight: "bold", size: 14 } // Bold x-axis title
+                    },
+                    ticks: {
+                        maxRotation: 0, // Prevents label tilting
+                        autoSkip: true, // Skips labels dynamically
+                        maxTicksLimit: 10, // Limits number of visible labels
+                        font: { weight: "bold" } // Bold x-axis labels
+                    }
+                },
+                y: {
+                    title: { 
+                        display: true, 
+                        text: "Distance of Effluence travelled in meters",
+                        font: { weight: "bold", size: 14 } // Bold y-axis title
+                    },
+                    ticks: {
+                        font: { weight: "bold" } // Bold y-axis labels
+                    }
+                }
             }
         }
     });
 }
+
