@@ -904,6 +904,38 @@ document.getElementById("municipalityFilter").addEventListener("click", function
     }
 
     fetchRainData(tributaryName);
+
+    fetch("http://localhost:5000/api/get_rain_data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tributary: tributaryName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Received Rain Data:", data);
+        if (data.length === 0) {
+            alert("No historical data found for this tributary.");
+            return;
+        }
+
+        // ✅ Extract tributary value (if needed)
+        const tributaryValue = data[0]?.tributary || tributaryName; 
+
+        // ✅ Now call the forecast API using the same tributary
+        return fetch("http://localhost:5000/api/forecast", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tributary: tributaryName})
+        });
+    })
+    .then(response => response.json())
+    .then(forecastData => {
+        console.log("Received Forecast Data:", forecastData);
+        if (forecastData.error) {
+            alert("Error generating forecast: " + forecastData.error);
+        }
+    })
+    .catch(error => console.error("Error:", error));
 });
 
 async function fetchRainData(tributaryName) {

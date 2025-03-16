@@ -247,6 +247,8 @@ main{
 
 .mainContent-container {
   flex: 1;
+  /* margin-left: 10px; */
+  padding-left: 100px;
 }
 
 .rightContent-container {
