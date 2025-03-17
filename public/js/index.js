@@ -895,8 +895,8 @@ function createChart(mergedData) {
 
 //============== MUNICIPALIY CHART =================//
 
-document.getElementById("municipalityFilter").addEventListener("click", function () {
-    const tributaryName = document.getElementById("municipality__select").value;
+document.getElementById("forecastTributaryFilter").addEventListener("click", function () {
+    const tributaryName = document.getElementById("forecast_tributary_select").value;
 
     if (tributaryName === "-") {
         alert("Please select a tributary first.");
