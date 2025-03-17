@@ -527,42 +527,59 @@ fetchDataAndMergeAndUpdateDOM();
 
 //============== UPDATE DISPLAY IN RAINFALL & LOCATION =================//
 
-// Function to update the UI with the latest data based on the timestamp
-function updateUIWithLatestData(mergedData) {
-    // Ensure that each entry in mergedData has the parsedTimestamp property properly set
-    mergedData.forEach(entry => {
-        // Check if the entry has a timestamp field and it's not already a Date object
-        if (entry.timestamp && !(entry.timestamp instanceof Date)) {
-            // Convert the timestamp to a JavaScript Date object using TimestampConverter
-            if (typeof entry.timestamp.toDate === 'function') {
-                // Firestore timestamp
-                entry.parsedTimestamp = TimestampConverter.convertFirestoreTimestamp(entry.timestamp);
-            } else {
-                // Realtime Database timestamp
-                entry.parsedTimestamp = TimestampConverter.convertRTDBTimestamp(entry.timestamp);
-            }
-        }
-    });
+// Function to fetch the latest data from MySQL via getVolume.php
+// async function fetchLatestData() {
+//     const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(tributary)}`;
 
-    // Find the latest data based on the timestamp
-    const latestData = mergedData.reduce((prev, current) => {
-        return (prev.parsedTimestamp > current.parsedTimestamp) ? prev : current;
-    });
+//     try {
+//         const response = await fetch(url);
+//         const data = await response.json();
 
-    // Update the UI elements with the latest data
-    const rainfallResultText = document.getElementById('rainfallResultText');
-    const locationResultText = document.getElementById('locationResultText');
+//         console.log("Fetched Data:", data); // Debugging line
 
-    if (rainfallResultText && locationResultText) {
-        rainfallResultText.textContent = `${latestData.rainfallValue} mm`;
-        locationResultText.textContent = `${latestData.locationName}`;
-    } else {
-        // console.log("One or both of the HTML elements not found.");
-    }
-}
+//         if (!data || data.error) {
+//             console.error("No valid latest data found:", data.error);
+//             return;
+//         }
 
-// Call the fetchDataAndMergeAndUpdateDOM function initially
-fetchDataAndMergeAndUpdateDOM();
+//         updateUIWithLatestData(data);
+//     } catch (error) {
+//         console.error("Error fetching latest data:", error);
+//     }
+// }
+
+
+// // Function to update the UI with the latest data
+// function updateUIWithLatestData(data) {
+//     // Assuming 'data' is an array of objects sorted by timestamp
+//     const latestData = data[data.length - 1]; // Get the latest entry
+
+//     if (!latestData) {
+//         console.error("No valid latest data found.");
+//         return;
+//     }
+
+//     // Update the UI elements
+//     const rainfallResultText = document.getElementById('rainfallResultText');
+//     const locationResultText = document.getElementById('locationResultText');
+
+//     if (rainfallResultText && locationResultText) {
+//         rainfallResultText.textContent = `${latestData.volume} mm`;
+//         locationResultText.textContent = latestData.tributary;
+//     } else {
+//         console.warn("One or both of the HTML elements not found.");
+//     }
+// }
+
+// // Call fetchLatestData() at regular intervals (e.g., every 5 seconds)
+// setInterval(fetchLatestData, 5000);
+
+// // Initial call to load data when the page loads
+// fetchLatestData();
+
+
+// // Call the fetchDataAndMergeAndUpdateDOM function initially
+// fetchDataAndMergeAndUpdateDOM();
 
 // // // Call the fetchDataAndMergeAndUpdateDOM function after initializing Flatpickr
 setInterval(fetchDataAndMergeAndUpdateDOM, 60000); // Update every 1 minute (adjust as needed)
@@ -904,7 +921,67 @@ document.getElementById("forecastTributaryFilter").addEventListener("click", fun
     }
 
     fetchRainData(tributaryName);
+    fetchForecasting(tributaryName);
+    latestDataFetching(tributaryName)
+    
+});
 
+async function latestDataFetching(tributaryName) {
+
+    async function fetchLatestData() {
+        const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(tributaryName)}`;
+    
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+    
+            console.log("Fetched Data:", data); // Debugging line
+    
+            if (!data || data.error) {
+                console.error("No valid latest data found:", data.error);
+                return;
+            }
+    
+            updateUIWithLatestData(data);
+        } catch (error) {
+            console.error("Error fetching latest data:", error);
+        }
+    }
+    
+    
+    // Function to update the UI with the latest data
+    function updateUIWithLatestData(data) {
+        if (!data || typeof data.volume === "undefined") {
+            console.error("No valid latest data found.");
+            return;
+        }
+    
+        // Update the UI elements
+        const rainfallResultText = document.getElementById('rainfallResultText');
+        const locationResultText = document.getElementById('locationResultText');
+    
+        if (rainfallResultText) {
+            rainfallResultText.textContent = `${data.volume} mm`;
+        } else {
+            console.warn("Element 'rainfallResultText' not found.");
+        }
+    
+        if (locationResultText) {
+            locationResultText.textContent = tributaryName || "Unknown Tributary";
+        } else {
+            console.warn("Element 'locationResultText' not found.");
+        }
+    }
+    
+    // Call fetchLatestData() at regular intervals (e.g., every 5 seconds)
+    // setInterval(fetchLatestData, 5000);
+    
+    // Initial call to load data when the page loads
+    fetchLatestData();
+}
+
+
+async function fetchForecasting(tributaryName) {
     fetch("http://localhost:5000/api/get_rain_data", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -936,10 +1013,12 @@ document.getElementById("forecastTributaryFilter").addEventListener("click", fun
         }
     })
     .catch(error => console.error("Error:", error));
-});
+}
+
+
 
 async function fetchRainData(tributaryName) {
-    let url = `/project-gis/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
+    let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
 
     try {
         const response = await fetch(url);
