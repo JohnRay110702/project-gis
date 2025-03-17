@@ -256,6 +256,7 @@ main{
   /* flex: 1; */
   /* margin-left: 10px; */
   padding-left: 30px;
+
 }
 
 .rightContent-container {
@@ -267,7 +268,7 @@ main{
 }
 
 main aside{
-  display: flex;
+  display: absolute;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
@@ -292,7 +293,7 @@ main aside .sidebar div{
 }
 
 #userDropdown {
-  display: flex;
+  display: absolute;
   align-items: center;
   gap: .8rem;
   height: 6rem;
@@ -407,6 +408,11 @@ main aside .sidebar-link.active:hover span{
   margin-top: 1rem;
   border-radius: var(--card-border-raidus);
   padding:0;
+}
+
+.tributary-forecast-section .row {
+  max-width: 300px;
+  margin: 0 auto;
 }
 
 .chart-container {
@@ -795,8 +801,8 @@ iframe {
 }
 
 #locationResultText{
-  font-size: 15px;
-  margin-top: 5px;
+  font-size: 20px;
+  margin-top: 40px;
   width: 150px;
 }
 
