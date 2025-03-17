@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchForecastData(periods) {
-    const tributaryName = document.getElementById("municipality__select").value.trim();
+    const tributaryName = document.getElementById("forecast_tributary_select").value.trim();
 
     if (!tributaryName || tributaryName === "-") {
         alert("⚠️ Please select a tributary.");
