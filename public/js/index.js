@@ -912,8 +912,8 @@ function createChart(mergedData) {
 
 //============== MUNICIPALIY CHART =================//
 
-document.getElementById("forecastTributaryFilter").addEventListener("click", function () {
-    const tributaryName = document.getElementById("forecast_tributary_select").value;
+document.getElementById("municipalityFilter").addEventListener("click", function () {
+    const tributaryName = document.getElementById("municipality__select").value;
 
     if (tributaryName === "-") {
         alert("Please select a tributary first.");
@@ -921,15 +921,27 @@ document.getElementById("forecastTributaryFilter").addEventListener("click", fun
     }
 
     fetchRainData(tributaryName);
-    fetchForecasting(tributaryName);
-    latestDataFetching(tributaryName)
     
 });
 
-async function latestDataFetching(tributaryName) {
+
+document.getElementById("forecastButton").addEventListener("click", function () {
+    const forecastTributary = document.getElementById("forecast_tributary_select").value;
+
+    if (forecastTributary === "-") {
+        alert("Please select a tributary first.");
+        return;
+    }
+
+    fetchForecasting(forecastTributary);
+    latestDataFetching(forecastTributary);
+    
+});
+
+async function latestDataFetching(forecastTributary) {
 
     async function fetchLatestData() {
-        const url = `/project-gis/public/php/getVolume.php?tributary=${encodeURIComponent(tributaryName)}`;
+        const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(forecastTributary)}`;
     
         try {
             const response = await fetch(url);
@@ -967,7 +979,7 @@ async function latestDataFetching(tributaryName) {
         }
     
         if (locationResultText) {
-            locationResultText.textContent = tributaryName || "Unknown Tributary";
+            locationResultText.textContent = forecastTributary || "Unknown Tributary";
         } else {
             console.warn("Element 'locationResultText' not found.");
         }
@@ -1018,7 +1030,7 @@ async function fetchForecasting(tributaryName) {
 
 
 async function fetchRainData(tributaryName) {
-    let url = `/project-gis/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
+    let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
 
     try {
         const response = await fetch(url);
