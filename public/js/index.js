@@ -445,7 +445,9 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 
 //============== FETCH AND MERGE DATA =================//
 
-// Define the fetchDataAndMergeAndUpdateDOM function
+
+// // Define the fetchDataAndMergeAndUpdateDOM function
+
 // async function fetchDataAndMergeAndUpdateDOM() {
 //     try {
 //        // Function to fetch data from Firestore for rainfall collection
@@ -485,7 +487,6 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 //                 throw error;
 //             }
 //         }
-
 
 //         // Function to fetch data from Realtime Database and convert to array for a specific rain gauge
 //         async function fetchDataFromRealtimeDatabaseToArray(rainGaugeName) {
@@ -555,8 +556,6 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 // }
 
 
-// Call the fetchDataAndMergeAndUpdateDOM function after initializing Flatpickr
-// fetchDataAndMergeAndUpdateDOM();
 
 
 
@@ -598,9 +597,6 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 
 // // Call the fetchDataAndMergeAndUpdateDOM function initially
 // fetchDataAndMergeAndUpdateDOM();
-
-// // // // Call the fetchDataAndMergeAndUpdateDOM function after initializing Flatpickr
-// setInterval(fetchDataAndMergeAndUpdateDOM, 60000); // Update every 1 minute (adjust as needed)
 
 
 // //============== CHART DISPLAY IN DASHBOARD =================//
