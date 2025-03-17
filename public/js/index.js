@@ -959,7 +959,9 @@ document.getElementById("forecastButton").addEventListener("click", function () 
 async function latestDataFetching(forecastTributary) {
 
     async function fetchLatestData() {
-        const url = '/public/php/getVolume.php?tributary=${encodeURIComponent(forecastTributary)}';
+
+        const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(forecastTributary)}`;
+
     
         try {
             const response = await fetch(url);
@@ -1023,6 +1025,7 @@ async function fetchForecasting(tributaryName) {
         if (data.length === 0) {
             // alert("No historical data found for this tributary.");
             showHistoricalDataAlert(tributaryName);
+
             return;
         }
 
@@ -1049,7 +1052,8 @@ async function fetchForecasting(tributaryName) {
 
 
 async function fetchRainData(tributaryName) {
-    let url = '/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}';
+
+    let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
 
     try {
         const response = await fetch(url);
@@ -1081,8 +1085,11 @@ function closePopup() {
     document.getElementById("historicalDataAlertPopup").style.display = "none";
 }
 
+
+
 function plotRainChart(rainData, tributaryName) {
     if (!rainData || rainData.length === 0) {
+        // alert(`No rain data available for ${tributaryName}.`);
         showRainAlert(tributaryName);
         return;
     }
