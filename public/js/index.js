@@ -36,6 +36,41 @@ window.addEventListener('load', () => {
     showDashboardContent();
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const menuBtn = document.getElementById("menu-btn");
+    const closeBtn = document.getElementById("close-btn");
+    const sidebar = document.getElementById("sidebar");
+  
+    if (menuBtn && closeBtn && sidebar) {
+      // Open sidebar when menu button is clicked
+      menuBtn.addEventListener("click", () => {
+        sidebar.classList.add("active");
+        menuBtn.style.display = "none";
+        closeBtn.style.display = "block"; // Show close button
+      });
+  
+      // Close sidebar when close button is clicked
+      closeBtn.addEventListener("click", () => {
+        sidebar.classList.remove("active");
+        menuBtn.style.display = "block"; // Show menu button again
+        // closeBtn.style.display = "none";
+      });
+  
+      // Close sidebar when clicking outside of it
+      document.addEventListener("click", (event) => {
+        if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+          sidebar.classList.remove("active");
+          menuBtn.style.display = "block"; // Show menu button again
+          closeBtn.style.display = "none";
+        }
+      });
+    } else {
+      console.error("Sidebar or buttons not found!");
+    }
+  });
+  
+
+
 // Additional JavaScript code...
 const sidebarLinks = document.querySelectorAll('.sidebar-link');
 const contentSections = document.querySelectorAll('.content-section');
@@ -410,7 +445,9 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 
 //============== FETCH AND MERGE DATA =================//
 
+
 // // Define the fetchDataAndMergeAndUpdateDOM function
+
 // async function fetchDataAndMergeAndUpdateDOM() {
 //     try {
 //        // Function to fetch data from Firestore for rainfall collection
@@ -450,7 +487,6 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 //                 throw error;
 //             }
 //         }
-
 
 //         // Function to fetch data from Realtime Database and convert to array for a specific rain gauge
 //         async function fetchDataFromRealtimeDatabaseToArray(rainGaugeName) {
@@ -520,69 +556,47 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 // }
 
 
-// // Call the fetchDataAndMergeAndUpdateDOM function after initializing Flatpickr
-// fetchDataAndMergeAndUpdateDOM();
 
 
 
-//============== UPDATE DISPLAY IN RAINFALL & LOCATION =================//
+// //============== UPDATE DISPLAY IN RAINFALL & LOCATION =================//
 
-// Function to fetch the latest data from MySQL via getVolume.php
-// async function fetchLatestData() {
-//     const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(tributary)}`;
-
-//     try {
-//         const response = await fetch(url);
-//         const data = await response.json();
-
-//         console.log("Fetched Data:", data); // Debugging line
-
-//         if (!data || data.error) {
-//             console.error("No valid latest data found:", data.error);
-//             return;
+// // Function to update the UI with the latest data based on the timestamp
+// function updateUIWithLatestData(mergedData) {
+//     // Ensure that each entry in mergedData has the parsedTimestamp property properly set
+//     mergedData.forEach(entry => {
+//         // Check if the entry has a timestamp field and it's not already a Date object
+//         if (entry.timestamp && !(entry.timestamp instanceof Date)) {
+//             // Convert the timestamp to a JavaScript Date object using TimestampConverter
+//             if (typeof entry.timestamp.toDate === 'function') {
+//                 // Firestore timestamp
+//                 entry.parsedTimestamp = TimestampConverter.convertFirestoreTimestamp(entry.timestamp);
+//             } else {
+//                 // Realtime Database timestamp
+//                 entry.parsedTimestamp = TimestampConverter.convertRTDBTimestamp(entry.timestamp);
+//             }
 //         }
+//     });
 
-//         updateUIWithLatestData(data);
-//     } catch (error) {
-//         console.error("Error fetching latest data:", error);
-//     }
-// }
+//     // Find the latest data based on the timestamp
+//     const latestData = mergedData.reduce((prev, current) => {
+//         return (prev.parsedTimestamp > current.parsedTimestamp) ? prev : current;
+//     });
 
-
-// // Function to update the UI with the latest data
-// function updateUIWithLatestData(data) {
-//     // Assuming 'data' is an array of objects sorted by timestamp
-//     const latestData = data[data.length - 1]; // Get the latest entry
-
-//     if (!latestData) {
-//         console.error("No valid latest data found.");
-//         return;
-//     }
-
-//     // Update the UI elements
+//     // Update the UI elements with the latest data
 //     const rainfallResultText = document.getElementById('rainfallResultText');
 //     const locationResultText = document.getElementById('locationResultText');
 
 //     if (rainfallResultText && locationResultText) {
-//         rainfallResultText.textContent = `${latestData.volume} mm`;
-//         locationResultText.textContent = latestData.tributary;
+//         rainfallResultText.textContent = `${latestData.rainfallValue} mm`;
+//         locationResultText.textContent = `${latestData.locationName}`;
 //     } else {
-//         console.warn("One or both of the HTML elements not found.");
+//         // console.log("One or both of the HTML elements not found.");
 //     }
 // }
 
-// // Call fetchLatestData() at regular intervals (e.g., every 5 seconds)
-// setInterval(fetchLatestData, 5000);
-
-// // Initial call to load data when the page loads
-// fetchLatestData();
-
-
 // // Call the fetchDataAndMergeAndUpdateDOM function initially
 // fetchDataAndMergeAndUpdateDOM();
-
-// // // Call the fetchDataAndMergeAndUpdateDOM function after initializing Flatpickr
-// setInterval(fetchDataAndMergeAndUpdateDOM, 60000); // Update every 1 minute (adjust as needed)
 
 
 // //============== CHART DISPLAY IN DASHBOARD =================//
@@ -941,7 +955,9 @@ document.getElementById("forecastButton").addEventListener("click", function () 
 async function latestDataFetching(forecastTributary) {
 
     async function fetchLatestData() {
+
         const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(forecastTributary)}`;
+
     
         try {
             const response = await fetch(url);
@@ -973,9 +989,9 @@ async function latestDataFetching(forecastTributary) {
         const locationResultText = document.getElementById('locationResultText');
     
         if (rainfallResultText) {
-            rainfallResultText.textContent = `${data.volume} mm`;
+            rainfallResultText.textContent = data.volume + " mm";
         } else {
-            console.warn("Element 'rainfallResultText' not found.");
+            console.log("Element 'rainfallResultText' not found.");
         }
     
         if (locationResultText) {
@@ -1004,7 +1020,8 @@ async function fetchForecasting(tributaryName) {
         console.log("Received Rain Data:", data);
         if (data.length === 0) {
             // alert("No historical data found for this tributary.");
-            showHistoricalDataAlert(tributaryName)
+            showHistoricalDataAlert(tributaryName);
+
             return;
         }
 
@@ -1031,6 +1048,7 @@ async function fetchForecasting(tributaryName) {
 
 
 async function fetchRainData(tributaryName) {
+
     let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
 
     try {

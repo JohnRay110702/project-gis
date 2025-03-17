@@ -147,6 +147,10 @@ nav{
   padding: 1rem 0;
 }
 
+.navbar {
+  padding: 0 !important;
+}
+
 nav .container{
   display: flex;
   justify-content: space-between;
@@ -238,6 +242,9 @@ main{
   width: 96%;
   /* max-height: 100%; */
   margin: 1rem auto 4rem;
+  margin-left: 0;
+  margin-bottom: 0;
+  margin-top: 0;
 
 }
 
@@ -289,21 +296,27 @@ main{
 }
 
 .mainContent-container {
-  flex: 1;
+  /* flex: 1; */
   /* margin-left: 10px; */
-  /* padding-left: 100px; */
-  margin-left: 100px;
+  padding-left: 30px;
+
 }
 
 .rightContent-container {
   width: 15rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-right: 0;
+  margin-right: 0;
 }
 
 main aside{
   display: absolute;
   flex-direction: column;
   justify-content: space-between;
-  height: 79vh;
+  height: 100%;
+
+  background-color: #000080;
 }
 
 /*will display only on mobile and tablets*/
@@ -317,7 +330,7 @@ main aside .sidebar div{
   align-items: center;
   gap: .8rem;
   height: 6rem;
-  color: var(--color-gray-light);
+  color: var(--color-white);
   position: relative;
   text-decoration: none;
 }
@@ -327,13 +340,13 @@ main aside .sidebar div{
   align-items: center;
   gap: .8rem;
   height: 6rem;
-  color: var(--color-gray-light);
+  color: var(--color-white);
   position: relative;
   text-decoration: none;
 
   font-weight: 500;
   font-size: 20px;
-  background-color: var(--color-white);
+  background-color: #000080;
 }
 #userDropdown:hover {
   color: #7fb8e0;
@@ -348,9 +361,9 @@ main aside .sidebar div span{
 
 main aside .sidebar a.active, 
 main aside .sidebar div.active{
-  border-radius: var(--border-raidus-1);
-  background: var(--color-white);
-  color:#7fb8e0;
+  /* border-radius: var(--border-raidus-1); */
+  background: #d8d8d8;
+  color:#000080;
 }
 
 main aside .sidebar a.active::before,
@@ -359,7 +372,7 @@ main aside .sidebar div.active::before {
   width: 6px;
   height: 100%;
   position: absolute;
-  background:#7fb8e0;
+  background:#ffff;
 }
 
 main aside .sidebar a:hover,
@@ -379,6 +392,11 @@ main aside .sidebar-link.active:hover span{
   font-size: 20px;
 } */
 /*================= DASHBOARD ==================*/
+.dashboardContent{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .dashboardContent .calendar {
   display: flex;
   flex-direction: column;
@@ -509,6 +527,10 @@ canvas {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.dropdown-content span {
+  color: #000080;
+}
+
 .logout-bttn {
   display: flex;
   align-items: flex-start;
@@ -527,6 +549,7 @@ canvas {
   margin: 0;
   font-size: 16px;
   font-weight: 500;
+  color: #000080;
 }
 
 .dropdown-content a {
@@ -544,6 +567,11 @@ canvas {
 } */
 
 /*================= MAP ==================*/
+.mapContent {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 h2{
   text-align: center; 
   font-size: 32px; /* Increase font size */
@@ -562,11 +590,60 @@ iframe {
 
 
 /*================= MUNICIPALITY ==================*/
+.municipalitiesContent {
+  padding-top: 2rem;
+  padding-bottom: 2rem  ;
+}
 
+.rainAlertPopup, .historicalDataAlertPopup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensures it appears above other content */
+}
 
+.rainAlertPopup-content, .historicalDataAlert-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+.rainAlertPopup-content p,
+.historicalDataAlert-content p {
+  font-size: 20px;
+}
+
+.rainAlertPopup button,
+.historicalDataAlertPopup button {
+  margin-top: 10px;
+  padding: 5px 20px;
+  font-size: 20px;
+  border: none;
+  background: #007BFF;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.rainAlertPopup button:hover,
+.historicalDataAlertPopup button:hover {
+  background: #0056b3;
+}
 
 /*================= SETTINGS ==================*/
+.settingsContent {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .settings_Content h1{
   margin-left: 10%;
   margin-top: 2rem;
@@ -596,9 +673,12 @@ iframe {
   width: 100%;
   height: 35%;
   position: relative;
-  display: flex;
+  /* display: flex; */
   flex-grow: 1;
   flex-shrink: 1;
+
+  padding-top: 3%;
+  padding-bottom: 2rem;
 }
 .content {
   position: absolute;
@@ -672,6 +752,7 @@ iframe {
   width: 100%;
   flex-grow: 1;
   flex-shrink: 1;
+  margin-top: 2rem;
 }
 
 #pagdaloy-text {
@@ -781,7 +862,6 @@ iframe {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding-bottom: 3px;
 }
 
 .listContent{
@@ -823,7 +903,7 @@ iframe {
 }
 
 .footer-container {
-  margin-top: auto;
+  margin-top: 0;
   width: 100%;
 }
 
@@ -834,6 +914,7 @@ iframe {
   background-color: #f8f9fa;
   padding: 20px;
   box-sizing: border-box;
+  margin-top: 0;
 }
 
 #dataList {
