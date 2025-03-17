@@ -300,7 +300,7 @@
         <div class="forecast-section">
           <div class="chart-container">
               <h2>Forecast Data</h2>
-              <canvas id="forecastChart"></canvas>\
+              <canvas id="forecastChart"></canvas>
           </div>
         </div>
       </div>
@@ -382,6 +382,22 @@
             <canvas id="dynamicChart"></canvas>
           </div>
         </div>
+
+        <div id="rainAlertPopup" class="rainAlertPopup">
+          <div class="rainAlertPopup-content">
+              <p>No rain data available for <span id="rainTributaryName"></span>.</p>
+              <button onclick="closePopup()">OK</button>
+          </div>
+        </div>
+
+        <div id="historicalDataAlertPopup" class="historicalDataAlertPopup">
+          <div class="historicalDataAlert-content">
+              <p>No rain data available for <span id="historicalTributaryName"></span>.</p>
+              <button onclick="closePopup()">OK</button>
+          </div>
+        </div>
+
+        
     
 
         <!-- Content for Setting -->
