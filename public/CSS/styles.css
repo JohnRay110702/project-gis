@@ -232,8 +232,8 @@ nav .theme-btn .active{
 
 main{
   flex: 1;
-  display: flex;
-  /* grid-template-columns: 18rem auto 15rem; */
+  display: grid;
+  grid-template-columns: 18rem auto 15rem;
   gap: 2rem;
   width: 96%;
   /* max-height: 100%; */
@@ -246,9 +246,9 @@ main{
 }
 
 .mainContent-container {
-  flex: 1;
+  /* flex: 1; */
   /* margin-left: 10px; */
-  padding-left: 100px;
+  padding-left: 30px;
 }
 
 .rightContent-container {
@@ -514,8 +514,45 @@ iframe {
 
 /*================= MUNICIPALITY ==================*/
 
+.rainAlertPopup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensures it appears above other content */
+}
 
+.rainAlertPopup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+.rainAlertPopup-content p {
+  font-size: 20px;
+}
+
+.rainAlertPopup button {
+  margin-top: 10px;
+  padding: 5px 20px;
+  font-size: 20px;
+  border: none;
+  background: #007BFF;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.rainAlertPopup button:hover {
+  background: #0056b3;
+}
 
 /*================= SETTINGS ==================*/
 .settings_Content h1{
@@ -547,7 +584,7 @@ iframe {
   width: 100%;
   height: 35%;
   position: relative;
-  display: flex;
+  /* display: flex; */
   flex-grow: 1;
   flex-shrink: 1;
 }
@@ -609,6 +646,7 @@ iframe {
 /* home */
 .aboutContainer {
   flex: 1;
+  margin-left: 30px;
 }
 
 .home-main-container {

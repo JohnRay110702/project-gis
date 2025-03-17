@@ -220,61 +220,61 @@
       
       
       
-      <div class="mainContent-container">
+      <!-- <div class="mainContent-container"> -->
 
-      <!-- Content for DASHBOARD -->
+        <!-- Content for DASHBOARD -->
 
-  
-      <div id="dashboardContent" class="middle content-section dashboardContent">
-        <div class="calendar">
-          <input type="text" id="datePicker" name="date" placeholder="Select Date" class="custom-date-picker">
-        </div>
-
-        <div class="flex-container">
-          <div class="flex-box" id="rainfallResult">
-            <h1>Rainfall</h1>
-            <p id="rainfallResultText"></p>
-            <img src="img_src\rain-water-svgrepo-com.png">
+    
+        <div id="dashboardContent" class="middle content-section dashboardContent">
+          <div class="calendar">
+            <input type="text" id="datePicker" name="date" placeholder="Select Date" class="custom-date-picker">
           </div>
 
-          <div class="flex-box" id="locationResult">
-            <h1>Location</h1>
-            <p id="locationResultText"></p>
-            <img src="img_src\planet-earth-global-svgrepo-com.png">
+          <div class="flex-container">
+            <div class="flex-box" id="rainfallResult">
+              <h1>Rainfall</h1>
+              <p id="rainfallResultText"></p>
+              <img src="img_src\rain-water-svgrepo-com.png">
+            </div>
+
+            <div class="flex-box" id="locationResult">
+              <h1>Location</h1>
+              <p id="locationResultText"></p>
+              <img src="img_src\planet-earth-global-svgrepo-com.png">
+            </div>
+          </div>
+
+          <div class="forecast-section">
+            <div class="chart-container">
+                <h2>Forecast Data</h2>
+                <canvas id="forecastChart"></canvas>\
+            </div>
+            <div class="input-container">
+              <label for="forecastPeriod">Enter Forecast Period (days):</label>
+              <input type="number" id="forecastPeriod" min="1" value="30">
+              <button id="forecastButton">Generate Forecast</button>
+            </div>
           </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="js/script.js"></script> <!-- External JavaScript -->
+          
+          
 
-        <div class="forecast-section">
-          <div class="chart-container">
-              <h2>Forecast Data</h2>
-              <canvas id="forecastChart"></canvas>\
-          </div>
-          <div class="input-container">
-            <label for="forecastPeriod">Enter Forecast Period (days):</label>
-            <input type="number" id="forecastPeriod" min="1" value="30">
-            <button id="forecastButton">Generate Forecast</button>
+          
+
+    
+        <!-- Content for MAP -->
+        <div id="mapContent" class="middle content-section mapContent">
+          <h2>PROJECT GIS</h2>
+          <div class="frameContainer">
+            <iframe src="./php/index.php" class="iframe"></iframe>
+          </script>
           </div>
         </div>
-      </div>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script src="js/script.js"></script> <!-- External JavaScript -->
-        
-        
-
-        
-
-  
-      <!-- Content for MAP -->
-      <div id="mapContent" class="middle content-section mapContent">
-        <h2>PROJECT GIS</h2>
-        <div class="frameContainer">
-          <iframe src="./php/index.php" class="iframe"></iframe>
-        </script>
-        </div>
-      </div>
-  
-  
-      <!--Content for MUNICIPALITIES-->
+    
+    
+        <!--Content for MUNICIPALITIES-->
       
     
         <!--Content for MUNICIPALITIES-->
@@ -332,6 +332,14 @@
           </div>
           <div class="row">
             <canvas id="dynamicChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Popup Container -->
+        <div id="rainAlertPopup" class="rainAlertPopup">
+          <div class="rainAlertPopup-content">
+              <p>No rain data available for <span id="popupTributaryName"></span>.</p>
+              <button onclick="closePopup()">OK</button>
           </div>
         </div>
     
@@ -763,7 +771,7 @@
             </div>
           
         </div>
-      </div>
+      <!-- </div> -->
       
   
      <div class="rightContent-container">

@@ -36,6 +36,41 @@ window.addEventListener('load', () => {
     showDashboardContent();
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const menuBtn = document.getElementById("menu-btn");
+    const closeBtn = document.getElementById("close-btn");
+    const sidebar = document.getElementById("sidebar");
+  
+    if (menuBtn && closeBtn && sidebar) {
+      // Open sidebar when menu button is clicked
+      menuBtn.addEventListener("click", () => {
+        sidebar.classList.add("active");
+        menuBtn.style.display = "none";
+        closeBtn.style.display = "block"; // Show close button
+      });
+  
+      // Close sidebar when close button is clicked
+      closeBtn.addEventListener("click", () => {
+        sidebar.classList.remove("active");
+        menuBtn.style.display = "block"; // Show menu button again
+        // closeBtn.style.display = "none";
+      });
+  
+      // Close sidebar when clicking outside of it
+      document.addEventListener("click", (event) => {
+        if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+          sidebar.classList.remove("active");
+          menuBtn.style.display = "block"; // Show menu button again
+          closeBtn.style.display = "none";
+        }
+      });
+    } else {
+      console.error("Sidebar or buttons not found!");
+    }
+  });
+  
+
+
 // Additional JavaScript code...
 const sidebarLinks = document.querySelectorAll('.sidebar-link');
 const contentSections = document.querySelectorAll('.content-section');
@@ -939,7 +974,7 @@ document.getElementById("municipalityFilter").addEventListener("click", function
 });
 
 async function fetchRainData(tributaryName) {
-    let url = `/project-gis/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
+    let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
 
     try {
         const response = await fetch(url);
@@ -956,9 +991,19 @@ async function fetchRainData(tributaryName) {
     }
 }
 
+function showRainAlert(tributaryName) {
+    document.getElementById("popupTributaryName").textContent = tributaryName;
+    document.getElementById("rainAlertPopup").style.display = "flex";
+}
+
+function closePopup() {
+    document.getElementById("rainAlertPopup").style.display = "none";
+}
+
 function plotRainChart(rainData, tributaryName) {
     if (!rainData || rainData.length === 0) {
-        alert(`No rain data available for ${tributaryName}.`);
+        // alert(`No rain data available for ${tributaryName}.`);
+        showRainAlert(tributaryName);
         return;
     }
 
