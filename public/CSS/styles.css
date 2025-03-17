@@ -232,8 +232,8 @@ nav .theme-btn .active{
 
 main{
   flex: 1;
-  display: flex;
-  /* grid-template-columns: 18rem auto 15rem; */
+  display: grid;
+  grid-template-columns: 18rem auto 15rem;
   gap: 2rem;
   width: 96%;
   /* max-height: 100%; */
@@ -248,7 +248,8 @@ main{
 .mainContent-container {
   flex: 1;
   /* margin-left: 10px; */
-  padding-left: 100px;
+  /* padding-left: 100px; */
+  margin-left: 100px;
 }
 
 .rightContent-container {
@@ -256,7 +257,7 @@ main{
 }
 
 main aside{
-  display: flex;
+  display: absolute;
   flex-direction: column;
   justify-content: space-between;
   height: 79vh;
@@ -279,7 +280,7 @@ main aside .sidebar div{
 }
 
 #userDropdown {
-  display: flex;
+  display: absolute;
   align-items: center;
   gap: .8rem;
   height: 6rem;
@@ -609,6 +610,7 @@ iframe {
 /* home */
 .aboutContainer {
   flex: 1;
+  margin-left: 30px;
 }
 
 .home-main-container {
@@ -716,8 +718,8 @@ iframe {
 }
 
 #locationResultText{
-  font-size: 15px;
-  margin-top: 5px;
+  font-size: 20px;
+  margin-top: 40px;
   width: 150px;
 }
 
