@@ -246,7 +246,7 @@
 
                 <!-- Tributary Dropdown for Forecast Section -->
         <div class="tributary-forecast-section">
-          <h2>Select Tributary</h2>
+          <!-- <h2>Select Tributary</h2> -->
           <div class="row">
             <div class="col-10 mt-3">
               <select class="form-control m-0" name="forecast_tributary_select" id="forecast_tributary_select">
@@ -290,25 +290,17 @@
                 <option value="Wawa River">Wawa River</option>
               </select>
             </div>
-            <div class="col-2 mt-3">
-              <div class="d-flex flex-column justify-content-center align-items-center">
-                <button class="form-control btn btn-primary" id="forecastTributaryFilter">Filter</button>
-              </div>
-            </div>
           </div>
         </div>
-
-
-
+        <div class="input-container">
+          <label for="forecastPeriod">Enter Forecast Period (days):</label>
+          <input type="number" id="forecastPeriod" min="1" value="30">
+          <button id="forecastButton">Generate Forecast</button>
+        </div>
         <div class="forecast-section">
           <div class="chart-container">
               <h2>Forecast Data</h2>
               <canvas id="forecastChart"></canvas>\
-          </div>
-          <div class="input-container">
-            <label for="forecastPeriod">Enter Forecast Period (days):</label>
-            <input type="number" id="forecastPeriod" min="1" value="30">
-            <button id="forecastButton">Generate Forecast</button>
           </div>
         </div>
       </div>
@@ -391,7 +383,7 @@
           </div>
         </div>
     
-     -->
+
         <!-- Content for Setting -->
         <div id="settingsContent" class="middle content-section settings_Content ">
           <h1>Settings</h1>
