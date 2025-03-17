@@ -929,7 +929,7 @@ document.getElementById("municipalityFilter").addEventListener("click", function
 async function latestDataFetching(tributaryName) {
 
     async function fetchLatestData() {
-        const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(tributaryName)}`;
+        const url = `/project-gis/public/php/getVolume.php?tributary=${encodeURIComponent(tributaryName)}`;
     
         try {
             const response = await fetch(url);
@@ -1018,7 +1018,7 @@ async function fetchForecasting(tributaryName) {
 
 
 async function fetchRainData(tributaryName) {
-    let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
+    let url = `/project-gis/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
 
     try {
         const response = await fetch(url);
