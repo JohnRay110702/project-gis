@@ -227,12 +227,20 @@
             <input type="text" id="datePicker" name="date" placeholder="Select Date" class="custom-date-picker">
           </div>
 
-          <div class="flex-box" id="locationResult">
-            <h1>Tributary</h1>
-            <p id="locationResultText"></p>
-            <img src="img_src\planet-earth-global-svgrepo-com.png">
+          <div class="flex-container">
+            <div class="flex-box" id="rainfallResult">
+              <h1>Rainfall</h1>
+              <p id="rainfallResultText"></p>
+              <img src="img_src\rain-water-svgrepo-com.png">
+            </div>
+  
+            <div class="flex-box" id="locationResult">
+              <h1>Tributary</h1>
+              <p id="locationResultText"></p>
+              <img src="img_src\planet-earth-global-svgrepo-com.png">
+            </div>
           </div>
-        </div>
+        
 
                 <!-- Tributary Dropdown for Forecast Section -->
         <div class="tributary-forecast-section">
@@ -294,6 +302,7 @@
           </div>
 
         </div>
+      </div>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="js/script.js"></script> <!-- External JavaScript -->
           
@@ -376,7 +385,14 @@
         <!-- Popup Container -->
         <div id="rainAlertPopup" class="rainAlertPopup">
           <div class="rainAlertPopup-content">
-              <p>No rain data available for <span id="popupTributaryName"></span>.</p>
+              <p>No rain data available for <span id="rainTributaryName"></span>.</p>
+              <button onclick="closePopup()">OK</button>
+          </div>
+        </div>
+
+        <div id="historicalDataAlertPopup" class="historicalDataAlertPopup">
+          <div class="historicalDataAlert-content">
+              <p>No historical data found in <span id="historicalTributaryName"></span>.</p>
               <button onclick="closePopup()">OK</button>
           </div>
         </div>

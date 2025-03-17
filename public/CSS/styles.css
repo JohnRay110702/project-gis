@@ -552,7 +552,7 @@ iframe {
   padding-bottom: 2rem  ;
 }
 
-.rainAlertPopup {
+.rainAlertPopup, .historicalDataAlertPopup {
   display: none; /* Hidden by default */
   position: fixed;
   top: 0;
@@ -565,7 +565,7 @@ iframe {
   z-index: 1000; /* Ensures it appears above other content */
 }
 
-.rainAlertPopup-content {
+.rainAlertPopup-content, .historicalDataAlert-content {
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -573,11 +573,13 @@ iframe {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.rainAlertPopup-content p {
+.rainAlertPopup-content p,
+.historicalDataAlert-content p {
   font-size: 20px;
 }
 
-.rainAlertPopup button {
+.rainAlertPopup button,
+.historicalDataAlertPopup button {
   margin-top: 10px;
   padding: 5px 20px;
   font-size: 20px;
@@ -588,7 +590,8 @@ iframe {
   border-radius: 5px;
 }
 
-.rainAlertPopup button:hover {
+.rainAlertPopup button:hover,
+.historicalDataAlertPopup button:hover {
   background: #0056b3;
 }
 
