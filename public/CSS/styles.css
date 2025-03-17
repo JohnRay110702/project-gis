@@ -59,7 +59,6 @@ html, body {
 
 main {
   flex: 1;
-  margin-left: 0;
 }
 
 img{
@@ -261,6 +260,10 @@ main{
 
 .rightContent-container {
   width: 15rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-right: 0;
+  margin-right: 0;
 }
 
 main aside{
@@ -268,6 +271,8 @@ main aside{
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+
+  background-color: #000080;
 }
 
 /*will display only on mobile and tablets*/
@@ -281,7 +286,7 @@ main aside .sidebar div{
   align-items: center;
   gap: .8rem;
   height: 6rem;
-  color: var(--color-gray-light);
+  color: var(--color-white);
   position: relative;
   text-decoration: none;
 }
@@ -291,13 +296,13 @@ main aside .sidebar div{
   align-items: center;
   gap: .8rem;
   height: 6rem;
-  color: var(--color-gray-light);
+  color: var(--color-white);
   position: relative;
   text-decoration: none;
 
   font-weight: 500;
   font-size: 20px;
-  background-color: var(--color-white);
+  background-color: #000080;
 }
 #userDropdown:hover {
   color: #7fb8e0;
@@ -312,9 +317,9 @@ main aside .sidebar div span{
 
 main aside .sidebar a.active, 
 main aside .sidebar div.active{
-  border-radius: var(--border-raidus-1);
-  background: var(--color-white);
-  color:#7fb8e0;
+  /* border-radius: var(--border-raidus-1); */
+  background: #d8d8d8;
+  color:#000080;
 }
 
 main aside .sidebar a.active::before,
@@ -323,7 +328,7 @@ main aside .sidebar div.active::before {
   width: 6px;
   height: 100%;
   position: absolute;
-  background:#7fb8e0;
+  background:#ffff;
 }
 
 main aside .sidebar a:hover,
@@ -473,6 +478,10 @@ canvas {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.dropdown-content span {
+  color: #000080;
+}
+
 .logout-bttn {
   display: flex;
   align-items: flex-start;
@@ -491,6 +500,7 @@ canvas {
   margin: 0;
   font-size: 16px;
   font-weight: 500;
+  color: #000080;
 }
 
 .dropdown-content a {
@@ -800,7 +810,6 @@ iframe {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding-bottom: 3px;
 }
 
 .listContent{
