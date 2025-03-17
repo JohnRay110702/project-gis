@@ -59,6 +59,7 @@ html, body {
 
 main {
   flex: 1;
+  margin-left: 0;
 }
 
 img{
@@ -145,6 +146,10 @@ nav{
   width: 100%;
   background: var(--color-white);
   padding: 1rem 0;
+}
+
+.navbar {
+  padding: 0 !important;
 }
 
 nav .container{
@@ -238,6 +243,9 @@ main{
   width: 96%;
   /* max-height: 100%; */
   margin: 1rem auto 4rem;
+  margin-left: 0;
+  margin-bottom: 0;
+  margin-top: 0;
 
 }
 
@@ -259,7 +267,7 @@ main aside{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 79vh;
+  height: 100%;
 }
 
 /*will display only on mobile and tablets*/
@@ -335,6 +343,11 @@ main aside .sidebar-link.active:hover span{
   font-size: 20px;
 } */
 /*================= DASHBOARD ==================*/
+.dashboardContent{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .dashboardContent .calendar {
   display: flex;
   flex-direction: column;
@@ -495,6 +508,11 @@ canvas {
 } */
 
 /*================= MAP ==================*/
+.mapContent {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 h2{
   text-align: center; 
   font-size: 32px; /* Increase font size */
@@ -513,6 +531,10 @@ iframe {
 
 
 /*================= MUNICIPALITY ==================*/
+.municipalitiesContent {
+  padding-top: 2rem;
+  padding-bottom: 2rem  ;
+}
 
 .rainAlertPopup {
   display: none; /* Hidden by default */
@@ -555,6 +577,11 @@ iframe {
 }
 
 /*================= SETTINGS ==================*/
+.settingsContent {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .settings_Content h1{
   margin-left: 10%;
   margin-top: 2rem;
@@ -587,6 +614,9 @@ iframe {
   /* display: flex; */
   flex-grow: 1;
   flex-shrink: 1;
+
+  padding-top: 3%;
+  padding-bottom: 2rem;
 }
 .content {
   position: absolute;
@@ -660,6 +690,7 @@ iframe {
   width: 100%;
   flex-grow: 1;
   flex-shrink: 1;
+  margin-top: 2rem;
 }
 
 #pagdaloy-text {
@@ -811,7 +842,7 @@ iframe {
 }
 
 .footer-container {
-  margin-top: auto;
+  margin-top: 0;
   width: 100%;
 }
 
@@ -822,6 +853,7 @@ iframe {
   background-color: #f8f9fa;
   padding: 20px;
   box-sizing: border-box;
+  margin-top: 0;
 }
 
 #dataList {
