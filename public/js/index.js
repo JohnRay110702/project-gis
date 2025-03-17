@@ -410,118 +410,118 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 
 //============== FETCH AND MERGE DATA =================//
 
-// Define the fetchDataAndMergeAndUpdateDOM function
-async function fetchDataAndMergeAndUpdateDOM() {
-    try {
-       // Function to fetch data from Firestore for rainfall collection
-        async function fetchDataFromFirestore() {
-            try {
-                // Reference to the "rainfall" collection
-                const rainfallCollectionRef = collection(db, "rainfall");
-                // Get all documents in the "rainfall" collection
-                const querySnapshot = await getDocs(rainfallCollectionRef);
-                // Array to store fetched data
-                const data = [];
-                // Iterate through each document
-                querySnapshot.forEach((doc) => {
-                    // Extract data from each document
-                    const docData = doc.data();
-                    // Convert Firestore timestamp to JavaScript Date object
-                    const parsedTimestamp = TimestampConverter.convertFirestoreTimestamp(docData.timestamp);
-                    // Format timestamp to match the desired format
-                    const formattedTimestamp = parsedTimestamp.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true }) + " UTC+8";
-                    // Create a new object with the formatted timestamp
-                    const newData = {
-                        latitude: docData.latitude,
-                        locationName: docData.locationName,
-                        longitude: docData.longitude,
-                        parsedTimestamp: parsedTimestamp,
-                        rainfallValue: docData.rainfallValue,
-                        rssi: docData.rssi,
-                        timestamp: formattedTimestamp
-                    };
-                    // Push the new object to the data array
-                    data.push(newData);
-                });
-                // Return the fetched data
-                return data;
-            } catch (error) {
-                // console.error("Error fetching data from Firestore:", error);
-                throw error;
-            }
-        }
+// // Define the fetchDataAndMergeAndUpdateDOM function
+// async function fetchDataAndMergeAndUpdateDOM() {
+//     try {
+//        // Function to fetch data from Firestore for rainfall collection
+//         async function fetchDataFromFirestore() {
+//             try {
+//                 // Reference to the "rainfall" collection
+//                 const rainfallCollectionRef = collection(db, "rainfall");
+//                 // Get all documents in the "rainfall" collection
+//                 const querySnapshot = await getDocs(rainfallCollectionRef);
+//                 // Array to store fetched data
+//                 const data = [];
+//                 // Iterate through each document
+//                 querySnapshot.forEach((doc) => {
+//                     // Extract data from each document
+//                     const docData = doc.data();
+//                     // Convert Firestore timestamp to JavaScript Date object
+//                     const parsedTimestamp = TimestampConverter.convertFirestoreTimestamp(docData.timestamp);
+//                     // Format timestamp to match the desired format
+//                     const formattedTimestamp = parsedTimestamp.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true }) + " UTC+8";
+//                     // Create a new object with the formatted timestamp
+//                     const newData = {
+//                         latitude: docData.latitude,
+//                         locationName: docData.locationName,
+//                         longitude: docData.longitude,
+//                         parsedTimestamp: parsedTimestamp,
+//                         rainfallValue: docData.rainfallValue,
+//                         rssi: docData.rssi,
+//                         timestamp: formattedTimestamp
+//                     };
+//                     // Push the new object to the data array
+//                     data.push(newData);
+//                 });
+//                 // Return the fetched data
+//                 return data;
+//             } catch (error) {
+//                 // console.error("Error fetching data from Firestore:", error);
+//                 throw error;
+//             }
+//         }
 
 
-        // Function to fetch data from Realtime Database and convert to array for a specific rain gauge
-        async function fetchDataFromRealtimeDatabaseToArray(rainGaugeName) {
-            try {
-                // Reference to the data in the database for the specified rain gauge
-                const dataRef = ref(customDBVariable, rainGaugeName);
-                // Get the data
-                const snapshot = await get(dataRef);
-                // Check if data exists
-                if (snapshot.exists()) {
-                    const dataObj = snapshot.val();
-                    // Convert object to array of objects
-                    const dataArray = Object.values(dataObj);
-                    return dataArray;
-                } else {
-                    // console.log("No data available for " + rainGaugeName);
-                    return [];
-                }
-            } catch (error) {
-                // console.error('Error fetching data from Realtime Database:', error);
-                throw error;
-            }
-        }
+//         // Function to fetch data from Realtime Database and convert to array for a specific rain gauge
+//         async function fetchDataFromRealtimeDatabaseToArray(rainGaugeName) {
+//             try {
+//                 // Reference to the data in the database for the specified rain gauge
+//                 const dataRef = ref(customDBVariable, rainGaugeName);
+//                 // Get the data
+//                 const snapshot = await get(dataRef);
+//                 // Check if data exists
+//                 if (snapshot.exists()) {
+//                     const dataObj = snapshot.val();
+//                     // Convert object to array of objects
+//                     const dataArray = Object.values(dataObj);
+//                     return dataArray;
+//                 } else {
+//                     // console.log("No data available for " + rainGaugeName);
+//                     return [];
+//                 }
+//             } catch (error) {
+//                 // console.error('Error fetching data from Realtime Database:', error);
+//                 throw error;
+//             }
+//         }
 
-        // Merge function to combine data from Realtime Database and Firestore
-        async function mergeData() {
-            try {
-                // Fetch data from Realtime Database for all rain gauges
-                const rtdbDataArrays = await Promise.all([
-                    fetchDataFromRealtimeDatabaseToArray('Rain Gauge 1'),
-                    fetchDataFromRealtimeDatabaseToArray('Rain Gauge 2'),
-                    fetchDataFromRealtimeDatabaseToArray('Rain Gauge 3'),
-                    fetchDataFromRealtimeDatabaseToArray('Rain Gauge 4'),
-                ]);
+//         // Merge function to combine data from Realtime Database and Firestore
+//         async function mergeData() {
+//             try {
+//                 // Fetch data from Realtime Database for all rain gauges
+//                 const rtdbDataArrays = await Promise.all([
+//                     fetchDataFromRealtimeDatabaseToArray('Rain Gauge 1'),
+//                     fetchDataFromRealtimeDatabaseToArray('Rain Gauge 2'),
+//                     fetchDataFromRealtimeDatabaseToArray('Rain Gauge 3'),
+//                     fetchDataFromRealtimeDatabaseToArray('Rain Gauge 4'),
+//                 ]);
 
-                // Fetch data from Firestore
-                const firestoreDataArray = await fetchDataFromFirestore();
+//                 // Fetch data from Firestore
+//                 const firestoreDataArray = await fetchDataFromFirestore();
 
-                // Combine the arrays
-                const mergedData = [...firestoreDataArray];
+//                 // Combine the arrays
+//                 const mergedData = [...firestoreDataArray];
 
-                // Merge data from all rain gauges
-                rtdbDataArrays.forEach((dataArray) => {
-                    mergedData.push(...dataArray);
-                });
+//                 // Merge data from all rain gauges
+//                 rtdbDataArrays.forEach((dataArray) => {
+//                     mergedData.push(...dataArray);
+//                 });
 
-                return mergedData;
-            } catch (error) {
+//                 return mergedData;
+//             } catch (error) {
                 
-                throw error;
-            }
-        }
+//                 throw error;
+//             }
+//         }
         
-         const mergedData = await mergeData();
+//          const mergedData = await mergeData();
 
         
 
-        updateUIWithLatestData(mergedData);
-        createChart(mergedData);
-        updateRightContainer(mergedData);
-        MonitorRain();
-        refreshChart();
-        setTimeout(checkRainfallAndDisplayPopUp(mergedData), 1 * 60 * 1000);
-    } catch (error) {
-        // console.error("Error:", error);
-    }
-}
+//         updateUIWithLatestData(mergedData);
+//         createChart(mergedData);
+//         updateRightContainer(mergedData);
+//         MonitorRain();
+//         refreshChart();
+//         setTimeout(checkRainfallAndDisplayPopUp(mergedData), 1 * 60 * 1000);
+//     } catch (error) {
+//         // console.error("Error:", error);
+//     }
+// }
 
 
-// Call the fetchDataAndMergeAndUpdateDOM function after initializing Flatpickr
-fetchDataAndMergeAndUpdateDOM();
+// // Call the fetchDataAndMergeAndUpdateDOM function after initializing Flatpickr
+// fetchDataAndMergeAndUpdateDOM();
 
 
 
@@ -582,120 +582,120 @@ fetchDataAndMergeAndUpdateDOM();
 // fetchDataAndMergeAndUpdateDOM();
 
 // // // Call the fetchDataAndMergeAndUpdateDOM function after initializing Flatpickr
-setInterval(fetchDataAndMergeAndUpdateDOM, 60000); // Update every 1 minute (adjust as needed)
+// setInterval(fetchDataAndMergeAndUpdateDOM, 60000); // Update every 1 minute (adjust as needed)
 
 
 // //============== CHART DISPLAY IN DASHBOARD =================//
 // Function to create the chart using merged data
-function createChart(mergedData) {
-    var chartCanvas = document.getElementById('chart');
+// function createChart(mergedData) {
+//     var chartCanvas = document.getElementById('chart');
 
-    if (mergedData && window.Chart && chartCanvas) {
-        // Clear the canvas before creating the chart
-        var ctx = chartCanvas.getContext('2d');
-        ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+//     if (mergedData && window.Chart && chartCanvas) {
+//         // Clear the canvas before creating the chart
+//         var ctx = chartCanvas.getContext('2d');
+//         ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-        // Check if there's an existing chart instance
-        if (window.myChart) {
-            window.myChart.destroy();
-        }
+//         // Check if there's an existing chart instance
+//         if (window.myChart) {
+//             window.myChart.destroy();
+//         }
 
-        // Ensure that each entry in mergedData has the parsedTimestamp property properly set
-        mergedData.forEach(entry => {
-            // Check if the entry has a timestamp field and it's not already a Date object
-            if (entry.timestamp && !(entry.timestamp instanceof Date)) {
-                // Convert the timestamp to a JavaScript Date object using TimestampConverter
-                if (typeof entry.timestamp.toDate === 'function') {
-                    // Firestore timestamp
-                    entry.parsedTimestamp = TimestampConverter.convertFirestoreTimestamp(entry.timestamp);
-                } else {
-                    // Realtime Database timestamp
-                    entry.parsedTimestamp = TimestampConverter.convertRTDBTimestamp(entry.timestamp);
-                }
-            }
-        });
+//         // Ensure that each entry in mergedData has the parsedTimestamp property properly set
+//         mergedData.forEach(entry => {
+//             // Check if the entry has a timestamp field and it's not already a Date object
+//             if (entry.timestamp && !(entry.timestamp instanceof Date)) {
+//                 // Convert the timestamp to a JavaScript Date object using TimestampConverter
+//                 if (typeof entry.timestamp.toDate === 'function') {
+//                     // Firestore timestamp
+//                     entry.parsedTimestamp = TimestampConverter.convertFirestoreTimestamp(entry.timestamp);
+//                 } else {
+//                     // Realtime Database timestamp
+//                     entry.parsedTimestamp = TimestampConverter.convertRTDBTimestamp(entry.timestamp);
+//                 }
+//             }
+//         });
 
-        // Sort the merged data by parsedTimestamp in ascending order
-        mergedData.sort((a, b) => a.parsedTimestamp - b.parsedTimestamp);
-        // console.log('MergeData', mergedData)
+//         // Sort the merged data by parsedTimestamp in ascending order
+//         mergedData.sort((a, b) => a.parsedTimestamp - b.parsedTimestamp);
+//         // console.log('MergeData', mergedData)
 
-        // Initialize arrays to store timestamp labels and rainfall data
-        var labelsArray = [];
-        var rainfallDataArray = [];
-        var label = [];
-        var datestring = new Date()
-        // Process each entry in mergedData
-        mergedData.forEach(entry => {
-          if (entry.rainfallValue != "0" && entry.rainfallValue != 0) {
-            if ((formatDateString((entry.parsedTimestamp).toLocaleString())).includes(formatDateString(datestring))){
-            // Extract parsedTimestamp, locationName, and rainfallValue from each entry
-            var parsedTimestamp = entry.parsedTimestamp;
-            var locationName = entry.locationName;
-            var rainfallValue = entry.rainfallValue;
+//         // Initialize arrays to store timestamp labels and rainfall data
+//         var labelsArray = [];
+//         var rainfallDataArray = [];
+//         var label = [];
+//         var datestring = new Date()
+//         // Process each entry in mergedData
+//         mergedData.forEach(entry => {
+//           if (entry.rainfallValue != "0" && entry.rainfallValue != 0) {
+//             if ((formatDateString((entry.parsedTimestamp).toLocaleString())).includes(formatDateString(datestring))){
+//             // Extract parsedTimestamp, locationName, and rainfallValue from each entry
+//             var parsedTimestamp = entry.parsedTimestamp;
+//             var locationName = entry.locationName;
+//             var rainfallValue = entry.rainfallValue;
             
-            // Format parsedTimestamp to display in the chart (adjust this part as needed)
-            var formattedTimestamp = parsedTimestamp ? parsedTimestamp.toLocaleString() : 'Unknown';
+//             // Format parsedTimestamp to display in the chart (adjust this part as needed)
+//             var formattedTimestamp = parsedTimestamp ? parsedTimestamp.toLocaleString() : 'Unknown';
             
-            // Add timestamp label and rainfall data to respective arrays
-              labelsArray.push(`${entry.rainfallValue} mm\n${formattedTimestamp}\n${locationName}`);
-                label.push(`${formattedTimestamp}`);
-                rainfallDataArray.push(rainfallValue);
-            }
-          }
-        });
+//             // Add timestamp label and rainfall data to respective arrays
+//               labelsArray.push(`${entry.rainfallValue} mm\n${formattedTimestamp}\n${locationName}`);
+//                 label.push(`${formattedTimestamp}`);
+//                 rainfallDataArray.push(rainfallValue);
+//             }
+//           }
+//         });
 
 
-        var myChart = new Chart(chartCanvas, {
-          type: 'line',
-          data: {
-            labels: label,
-            datasets: [{
-              label: 'Rainfall Data',
-              data: rainfallDataArray,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(0, 0, 0, 1)',
-              borderWidth: 1,
-              fill: true,
-              tension: 0.1,
-            }]
-          },
-          options: {
-            plugins: {
-              tooltip: {
-                callbacks: {
-                  label: function (context) {
-                    const dataIndex = context.dataIndex;
-                    return 'Rainfall Data: ' + labelsArray[dataIndex];
-                  }
-                }
-              }
-            },
-            scales: {
-							x: {
-								display: true,
-								title: {
-									display: true,
-									text: 'Date and Time'
-								}
-							},
-							y: {
-								beginAtZero: true,
-								display: true,
-								title: {
-									display: true,
-									text: 'Rainfall (mm)'
-								}
-							}
-            }
-          }
-        });
+//         var myChart = new Chart(chartCanvas, {
+//           type: 'line',
+//           data: {
+//             labels: label,
+//             datasets: [{
+//               label: 'Rainfall Data',
+//               data: rainfallDataArray,
+//               backgroundColor: 'rgba(75, 192, 192, 0.2)',
+//               borderColor: 'rgba(0, 0, 0, 1)',
+//               borderWidth: 1,
+//               fill: true,
+//               tension: 0.1,
+//             }]
+//           },
+//           options: {
+//             plugins: {
+//               tooltip: {
+//                 callbacks: {
+//                   label: function (context) {
+//                     const dataIndex = context.dataIndex;
+//                     return 'Rainfall Data: ' + labelsArray[dataIndex];
+//                   }
+//                 }
+//               }
+//             },
+//             scales: {
+// 							x: {
+// 								display: true,
+// 								title: {
+// 									display: true,
+// 									text: 'Date and Time'
+// 								}
+// 							},
+// 							y: {
+// 								beginAtZero: true,
+// 								display: true,
+// 								title: {
+// 									display: true,
+// 									text: 'Rainfall (mm)'
+// 								}
+// 							}
+//             }
+//           }
+//         });
 
-        // Store the new chart instance
-        window.myChart = myChart;
+//         // Store the new chart instance
+//         window.myChart = myChart;
 
-        return myChart;
-    }
-}
+//         return myChart;
+//     }
+// }
 
 // //============== UPDATE RIGHT CONTENT DISPLAY =================//
 
