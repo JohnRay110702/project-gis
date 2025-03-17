@@ -941,7 +941,7 @@ document.getElementById("forecastButton").addEventListener("click", function () 
 async function latestDataFetching(forecastTributary) {
 
     async function fetchLatestData() {
-        const url = `/project-gis/public/php/getVolume.php?tributary=${encodeURIComponent(forecastTributary)}`;
+        const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(forecastTributary)}`;
     
         try {
             const response = await fetch(url);
@@ -1003,7 +1003,8 @@ async function fetchForecasting(tributaryName) {
     .then(data => {
         console.log("Received Rain Data:", data);
         if (data.length === 0) {
-            alert("No historical data found for this tributary.");
+            // alert("No historical data found for this tributary.");
+            showHistoricalDataAlert(tributaryName)
             return;
         }
 
@@ -1030,7 +1031,7 @@ async function fetchForecasting(tributaryName) {
 
 
 async function fetchRainData(tributaryName) {
-    let url = `/project-gis/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
+    let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
 
     try {
         const response = await fetch(url);
@@ -1047,9 +1048,27 @@ async function fetchRainData(tributaryName) {
     }
 }
 
+function showRainAlert(tributaryName) {
+    document.getElementById("rainTributaryName").textContent = tributaryName;
+    document.getElementById("rainAlertPopup").style.display = "flex";
+}
+
+function showHistoricalDataAlert(tributaryName){
+    document.getElementById("historicalTributaryName").textContent = tributaryName;
+    document.getElementById("historicalDataAlertPopup").style.display = "flex";
+}
+
+function closePopup() {
+    document.getElementById("rainAlertPopup").style.display = "none";
+    document.getElementById("historicalDataAlertPopup").style.display = "none";
+}
+
+
+
 function plotRainChart(rainData, tributaryName) {
     if (!rainData || rainData.length === 0) {
-        alert(`No rain data available for ${tributaryName}.`);
+        // alert(`No rain data available for ${tributaryName}.`);
+        showRainAlert(tributaryName);
         return;
     }
 
@@ -1703,7 +1722,7 @@ function formatDate(dateString, includeTime = false) {
 
 
 function fetchAllRainfallData() {
-    fetch('/project-gis/public/php/get_rainfall_monitoring.php')
+    fetch('/public/php/get_rainfall_monitoring.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error("Network response was not ok");
