@@ -445,7 +445,9 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 
 //============== FETCH AND MERGE DATA =================//
 
-// Define the fetchDataAndMergeAndUpdateDOM function
+
+// // Define the fetchDataAndMergeAndUpdateDOM function
+
 // async function fetchDataAndMergeAndUpdateDOM() {
 //     try {
 //        // Function to fetch data from Firestore for rainfall collection
@@ -485,7 +487,6 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 //                 throw error;
 //             }
 //         }
-
 
 //         // Function to fetch data from Realtime Database and convert to array for a specific rain gauge
 //         async function fetchDataFromRealtimeDatabaseToArray(rainGaugeName) {
@@ -555,8 +556,6 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 // }
 
 
-// Call the fetchDataAndMergeAndUpdateDOM function after initializing Flatpickr
-// fetchDataAndMergeAndUpdateDOM();
 
 
 
@@ -598,9 +597,6 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 
 // // Call the fetchDataAndMergeAndUpdateDOM function initially
 // fetchDataAndMergeAndUpdateDOM();
-
-// // // // Call the fetchDataAndMergeAndUpdateDOM function after initializing Flatpickr
-// setInterval(fetchDataAndMergeAndUpdateDOM, 60000); // Update every 1 minute (adjust as needed)
 
 
 // //============== CHART DISPLAY IN DASHBOARD =================//
@@ -959,7 +955,9 @@ document.getElementById("forecastButton").addEventListener("click", function () 
 async function latestDataFetching(forecastTributary) {
 
     async function fetchLatestData() {
-        const url = '/public/php/getVolume.php?tributary=${encodeURIComponent(forecastTributary)}';
+
+        const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(forecastTributary)}`;
+
     
         try {
             const response = await fetch(url);
@@ -1023,6 +1021,7 @@ async function fetchForecasting(tributaryName) {
         if (data.length === 0) {
             // alert("No historical data found for this tributary.");
             showHistoricalDataAlert(tributaryName);
+
             return;
         }
 
@@ -1049,7 +1048,8 @@ async function fetchForecasting(tributaryName) {
 
 
 async function fetchRainData(tributaryName) {
-    let url = '/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}';
+
+    let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
 
     try {
         const response = await fetch(url);
@@ -1081,8 +1081,11 @@ function closePopup() {
     document.getElementById("historicalDataAlertPopup").style.display = "none";
 }
 
+
+
 function plotRainChart(rainData, tributaryName) {
     if (!rainData || rainData.length === 0) {
+        // alert(`No rain data available for ${tributaryName}.`);
         showRainAlert(tributaryName);
         return;
     }
