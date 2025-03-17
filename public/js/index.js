@@ -605,115 +605,115 @@ const addRainfallData = async (locationName, latitude, longitude, rainfallValue,
 
 // //============== CHART DISPLAY IN DASHBOARD =================//
 // Function to create the chart using merged data
-// function createChart(mergedData) {
-//     var chartCanvas = document.getElementById('chart');
+function createChart(mergedData) {
+    var chartCanvas = document.getElementById('chart');
 
-//     if (mergedData && window.Chart && chartCanvas) {
-//         // Clear the canvas before creating the chart
-//         var ctx = chartCanvas.getContext('2d');
-//         ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+    if (mergedData && window.Chart && chartCanvas) {
+        // Clear the canvas before creating the chart
+        var ctx = chartCanvas.getContext('2d');
+        ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
 
-//         // Check if there's an existing chart instance
-//         if (window.myChart) {
-//             window.myChart.destroy();
-//         }
+        // Check if there's an existing chart instance
+        if (window.myChart) {
+            window.myChart.destroy();
+        }
 
-//         // Ensure that each entry in mergedData has the parsedTimestamp property properly set
-//         mergedData.forEach(entry => {
-//             // Check if the entry has a timestamp field and it's not already a Date object
-//             if (entry.timestamp && !(entry.timestamp instanceof Date)) {
-//                 // Convert the timestamp to a JavaScript Date object using TimestampConverter
-//                 if (typeof entry.timestamp.toDate === 'function') {
-//                     // Firestore timestamp
-//                     entry.parsedTimestamp = TimestampConverter.convertFirestoreTimestamp(entry.timestamp);
-//                 } else {
-//                     // Realtime Database timestamp
-//                     entry.parsedTimestamp = TimestampConverter.convertRTDBTimestamp(entry.timestamp);
-//                 }
-//             }
-//         });
+        // Ensure that each entry in mergedData has the parsedTimestamp property properly set
+        mergedData.forEach(entry => {
+            // Check if the entry has a timestamp field and it's not already a Date object
+            if (entry.timestamp && !(entry.timestamp instanceof Date)) {
+                // Convert the timestamp to a JavaScript Date object using TimestampConverter
+                if (typeof entry.timestamp.toDate === 'function') {
+                    // Firestore timestamp
+                    entry.parsedTimestamp = TimestampConverter.convertFirestoreTimestamp(entry.timestamp);
+                } else {
+                    // Realtime Database timestamp
+                    entry.parsedTimestamp = TimestampConverter.convertRTDBTimestamp(entry.timestamp);
+                }
+            }
+        });
 
-//         // Sort the merged data by parsedTimestamp in ascending order
-//         mergedData.sort((a, b) => a.parsedTimestamp - b.parsedTimestamp);
-//         // console.log('MergeData', mergedData)
+        // Sort the merged data by parsedTimestamp in ascending order
+        mergedData.sort((a, b) => a.parsedTimestamp - b.parsedTimestamp);
+        // console.log('MergeData', mergedData)
 
-//         // Initialize arrays to store timestamp labels and rainfall data
-//         var labelsArray = [];
-//         var rainfallDataArray = [];
-//         var label = [];
-//         var datestring = new Date()
-//         // Process each entry in mergedData
-//         mergedData.forEach(entry => {
-//           if (entry.rainfallValue != "0" && entry.rainfallValue != 0) {
-//             if ((formatDateString((entry.parsedTimestamp).toLocaleString())).includes(formatDateString(datestring))){
-//             // Extract parsedTimestamp, locationName, and rainfallValue from each entry
-//             var parsedTimestamp = entry.parsedTimestamp;
-//             var locationName = entry.locationName;
-//             var rainfallValue = entry.rainfallValue;
+        // Initialize arrays to store timestamp labels and rainfall data
+        var labelsArray = [];
+        var rainfallDataArray = [];
+        var label = [];
+        var datestring = new Date()
+        // Process each entry in mergedData
+        mergedData.forEach(entry => {
+          if (entry.rainfallValue != "0" && entry.rainfallValue != 0) {
+            if ((formatDateString((entry.parsedTimestamp).toLocaleString())).includes(formatDateString(datestring))){
+            // Extract parsedTimestamp, locationName, and rainfallValue from each entry
+            var parsedTimestamp = entry.parsedTimestamp;
+            var locationName = entry.locationName;
+            var rainfallValue = entry.rainfallValue;
             
-//             // Format parsedTimestamp to display in the chart (adjust this part as needed)
-//             var formattedTimestamp = parsedTimestamp ? parsedTimestamp.toLocaleString() : 'Unknown';
+            // Format parsedTimestamp to display in the chart (adjust this part as needed)
+            var formattedTimestamp = parsedTimestamp ? parsedTimestamp.toLocaleString() : 'Unknown';
             
-//             // Add timestamp label and rainfall data to respective arrays
-//               labelsArray.push(`${entry.rainfallValue} mm\n${formattedTimestamp}\n${locationName}`);
-//                 label.push(`${formattedTimestamp}`);
-//                 rainfallDataArray.push(rainfallValue);
-//             }
-//           }
-//         });
+            // Add timestamp label and rainfall data to respective arrays
+              labelsArray.push(`${entry.rainfallValue} mm\n${formattedTimestamp}\n${locationName}`);
+                label.push(`${formattedTimestamp}`);
+                rainfallDataArray.push(rainfallValue);
+            }
+          }
+        });
 
 
-//         var myChart = new Chart(chartCanvas, {
-//           type: 'line',
-//           data: {
-//             labels: label,
-//             datasets: [{
-//               label: 'Rainfall Data',
-//               data: rainfallDataArray,
-//               backgroundColor: 'rgba(75, 192, 192, 0.2)',
-//               borderColor: 'rgba(0, 0, 0, 1)',
-//               borderWidth: 1,
-//               fill: true,
-//               tension: 0.1,
-//             }]
-//           },
-//           options: {
-//             plugins: {
-//               tooltip: {
-//                 callbacks: {
-//                   label: function (context) {
-//                     const dataIndex = context.dataIndex;
-//                     return 'Rainfall Data: ' + labelsArray[dataIndex];
-//                   }
-//                 }
-//               }
-//             },
-//             scales: {
-// 							x: {
-// 								display: true,
-// 								title: {
-// 									display: true,
-// 									text: 'Date and Time'
-// 								}
-// 							},
-// 							y: {
-// 								beginAtZero: true,
-// 								display: true,
-// 								title: {
-// 									display: true,
-// 									text: 'Rainfall (mm)'
-// 								}
-// 							}
-//             }
-//           }
-//         });
+        var myChart = new Chart(chartCanvas, {
+          type: 'line',
+          data: {
+            labels: label,
+            datasets: [{
+              label: 'Rainfall Data',
+              data: rainfallDataArray,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(0, 0, 0, 1)',
+              borderWidth: 1,
+              fill: true,
+              tension: 0.1,
+            }]
+          },
+          options: {
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    const dataIndex = context.dataIndex;
+                    return 'Rainfall Data: ' + labelsArray[dataIndex];
+                  }
+                }
+              }
+            },
+            scales: {
+							x: {
+								display: true,
+								title: {
+									display: true,
+									text: 'Date and Time'
+								}
+							},
+							y: {
+								beginAtZero: true,
+								display: true,
+								title: {
+									display: true,
+									text: 'Rainfall (mm)'
+								}
+							}
+            }
+          }
+        });
 
-//         // Store the new chart instance
-//         window.myChart = myChart;
+        // Store the new chart instance
+        window.myChart = myChart;
 
-//         return myChart;
-//     }
-// }
+        return myChart;
+    }
+}
 
 // //============== UPDATE RIGHT CONTENT DISPLAY =================//
 
