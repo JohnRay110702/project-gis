@@ -457,8 +457,8 @@ main aside .sidebar-link.active:hover span{
 .dashboardContent .flex-box img {
   position: absolute;
   top: 40px;
-  right: 20px;
-  width: 40%; 
+  right: 30px;
+  width: auto; 
   height: 60%; 
 }
 
@@ -679,9 +679,28 @@ iframe {
   padding-bottom: 2rem  ;
 }
 
+
+#municipality__select {
+  border: 2px solid #000080;
+  height: 40px;
+  font-size: 14px;
+}
+
+#municipalityFilter {
+  height: 40px;
+  background-color: #000080;
+  color: #ffff;
+}
+
+#municipalityFilter:hover {
+  background-color: #0056b3;
+}
+
+
 .rainAlertPopup, 
 .historicalDataAlertPopup, 
 .tributarySelectAlertPopup {
+
   display: none; /* Hidden by default */
   position: fixed;
   top: 0;
