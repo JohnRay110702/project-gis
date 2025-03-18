@@ -930,7 +930,8 @@ document.getElementById("municipalityFilter").addEventListener("click", function
     const tributaryName = document.getElementById("municipality__select").value;
 
     if (tributaryName === "-") {
-        alert("Please select a tributary first.");
+        // alert("Please select a tributary first.");
+        showTributaryAlert();
         return;
     }
 
@@ -943,7 +944,8 @@ document.getElementById("forecastButton").addEventListener("click", function () 
     const forecastTributary = document.getElementById("forecast_tributary_select").value;
 
     if (forecastTributary === "-") {
-        alert("Please select a tributary first.");
+        // alert("Please select a tributary first.");
+        showTributaryAlert();
         return;
     }
 
@@ -1007,6 +1009,80 @@ async function latestDataFetching(forecastTributary) {
     // Initial call to load data when the page loads
     fetchLatestData();
 }
+
+//fetching the tributaries based on the logged in municipalities
+// Function to fetch user data and get municipality
+async function fetchUserMunicipality() {
+    try {
+        const response = await fetch('./php/userdata.php');
+        const data = await response.json();
+
+        if (data.error) {
+            console.error("Error fetching user data:", data.error);
+            return null;
+        }
+
+    
+
+        // Return the municipality associated with the user
+        console.log(data.username);
+        return data.username
+    } catch (error) {
+        console.error("Fetch Error (User Data):", error);
+        return null;
+    }
+}
+
+// Function to fetch tributaries based on municipality
+async function fetchTributaries() {
+    try {
+        const municipalityName = await fetchUserMunicipality(); // Get municipality from user data
+
+        if (!municipalityName) {
+            console.error("Municipality not found for the user.");
+            return;
+        }
+
+        // Fetch tributaries based on municipality
+        const response = await fetch(`/public/php/getTributaries.php?municipality=${encodeURIComponent(municipalityName)}`);
+        const data = await response.json();
+
+        const tributarySelect = document.getElementById("forecast_tributary_select");
+        tributarySelect.innerHTML = "<option value='' selected hidden >Select a tributary</option>";
+
+
+        const tributaryChart = document.getElementById("municipality__select");
+        tributaryChart.innerHTML = "<option value='' selected hidden >Select a tributary</option>";
+
+        if (data.error) {
+            console.error("Error:", data.error);
+        } else {
+            data.forEach(tributary => {
+                let option = document.createElement("option");
+                option.value = tributary;
+                option.textContent = tributary;
+                tributarySelect.appendChild(option);
+                // tributaryChart.appendChild(option);
+            });
+        }
+
+        if(data.error) {
+            console.error("Error: ", data.error);
+        } else {
+            data.forEach(tributary => {
+                let option = document.createElement("option");
+                option.value = tributary;
+                option.textContent = tributary;
+                tributaryChart.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error("Fetch Error (Tributaries):", error);
+    }
+}
+
+// Run functions when the page loads
+document.addEventListener("DOMContentLoaded", fetchTributaries);
 
 
 async function fetchForecasting(tributaryName) {
@@ -1076,10 +1152,18 @@ function showHistoricalDataAlert(tributaryName){
     document.getElementById("historicalDataAlertPopup").style.display = "flex";
 }
 
+function showTributaryAlert(){
+    // document.getElementById("tributarySelectAlertPopup").style.display = "flex";
+    document.getElementById("tributarySelectAlertPopup").style.display = "flex";
+}
+
 function closePopup() {
     document.getElementById("rainAlertPopup").style.display = "none";
     document.getElementById("historicalDataAlertPopup").style.display = "none";
+    document.getElementById("tributarySelectAlertPopup").style.display = "none";
 }
+
+
 
 
 
@@ -1903,9 +1987,7 @@ function displayIntervals(intervals) {
 
 $(document).ready(function () {
     // Function to format text to sentence case
-    function toSentenceCase(text) {
-        return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-    }
+    
 
     // Fetch user data
     $.ajax({
@@ -1914,8 +1996,7 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (response) {
             if (!response.error) {
-                let formattedUsername = toSentenceCase(response.username);
-                $("#userDropdown").text(formattedUsername);
+                $("#userDropdown").text(response.username); // No formatting applied
             } else {
                 $("#userDropdown").text("Guest");
             }
