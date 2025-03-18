@@ -462,8 +462,8 @@ main aside .sidebar-link.active:hover span{
 
 .tributary-dropdown-content {
   display: flex;
-  align-items:flex-start; /* Align items vertically */
-  justify-content: flex-start; /* Align content to the left */
+  align-items: center; /* Align items vertically */
+  justify-content: center; /* Align content to the left */
   gap: 10px; /* Add spacing between elements */
   flex-wrap: wrap; /* Allow wrapping if necessary */
 }
@@ -483,7 +483,7 @@ main aside .sidebar-link.active:hover span{
   appearance: none; 
   display: flex;
   justify-content: flex-start;
-  margin-left: 300px;
+  /* margin-left: 300px; */
 
 }
 
@@ -496,7 +496,7 @@ main aside .sidebar-link.active:hover span{
 .tributary-forecast-section {
   display: flex;
   flex-direction: column; /* Stack items vertically */
-  align-items: flex-start; /* Align items to the left */
+  align-items: center; /* Align items to the left */
 }
 
 .input-container {
@@ -504,7 +504,8 @@ main aside .sidebar-link.active:hover span{
   align-items: center; /* Align elements in a single row */
   gap: 10px; /* Add space between elements */
   /* margin-top: 5px; */
-  margin-left: 300px;
+  /* margin-left: 300px; */
+  justify-content: center;
 }
 
 .tributary-dropdown-content select {
@@ -562,7 +563,7 @@ canvas {
 .input-container button {
   padding: 8px 15px;
   font-size: 16px;
-  background: #007bff;
+  background: #000080;
   color: white;
   border: none;
   border-radius: 5px;
