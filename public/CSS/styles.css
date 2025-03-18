@@ -420,6 +420,7 @@ main aside .sidebar-link.active:hover span{
   width: 100%;
   height: auto;
   display: flex;
+  align-items: center;
   justify-content: center;
   
 }
@@ -459,9 +460,63 @@ main aside .sidebar-link.active:hover span{
   padding:0;
 }
 
-.tributary-forecast-section .row {
-  max-width: 300px;
+.tributary-dropdown-content {
+  display: flex;
+  align-items:flex-start; /* Align items vertically */
+  justify-content: flex-start; /* Align content to the left */
+  gap: 10px; /* Add spacing between elements */
+  flex-wrap: wrap; /* Allow wrapping if necessary */
+}
+
+#forecastChart {
+  margin-right: 30px;
+}
+.tributary-forecast-section select{
+  max-width: 500px;
+  height: 40px;
+  font-family: 10px;
   margin: 0 auto;
+  border: 2px solid #000080;
+  border-radius: 10px;
+  box-shadow: none;
+  outline: none;
+  appearance: none; 
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 300px;
+
+}
+
+#forecast_tributary_select {
+  font-size: 15px;
+}
+
+
+
+.tributary-forecast-section {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: flex-start; /* Align items to the left */
+}
+
+.input-container {
+  display: flex;
+  align-items: center; /* Align elements in a single row */
+  gap: 10px; /* Add space between elements */
+  /* margin-top: 5px; */
+  margin-left: 300px;
+}
+
+.tributary-dropdown-content select {
+  width: 460px; /* Adjust the width of the dropdown */
+}
+
+
+
+
+select:focus {
+  outline: none;
+  border-color: #004080; /* Darker blue for focus */
 }
 
 .chart-container {
@@ -470,7 +525,9 @@ main aside .sidebar-link.active:hover span{
   max-width: 100%;
   margin: 20px auto;
   background: white;
-  border-radius: 8px;
+  /* border-radius: 8px; */
+  border: 2px solid #000080;
+  border-radius: var(--border-raidus-1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
