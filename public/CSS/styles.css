@@ -663,7 +663,9 @@ iframe {
   padding-bottom: 2rem  ;
 }
 
-.rainAlertPopup, .historicalDataAlertPopup {
+.rainAlertPopup, 
+.historicalDataAlertPopup, 
+.tributarySelectAlertPopup {
   display: none; /* Hidden by default */
   position: fixed;
   top: 0;
@@ -676,7 +678,9 @@ iframe {
   z-index: 1000; /* Ensures it appears above other content */
 }
 
-.rainAlertPopup-content, .historicalDataAlert-content {
+.rainAlertPopup-content, 
+.historicalDataAlert-content, 
+.tributaryAlertPopup-content{
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -685,24 +689,27 @@ iframe {
 }
 
 .rainAlertPopup-content p,
-.historicalDataAlert-content p {
+.historicalDataAlert-content p,
+.tributaryAlertPopup-content p {
   font-size: 20px;
 }
 
 .rainAlertPopup button,
-.historicalDataAlertPopup button {
+.historicalDataAlertPopup button,
+.tributarySelectAlertPopup button {
   margin-top: 10px;
   padding: 5px 20px;
   font-size: 20px;
   border: none;
-  background: #007BFF;
+  background: #000080;
   color: white;
   cursor: pointer;
   border-radius: 5px;
 }
 
 .rainAlertPopup button:hover,
-.historicalDataAlertPopup button:hover {
+.historicalDataAlertPopup button:hover,
+.tributarySelectAlertPopup button:hover {
   background: #0056b3;
 }
 
