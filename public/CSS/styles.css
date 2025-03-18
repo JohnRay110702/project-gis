@@ -457,8 +457,8 @@ main aside .sidebar-link.active:hover span{
 .dashboardContent .flex-box img {
   position: absolute;
   top: 40px;
-  right: 20px;
-  width: 40%; 
+  right: 30px;
+  width: auto; 
   height: 60%; 
 }
 
