@@ -684,6 +684,9 @@ iframe {
   height: 40px;
   font-size: 14px;
 }
+.tributary-chart {
+  margin-top: 50px;
+}
 
 #municipalityFilter {
   height: 40px;

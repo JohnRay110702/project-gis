@@ -929,7 +929,7 @@ function createChart(mergedData) {
 document.getElementById("municipalityFilter").addEventListener("click", function () {
     const tributaryName = document.getElementById("municipality__select").value;
 
-    if (tributaryName === "-") {
+    if (tributaryName === "") {
         // alert("Please select a tributary first.");
         showTributaryAlert();
         return;
@@ -943,7 +943,7 @@ document.getElementById("municipalityFilter").addEventListener("click", function
 document.getElementById("forecastButton").addEventListener("click", function () {
     const forecastTributary = document.getElementById("forecast_tributary_select").value;
 
-    if (forecastTributary === "-") {
+    if (forecastTributary === "") {
         // alert("Please select a tributary first.");
         showTributaryAlert();
         return;
@@ -1048,11 +1048,11 @@ async function fetchTributaries() {
         const data = await response.json();
 
         const tributarySelect = document.getElementById("forecast_tributary_select");
-        tributarySelect.innerHTML = "<option value='' selected hidden >Select a tributary</option>";
+        tributarySelect.innerHTML = "<option value='' selected hidden >Select tributary...</option>";
 
 
         const tributaryChart = document.getElementById("municipality__select");
-        tributaryChart.innerHTML = "<option value='' selected hidden >Select a tributary</option>";
+        tributaryChart.innerHTML = "<option value='' selected hidden >Select tributary...</option>";
 
         if (data.error) {
             console.error("Error:", data.error);
@@ -1892,67 +1892,88 @@ function processRainfallData(data) {
     displayIntervals(intervals);
 }
 
-function displayIntervals(intervals) {
-    let tributaries = [
-        "Agoncillo Creek 1", "Agoncillo Creek 2", "Agoncillo Creek 3",
-        "Ambulong Stream 2", "Ambulong Stream 3", "Balakilong Creek",
-        "Balete River", "Banga Creek", "Bancoro Creek", "Bignay Creek",
-        "Bilibinwang Creek 1", "Bilibinwang Creek 2", "Berinayan Creek",
-        "Bulaklakan River", "Buso-buso Stream 1", "Buso-buso Stream 2",
-        "Buso-buso Stream 3", "Buso-buso Stream 4", "Caloocan Creek",
-        "Calumala Creek 1", "Calumala Creek 2", "Gulod Stream 3",
-        "Gulod Stream 4", "Gulod Stream 5", "Gulod Stream 6",
-        "Gulod Stream 7", "Kinalaglagan River", "Lambingan River",
-        "Laurel River 1", "Molinete Creek 2", "Palsara River",
-        "Pansipit River", "Sampaloc Creek 1", "Sampaloc Creek 2",
-        "Tagudtod Creek", "Tumaway River", "Wawa River"
-    ];
+async function displayIntervals(intervals) {
+    try {
+        const municipalityName = await fetchUserMunicipality(); // Get municipality from user data
 
-    document.getElementById('dataList').innerHTML = '';
+        if (!municipalityName) {
+            console.error("Municipality not found for the user.");
+            return []; // Return an empty array instead of undefined
+        }
 
-    intervals.forEach((interval, index) => {
-        let intervalStart = interval.start;
-        let intervalEnd = interval.end;
+        // Fetch tributaries based on municipality
+        const response = await fetch(`/public/php/getTributaries.php?municipality=${encodeURIComponent(municipalityName)}`);
+        const data = await response.json();
 
-        document.getElementById('dataList').innerHTML += `
-            <h5>Rainfall Data From: </h5>
-            <h6>${formatDate(intervalStart, false)} ${formatDate(intervalStart, true)} 
-                To 
-                ${formatDate(intervalEnd, false)} ${formatDate(intervalEnd, true)}
-            </h6>
-            <hr>
-        `;
+        if (data.error) {
+            console.error("Error:", data.error);
+            return []; // Return an empty array in case of an error
+        }
 
-        tributaries.forEach(tributary => {
-            let tribData = interval.data.filter(entry => entry.tributary === tributary);
+        // Store tributaries in an array and sort them alphabetically
+        let tributariesArray = data.sort((a, b) => a.localeCompare(b));
 
-            if (tribData.length === 0) {
-                document.getElementById('dataList').innerHTML += `
-                    <li>
-                        <div>No Rainfall data for the last 6 hours.</div>
-                        <div><strong>Date:</strong> ${formatDate(intervalStart)}</div>
-                        <div><strong>Tributary:</strong> ${tributary}</div>
-                    </li>
-                    <hr>
-                `;
-            } else {
-                tribData.forEach(entry => {
+        // Log the sorted array
+        console.log("Sorted Tributaries:", tributariesArray);
+
+        // return tributariesArray; // ✅ Now it explicitly returns an array\
+        document.getElementById('dataList').innerHTML = '';
+        intervals.forEach((interval) => {
+            let intervalStart = interval.start;
+            let intervalEnd = interval.end;
+    
+            document.getElementById('dataList').innerHTML += `
+                <h5>Rainfall Data From: </h5>
+                <h6>${formatDate(intervalStart, false)} ${formatDate(intervalStart, true)} 
+                    To 
+                    ${formatDate(intervalEnd, false)} ${formatDate(intervalEnd, true)}
+                </h6>
+                <hr>
+            `;
+    
+            tributariesArray.forEach(tributary => {
+                let tribData = interval.data.filter(entry => entry.tributary === tributary);
+    
+                if (tribData.length === 0) {
                     document.getElementById('dataList').innerHTML += `
                         <li>
-                            <div><strong>Date:</strong> ${formatDate(entry.timestamp)}</div>
-                            <div><strong>Time:</strong> ${formatDate(entry.timestamp, true)}</div>
-                            <div><strong>Rainfall Value:</strong> ${entry.rainfall_value} mm</div>
-                            <div><strong>Tributary:</strong> ${entry.tributary}</div>
+                            <div>No Rainfall data for the last 6 hours.</div>
+                            <div><strong>Date:</strong> ${formatDate(intervalStart)}</div>
+                            <div><strong>Tributary:</strong> ${tributary}</div>
                         </li>
                         <hr>
                     `;
-                });
-            }
+                } else {
+                    tribData.forEach(entry => {
+                        document.getElementById('dataList').innerHTML += `
+                            <li>
+                                <div><strong>Date:</strong> ${formatDate(entry.timestamp)}</div>
+                                <div><strong>Time:</strong> ${formatDate(entry.timestamp, true)}</div>
+                                <div><strong>Rainfall Value:</strong> ${entry.rainfall_value} mm</div>
+                                <div><strong>Tributary:</strong> ${entry.tributary}</div>
+                            </li>
+                            <hr>
+                        `;
+                    });
+                }
+            });
         });
-    });
+
+
+        
+    } catch (error) {
+        console.error("Fetch Error (Tributaries):", error);
+        return []; // Return an empty array if an error occurs
+    }
 
     console.log("Rainfall data displayed in 6-hour intervals.");
+
 }
+
+// Example usag
+document.addEventListener("DOMContentLoaded", displayIntervals);
+
+    
 
 // $(document).ready(function () {
 //     // Fetch user data
