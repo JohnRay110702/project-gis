@@ -679,6 +679,22 @@ iframe {
   padding-bottom: 2rem  ;
 }
 
+#municipality__select {
+  border: 2px solid #000080;
+  height: 40px;
+  font-size: 14px;
+}
+
+#municipalityFilter {
+  height: 40px;
+  background-color: #000080;
+  color: #ffff;
+}
+
+#municipalityFilter:hover {
+  background-color: #0056b3;
+}
+
 .rainAlertPopup, .historicalDataAlertPopup {
   display: none; /* Hidden by default */
   position: fixed;

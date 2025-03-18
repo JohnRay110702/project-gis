@@ -29,7 +29,8 @@ html{
 
 .summary-wrapper {
     width: 100%;
-    background: #F4F4F8;
+    background: #5eade6;
+    border: 5px solid #000080;
     height: 100%;
     border-radius: 10px;
     overflow-y: scroll;
@@ -45,21 +46,24 @@ html{
 
 .summary-wrapper::-webkit-scrollbar {
     width: 6px;
+    border-radius: 10px;
     /* Width of the scrollbar */
 }
 
 .summary-wrapper::-webkit-scrollbar-track {
     background: #F4F4F8;
+    border-radius: 10px;
     /* Track color */
 }
 
 .summary-wrapper::-webkit-scrollbar-thumb {
     background: rgb(143, 135, 135);
+    border-radius: 10px;
     /* Scrollbar color when hovered or held */
 }
 
 .summary-wrapper::-webkit-scrollbar-thumb:hover {
-    background: #8D0801;
+    background: #7ACC80;
     /* Scrollbar color when hovered */
 }
 
@@ -162,8 +166,8 @@ html{
     align-items: center;
     position: sticky;
     top: 0;
-    background-color: #111111;
-    color: white;
+    background-color: #5eade6;
+    color: black;
     font-size: 15px;
     padding: 8px;
 }
@@ -188,9 +192,9 @@ html{
 
 /* municipalities */
 .municipalities-name {
-    background-color: #7ACC80;
+    background-color: #000080;
     font-family: 'Ubuntu', sans-serif;
-    color: #000;
+    color: #ffff;
     padding: 0.5rem;
     min-width: 150px;
     text-align: center;
@@ -203,8 +207,8 @@ html{
 }
 
 .municipalities-name:hover {
-    background-color: #000;
-    color: #94ECBE;
+    background-color: #ffff;
+    color: #000080;
     transition: all 0.4s;
     transform: scale(1.1);
 }
