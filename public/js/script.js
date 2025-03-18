@@ -24,10 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function fetchForecastData(periods) {
     const tributaryName = document.getElementById("forecast_tributary_select").value.trim();
 
-    // if (!tributaryName || tributaryName === "-") {
-    //     alert("⚠️ Please select a tributary.");
-    //     return;
-    // }
+
 
     console.log(`📡 Sending POST request with periods: ${periods}, tributary: ${tributaryName}`);
 
