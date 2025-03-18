@@ -923,6 +923,36 @@ function createChart(mergedData) {
 // fetchDataAndMergeAndUpdateDOM();
 // // Call the fetchDataAndMergeAndUpdateDOM function after initializing Flatpickr
 
+document.addEventListener("DOMContentLoaded", function () {
+    const forecastPeriod = document.getElementById("forecastPeriod"); // Spinner input
+    const datePickerInput = document.getElementById("datePicker"); // Flatpickr input
+
+    // Initialize Flatpickr
+    const datePicker = flatpickr(datePickerInput, {
+        dateFormat: "F j, Y",
+        altInput: true,
+        altFormat: "F j, Y",
+        onChange: function (selectedDates) {
+            if (selectedDates.length > 0) {
+                let selectedDate = selectedDates[0]; // Get picked date
+                let today = new Date();
+                let diffTime = selectedDate - today;
+                let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Convert to days
+                forecastPeriod.value = diffDays > 0 ? diffDays : 0; // Update spinner
+            }
+        }
+    });
+
+    // Update Date Picker when spinner changes
+    forecastPeriod.addEventListener("input", function () {
+        let days = parseInt(forecastPeriod.value) || 0;
+        let newDate = new Date();
+        newDate.setDate(newDate.getDate() + days);
+        datePicker.setDate(newDate, true); // Update Flatpickr
+    });
+});
+
+
 
 //============== MUNICIPALIY CHART =================//
 
