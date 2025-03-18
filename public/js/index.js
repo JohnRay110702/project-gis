@@ -1997,6 +1997,9 @@ $(document).ready(function () {
         success: function (response) {
             if (!response.error) {
                 $("#userDropdown").text(response.username); // No formatting applied
+                if(response.username === "MATAASNAKAHOY") {
+                    document.getElementById("userDropdown").style.fontSize = "1.3rem";
+                }
             } else {
                 $("#userDropdown").text("Guest");
             }
@@ -2005,6 +2008,8 @@ $(document).ready(function () {
             $("#userDropdown").text("Error fetching user");
         }
     });
+
+    
 
     // Toggle dropdown on click
     $("#userDropdown").click(function () {
