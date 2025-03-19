@@ -1839,19 +1839,30 @@ function removeLoader(){
 //     })
 // }
 
-function formatDate(dateString, includeTime = false) {
-    if (!dateString) return "Invalid Date"; 
 
-    let date = new Date(dateString);
-    let dateOptions = { year: "numeric", month: "long", day: "2-digit" };
-    let timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
 
-    if (includeTime) {
-        return date.toLocaleTimeString("en-US", timeOptions); // Properly extract only time
-    } else {
-        return date.toLocaleDateString("en-US", dateOptions);
-    }
+function formatDateTime(date) {
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    let year = date.getFullYear();
+    let month = months[date.getMonth()];
+    let day = date.getDate();
+
+    let hours = date.getHours();
+    let minutes = String(date.getMinutes()).padStart(2, '0');
+
+    let amPm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12; // Convert to 12-hour format
+
+    return {
+        date: `${month} ${day}, ${year}`,
+        time: `${hours}:${minutes} ${amPm}`
+    };
 }
+
 
 
 function fetchAllRainfallData() {
@@ -1892,32 +1903,23 @@ function processRainfallData(data) {
     let intervals = [];
     let intervalData = [];
 
-    for (let i = data.length - 1; i >= 0; i--) {
-        let entryTime = new Date(data[i].timestamp);
+    let firstTimestamp = new Date(data[0].timestamp);
 
-        while (entryTime < currentIntervalStart) {
-            if (intervalData.length > 0) {
-                intervals.push({
-                    start: new Date(currentIntervalStart),
-                    end: new Date(currentIntervalEnd),
-                    data: [...intervalData]
-                });
-            }
-            intervalData = [];
+    while (currentIntervalEnd >= firstTimestamp) {
+        let tempData = data.filter(entry => {
+            let entryTime = new Date(entry.timestamp);
+            return entryTime >= currentIntervalStart && entryTime < currentIntervalEnd;
+        });
 
-            currentIntervalEnd = new Date(currentIntervalStart);
-            currentIntervalStart.setHours(currentIntervalStart.getHours() - 6);
-        }
-
-        intervalData.push(data[i]);
-    }
-
-    if (intervalData.length > 0) {
         intervals.push({
             start: new Date(currentIntervalStart),
             end: new Date(currentIntervalEnd),
-            data: intervalData
+            data: tempData
         });
+
+        // Move to the previous 6-hour interval
+        currentIntervalEnd = new Date(currentIntervalStart);
+        currentIntervalStart.setHours(currentIntervalStart.getHours() - 6);
     }
 
     displayIntervals(intervals);
@@ -1949,15 +1951,15 @@ async function displayIntervals(intervals) {
 
         // return tributariesArray; // ✅ Now it explicitly returns an array\
         document.getElementById('dataList').innerHTML = '';
-        intervals.forEach((interval) => {
-            let intervalStart = interval.start;
-            let intervalEnd = interval.end;
+        intervals.forEach((interval, index) => {
+            let intervalStart = formatDateTime(interval.start);
+            let intervalEnd = formatDateTime(interval.end);
     
             document.getElementById('dataList').innerHTML += `
                 <h5>Rainfall Data From: </h5>
-                <h6>${formatDate(intervalStart, false)} ${formatDate(intervalStart, true)} 
+                <h6>${intervalStart.date} ${intervalStart.time}
                     To 
-                    ${formatDate(intervalEnd, false)} ${formatDate(intervalEnd, true)}
+                    ${intervalEnd.date} ${intervalEnd.time}
                 </h6>
                 <hr>
             `;
@@ -1969,17 +1971,19 @@ async function displayIntervals(intervals) {
                     document.getElementById('dataList').innerHTML += `
                         <li>
                             <div>No Rainfall data for the last 6 hours.</div>
-                            <div><strong>Date:</strong> ${formatDate(intervalStart)}</div>
+                            <div><strong>Date:</strong> ${formatDateTime(interval.end).date}</div>
                             <div><strong>Tributary:</strong> ${tributary}</div>
                         </li>
                         <hr>
                     `;
                 } else {
                     tribData.forEach(entry => {
+                        let timestamp = new Date(entry.timestamp); // Ensure it's a Date object
+                        let formattedTimestamp = formatDateTime(timestamp);
                         document.getElementById('dataList').innerHTML += `
                             <li>
-                                <div><strong>Date:</strong> ${formatDate(entry.timestamp)}</div>
-                                <div><strong>Time:</strong> ${formatDate(entry.timestamp, true)}</div>
+                                <div>Date: ${formattedTimestamp.date}</div>
+                                <div>Time: ${formattedTimestamp.time}</div>
                                 <div><strong>Rainfall Value:</strong> ${entry.rainfall_value} mm</div>
                                 <div><strong>Tributary:</strong> ${entry.tributary}</div>
                             </li>
