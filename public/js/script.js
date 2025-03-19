@@ -81,9 +81,13 @@ function updateForecastChart(forecastData) {
             datasets: [{
                 label: "Forecasted Values",
                 data: predictions,
-                borderColor: "blue",
+                borderColor: "#000080",
                 borderWidth: 2,
-                fill: false
+                fill: true, // Light fill color
+                pointBorderColor: "#000080", // Change the border color of the dots
+                pointRadius: 3, // Adjust the size of the dots
+                pointHoverRadius: 8, // Size of the dots on hover
+                pointHitRadius: 15
             }]
         },
         options: {
@@ -113,6 +117,12 @@ function updateForecastChart(forecastData) {
                         font: { weight: "bold" } // Bold y-axis labels
                     }
                 }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'xy',
+                intersect: false
+
             }
         }
     });
