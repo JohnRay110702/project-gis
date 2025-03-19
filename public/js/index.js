@@ -1022,6 +1022,7 @@ async function latestDataFetching(forecastTributary) {
     
         if (rainfallResultText) {
             rainfallResultText.textContent = data.volume + " mm";
+            console.log("Volume: ", data.volume)
         } else {
             console.log("Element 'rainfallResultText' not found.");
         }
