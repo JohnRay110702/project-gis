@@ -1221,16 +1221,16 @@ function plotRainChart(rainData, tributaryName) {
             datasets: [{
                 label: `Rainfall Data for ${tributaryName}`,
                 data: values,
-                borderColor: "blue",
-                backgroundColor: "rgba(0, 0, 255, 0.2)",
+                borderColor: "#000080",
+                borderWidth: 2,
                 fill: true
             }]
         },
         options: {
             responsive: true,
             scales: {
-                x: { title: { display: true, text: "Timestamp" } },
-                y: { title: { display: true, text: "Rainfall (mm)" } }
+                x: { title: { display: true, text: "Timestamp", font: {weight: "bold", size: 14} } },
+                y: { title: { display: true, text: "Rainfall (mm)", font: {weight: "bold", size: 14} } }
             }
         }
     });
