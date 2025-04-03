@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2025 at 02:43 AM
+-- Generation Time: Apr 03, 2025 at 02:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -427,24 +427,24 @@ INSERT INTO `piggeries` (`id`, `resident_id`, `municipality`, `barangay`, `munic
 (114, 'Resident 114', 'Laurel', 'Niyugan', 'LAU', 'Resident 28', 8, 0, 39, 0, 0, '14.07907742', '120.8710351', 'Septic Tank', 0.000),
 (115, 'Resident 115', 'Laurel', 'Paliparan', 'LAU', 'Resident 29', 15, 0, 15, 30, 0, '14.05879794', '120.8812918', 'Septic Tank', 0.000),
 (116, 'Resident 116', 'Laurel', 'Paliparan', 'LAU', 'Resident 30', 0, 0, 0, 0, 0, '14.05609808', '120.8880539', 'Septic Tank', 0.000),
-(117, 'Resident 117', 'Mataas Na Kahoy', 'Kinalaglagan', 'MNK', 'Francisco Sandoval', 1, 0, 0, 8, 0, '14.00455', '121.09296', 'Septic Tank', 0.000),
-(118, 'Resident 118', 'Mataas Na Kahoy', 'Kinalaglagan', 'MNK', 'Romio Orense', 0, 0, 9, 0, 0, '14.0043', '121.095', 'Septic Tank', 0.000),
-(119, 'Resident 119', 'Mataas Na Kahoy', 'Kinalaglagan', 'MNK', 'Noel de Torres', 7, 0, 0, 25, 0, '14.00667', '121.09622', 'Septic Tank', 0.000),
-(120, 'Resident 120', 'Mataas Na Kahoy', 'Kinalaglagan', 'MNK', 'Richard Calacal', 1, 0, 0, 12, 0, '14.00481', '121.09422', 'Septic Tank', 0.000),
-(121, 'Resident 121', 'Mataas Na Kahoy', 'Nangkaan', 'MNK', 'Piggery 1', 0, 0, 0, 7, 0, '13.98398', '121.08496', 'Septic Tank', 0.000),
-(122, 'Resident 122', 'Mataas Na Kahoy', 'Nangkaan', 'MNK', 'Piggery 2', 0, 3, 0, 0, 0, '13.98498', '121.08417', 'Compost', 0.000),
-(123, 'Resident 123', 'Mataas Na Kahoy', 'Nangkaan', 'MNK', 'Piggery 3', 0, 0, 6, 0, 0, '13.98513', '121.08435', 'Septic Tank', 0.000),
-(124, 'Resident 124', 'Mataas Na Kahoy', 'Nangkaan', 'MNK', 'Piggery 4', 0, 1, 0, 0, 0, '13.98498', '121.08482', 'Compost', 0.000),
-(125, 'Resident 125', 'Mataas Na Kahoy', 'Nangkaan', 'MNK', 'Piggery 5', 0, 2, 0, 0, 0, '13.98534', '121.08472', 'Compost', 0.000),
-(126, 'Resident 126', 'Mataas Na Kahoy', 'Nangkaan', 'MNK', 'Piggery 6', 0, 0, 6, 0, 0, '13.98513', '121.0852', 'Septic Tank', 0.000),
-(127, 'Resident 127', 'Mataas Na Kahoy', 'Bubuyan', 'MNK', 'Daisy Mendoza', 0, 0, 5, 0, 0, '13.9970752', '121.1041778', 'Septic Tank', 0.000),
-(128, 'Resident 128', 'Mataas Na Kahoy', 'Upa', 'MNK', 'Pedro Reyes', 15, 2, 0, 50, 0, '13.9623351', '121.1128712', 'Septic Tank', 0.000),
-(129, 'Resident 129', 'Mataas Na Kahoy', 'Upa', 'MNK', 'Cesar Osena', 3, 1, 9, 20, 0, '13.9637944', '121.1115365', 'Septic Tank', 0.000),
-(130, 'Resident 130', 'Mataas Na Kahoy', 'Upa', 'MNK', 'Homer Hernandez', 2, 0, 6, 0, 0, '13.9619008', '121.1120075', 'Septic Tank', 0.000),
-(131, 'Resident 131', 'Mataas Na Kahoy', 'Upa', 'MNK', 'Jose Resinto', 25, 2, 100, 0, 0, '13.9729592', '121.1096375', 'Lagoon', 0.000),
-(132, 'Resident 132', 'Mataas Na Kahoy', 'Upa', 'MNK', 'Violeta Rivera', 25, 1, 130, 0, 0, '13.9733669', '121.1096227', 'Septic Tank', 0.000),
-(133, 'Resident 133', 'Mataas Na Kahoy', 'Bayorbor', 'MNK', 'Noel Gutierez', 7, 0, 10, 0, 0, '13.9796992', '121.0943848', 'Septic Tank', 0.000),
-(134, 'Resident 134', 'Mataas Na Kahoy', 'Bayorbor', 'MNK', 'Eupoldo Landicho', 15, 2, 30, 0, 0, '13.9808275', '121.0961108', 'Septic Tank', 0.000),
+(117, 'Resident 117', 'MataasNaKahoy', 'Kinalaglagan', 'MNK', 'Francisco Sandoval', 1, 0, 0, 8, 0, '14.00455', '121.09296', 'Septic Tank', 0.000),
+(118, 'Resident 118', 'MataasNaKahoy', 'Kinalaglagan', 'MNK', 'Romio Orense', 0, 0, 9, 0, 0, '14.0043', '121.095', 'Septic Tank', 0.000),
+(119, 'Resident 119', 'MataasNaKahoy', 'Kinalaglagan', 'MNK', 'Noel de Torres', 7, 0, 0, 25, 0, '14.00667', '121.09622', 'Septic Tank', 0.000),
+(120, 'Resident 120', 'MataasNaKahoy', 'Kinalaglagan', 'MNK', 'Richard Calacal', 1, 0, 0, 12, 0, '14.00481', '121.09422', 'Septic Tank', 0.000),
+(121, 'Resident 121', 'MataasNaKahoy', 'Nangkaan', 'MNK', 'Piggery 1', 0, 0, 0, 7, 0, '13.98398', '121.08496', 'Septic Tank', 0.000),
+(122, 'Resident 122', 'MataasNaKahoy', 'Nangkaan', 'MNK', 'Piggery 2', 0, 3, 0, 0, 0, '13.98498', '121.08417', 'Compost', 0.000),
+(123, 'Resident 123', 'MataasNaKahoy', 'Nangkaan', 'MNK', 'Piggery 3', 0, 0, 6, 0, 0, '13.98513', '121.08435', 'Septic Tank', 0.000),
+(124, 'Resident 124', 'MataasNaKahoy', 'Nangkaan', 'MNK', 'Piggery 4', 0, 1, 0, 0, 0, '13.98498', '121.08482', 'Compost', 0.000),
+(125, 'Resident 125', 'MataasNaKahoy', 'Nangkaan', 'MNK', 'Piggery 5', 0, 2, 0, 0, 0, '13.98534', '121.08472', 'Compost', 0.000),
+(126, 'Resident 126', 'MataasNaKahoy', 'Nangkaan', 'MNK', 'Piggery 6', 0, 0, 6, 0, 0, '13.98513', '121.0852', 'Septic Tank', 0.000),
+(127, 'Resident 127', 'MataasNaKahoy', 'Bubuyan', 'MNK', 'Daisy Mendoza', 0, 0, 5, 0, 0, '13.9970752', '121.1041778', 'Septic Tank', 0.000),
+(128, 'Resident 128', 'MataasNaKahoy', 'Upa', 'MNK', 'Pedro Reyes', 15, 2, 0, 50, 0, '13.9623351', '121.1128712', 'Septic Tank', 0.000),
+(129, 'Resident 129', 'MataasNaKahoy', 'Upa', 'MNK', 'Cesar Osena', 3, 1, 9, 20, 0, '13.9637944', '121.1115365', 'Septic Tank', 0.000),
+(130, 'Resident 130', 'MataasNaKahoy', 'Upa', 'MNK', 'Homer Hernandez', 2, 0, 6, 0, 0, '13.9619008', '121.1120075', 'Septic Tank', 0.000),
+(131, 'Resident 131', 'MataasNaKahoy', 'Upa', 'MNK', 'Jose Resinto', 25, 2, 100, 0, 0, '13.9729592', '121.1096375', 'Lagoon', 0.000),
+(132, 'Resident 132', 'MataasNaKahoy', 'Upa', 'MNK', 'Violeta Rivera', 25, 1, 130, 0, 0, '13.9733669', '121.1096227', 'Septic Tank', 0.000),
+(133, 'Resident 133', 'MataasNaKahoy', 'Bayorbor', 'MNK', 'Noel Gutierez', 7, 0, 10, 0, 0, '13.9796992', '121.0943848', 'Septic Tank', 0.000),
+(134, 'Resident 134', 'MataasNaKahoy', 'Bayorbor', 'MNK', 'Eupoldo Landicho', 15, 2, 30, 0, 0, '13.9808275', '121.0961108', 'Septic Tank', 0.000),
 (135, 'Resident 135', 'San Nicolas', 'Abelo', 'SAN', 'Aldin De Roxas Carolino', 0, 0, 9, 0, 0, '13.91896734', '120.9517486', 'Septic Tank', 0.000),
 (136, 'Resident 136', 'San Nicolas', 'Abelo', 'SAN', 'Julia A. Belo', 2, 0, 12, 0, 0, '13.9216305', '120.9540897', 'Septic Tank', 0.000),
 (137, 'Resident 137', 'San Nicolas', 'Bancoro', 'SAN', 'Ferdinand A. Delos Reyes', 6, 0, 8, 0, 0, '13.91312251', '120.9734984', 'Lagoon', 0.000),
@@ -475,36 +475,36 @@ INSERT INTO `piggeries` (`id`, `resident_id`, `municipality`, `barangay`, `munic
 (162, 'Resident 162', 'San Nicolas', 'Talang', 'SAN', 'Edilberto H. Martinez', 0, 0, 0, 48, 0, '13.92075923', '120.9455124', 'Septic Tank', 0.000),
 (163, 'Resident 163', 'San Nicolas', 'Talang', 'SAN', 'Elenita D. Arenas', 1, 0, 0, 0, 0, '13.9203449', '120.9456016', 'Septic Tank', 0.000),
 (164, 'Resident 164', 'San Nicolas', 'Talang', 'SAN', 'Florentino Alolod', 0, 0, 13, 0, 0, '13.92094369', '120.9460522', 'Septic Tank', 0.000),
-(165, 'Resident 165', 'Sta. Teresita', 'Antipolo', 'STA', 'May Punsalan', 1, 0, 0, 0, 0, '13.88182790630655', '120.97429783471', 'Septic Tank', 0.000),
-(166, 'Resident 166', 'Sta. Teresita', 'Burol', 'STA', 'Resurrecsion Caguicla', 0, 0, 0, 0, 0, '13.895461616841849', '120.965415761575', 'N/A', 0.000),
-(167, 'Resident 167', 'Sta. Teresita', 'Burol', 'STA', 'Jerome\'s Babuyan', 0, 0, 1, 0, 0, '13.8973891597423', '120.9670520098452', 'Ipa/Rice Hull', 0.000),
-(168, 'Resident 168', 'Sta. Teresita', 'Burol', 'STA', 'Ecolerence Piggery', 5, 0, 0, 0, 0, '13.895556192898692', '120.967096098385', 'Septic Tank', 0.000),
-(169, 'Resident 169', 'Sta. Teresita', 'Burol', 'STA', 'Retchie Bobadilla', 0, 0, 0, 0, 0, '13.89661384369715', '120.96654800184562', 'N/A', 0.000),
-(170, 'Resident 170', 'Sta. Teresita', 'Calumala', 'STA', 'Danilo Katigbak', 0, 0, 0, 0, 0, '13.887474141414500', '120.9781742727220', 'N/A', 0.000),
-(171, 'Resident 171', 'Sta. Teresita', 'Calumala', 'STA', 'Diosdado B. Bathan', 2, 0, 0, 7, 0, '13.88937800130199', '120.980316782961', 'Septic Tank', 0.000),
-(172, 'Resident 172', 'Sta. Teresita', 'Calumala', 'STA', 'Guillermo B. Malaluan', 1, 0, 0, 10, 0, '13.88804023569232', '120.976400168345', 'Septic Tank', 0.000),
-(173, 'Resident 173', 'Sta. Teresita', 'Calumala', 'STA', 'Joey A. Benedicto', 0, 0, 0, 0, 0, '13.88782667120326', '120.978798425373', 'N/A', 0.000),
-(174, 'Resident 174', 'Sta. Teresita', 'Calumala', 'STA', 'John James B. Arellano', 0, 0, 2, 0, 0, '13.88992134654180', '120.977802545154', 'Lagoon', 0.000),
-(175, 'Resident 175', 'Sta. Teresita', 'Calumala', 'STA', 'Jonah T. Coro', 0, 0, 0, 0, 0, '13.887246194460058', '120.976513085417', 'Septic Tank', 0.000),
-(176, 'Resident 176', 'Sta. Teresita', 'Calumala', 'STA', 'Jose R. Alviz', 2, 0, 2, 0, 0, '13.88692793881696', '120.976825551274', 'Composting', 0.000),
-(177, 'Resident 177', 'Sta. Teresita', 'Calumala', 'STA', 'Laami M. Basco', 6, 0, 0, 3, 0, '13.883823654802285', '120.974588448944', 'Septic Tank', 0.000),
-(178, 'Resident 178', 'Sta. Teresita', 'Calumala', 'STA', 'Narmi Bathan', 1, 0, 0, 0, 0, '13.888633014480991', '120.976914744468', 'Free-flow', 11.298),
-(179, 'Resident 179', 'Sta. Teresita', 'Calumala', 'STA', 'Nestor B. Manalo', 2, 0, 0, 0, 0, '13.88689701540584', '120.97652207187333', 'Lagoon', 0.000),
-(180, 'Resident 180', 'Sta. Teresita', 'Calumala', 'STA', 'Ronald Mendoza', 1, 0, 0, 0, 0, '13.885460675361998', '120.982314093077', 'Composting', 0.000),
-(181, 'Resident 181', 'Sta. Teresita', 'Calumala', 'STA', 'Sylvia D. Bancoro', 8, 0, 0, 31, 0, '13.888335952034526', '120.977992049833', 'Ipa/Rice Hull', 0.000),
-(182, 'Resident 182', 'Sta. Teresita', 'Calumala', 'STA', 'Teodoro A. Agno', 0, 0, 1, 0, 0, '13.888952714771248', '120.977326405367', 'N/A', 0.000),
-(183, 'Resident 183', 'Sta. Teresita', 'Cuta East', 'STA', 'Alberto Atienza', 7, 0, 23, 0, 0, '13.864882745815', '120.992212587159', 'Composting', 0.000),
-(184, 'Resident 184', 'Sta. Teresita', 'Cutang Cawayan', 'STA', 'Arnold V. Amores', 0, 0, 0, 0, 0, '13.868829977470815', '120.987615695768', 'N/A', 0.000),
-(185, 'Resident 185', 'Sta. Teresita', 'Cutang Cawayan', 'STA', 'Edison Dimailig', 2, 0, 10, 0, 0, '13.86751696757775', '120.9850511754255', 'Septic Tank', 0.000),
-(186, 'Resident 186', 'Sta. Teresita', 'Cutang Cawayan', 'STA', 'Ronaldo Oftial', 4, 0, 20, 10, 0, '13.866303046162407', '120.985446698463', 'Biogas', 0.000),
-(187, 'Resident 187', 'Sta. Teresita', 'Poblacion 1', 'STA', 'Felipe B. Maranan', 0, 0, 3, 0, 0, '13.87186662048421', '120.972800640376', 'Composting', 0.000),
-(188, 'Resident 188', 'Sta. Teresita', 'Poblacion 2', 'STA', 'Isagani N. Arenas', 6, 0, 0, 0, 0, '13.866846091677708', '120.976384071738', 'Lagoon', 0.000),
-(189, 'Resident 189', 'Sta. Teresita', 'Poblacion 3', 'STA', 'Eden Perez/Ruelito Perez', 0, 0, 23, 9, 0, '13.900079727400446', '120.972889380003', 'Septic Tank', 0.000),
-(190, 'Resident 190', 'Sta. Teresita', 'Saimsim', 'STA', 'Welbert Salazar', 0, 1, 0, 0, 0, '13.911231408542054', '120.98073680269505', 'N/A', 0.000),
-(191, 'Resident 191', 'Sta. Teresita', 'Saimsim', 'STA', 'Renato Comia', 0, 0, 0, 10, 0, '13.900982070021428', '120.97748446966', 'Septic Tank', 0.000),
-(192, 'Resident 192', 'Sta. Teresita', 'Saimsim', 'STA', 'Aljon Comia', 4, 3, 31, 0, 0, '13.900982070021428', '120.979261990312', 'N/A', 0.000),
-(193, 'Resident 193', 'Sta. Teresita', 'Sampa', 'STA', 'Celso Clor', 0, 0, 9, 0, 0, '13.859847054137376', '120.964058296214', 'Septic Tank', 0.000),
-(194, 'Resident 194', 'Sta. Teresita', 'Sampa', 'STA', 'Philip Mendoza', 0, 0, 9, 0, 0, '13.86396997581948', '120.96697850283', 'Septic Tank', 0.000),
+(165, 'Resident 165', 'Santa Teresita', 'Antipolo', 'STA', 'May Punsalan', 1, 0, 0, 0, 0, '13.88182790630655', '120.97429783471', 'Septic Tank', 0.000),
+(166, 'Resident 166', 'Santa Teresita', 'Burol', 'STA', 'Resurrecsion Caguicla', 0, 0, 0, 0, 0, '13.895461616841849', '120.965415761575', 'N/A', 0.000),
+(167, 'Resident 167', 'Santa Teresita', 'Burol', 'STA', 'Jerome\'s Babuyan', 0, 0, 1, 0, 0, '13.8973891597423', '120.9670520098452', 'Ipa/Rice Hull', 0.000),
+(168, 'Resident 168', 'Santa Teresita', 'Burol', 'STA', 'Ecolerence Piggery', 5, 0, 0, 0, 0, '13.895556192898692', '120.967096098385', 'Septic Tank', 0.000),
+(169, 'Resident 169', 'Santa Teresita', 'Burol', 'STA', 'Retchie Bobadilla', 0, 0, 0, 0, 0, '13.89661384369715', '120.96654800184562', 'N/A', 0.000),
+(170, 'Resident 170', 'Santa Teresita', 'Calumala', 'STA', 'Danilo Katigbak', 0, 0, 0, 0, 0, '13.887474141414500', '120.9781742727220', 'N/A', 0.000),
+(171, 'Resident 171', 'Santa Teresita', 'Calumala', 'STA', 'Diosdado B. Bathan', 2, 0, 0, 7, 0, '13.88937800130199', '120.980316782961', 'Septic Tank', 0.000),
+(172, 'Resident 172', 'Santa Teresita', 'Calumala', 'STA', 'Guillermo B. Malaluan', 1, 0, 0, 10, 0, '13.88804023569232', '120.976400168345', 'Septic Tank', 0.000),
+(173, 'Resident 173', 'Santa Teresita', 'Calumala', 'STA', 'Joey A. Benedicto', 0, 0, 0, 0, 0, '13.88782667120326', '120.978798425373', 'N/A', 0.000),
+(174, 'Resident 174', 'Santa Teresita', 'Calumala', 'STA', 'John James B. Arellano', 0, 0, 2, 0, 0, '13.88992134654180', '120.977802545154', 'Lagoon', 0.000),
+(175, 'Resident 175', 'Santa Teresita', 'Calumala', 'STA', 'Jonah T. Coro', 0, 0, 0, 0, 0, '13.887246194460058', '120.976513085417', 'Septic Tank', 0.000),
+(176, 'Resident 176', 'Santa Teresita', 'Calumala', 'STA', 'Jose R. Alviz', 2, 0, 2, 0, 0, '13.88692793881696', '120.976825551274', 'Composting', 0.000),
+(177, 'Resident 177', 'Santa Teresita', 'Calumala', 'STA', 'Laami M. Basco', 6, 0, 0, 3, 0, '13.883823654802285', '120.974588448944', 'Septic Tank', 0.000),
+(178, 'Resident 178', 'Santa Teresita', 'Calumala', 'STA', 'Narmi Bathan', 1, 0, 0, 0, 0, '13.888633014480991', '120.976914744468', 'Free-flow', 11.298),
+(179, 'Resident 179', 'Santa Teresita', 'Calumala', 'STA', 'Nestor B. Manalo', 2, 0, 0, 0, 0, '13.88689701540584', '120.97652207187333', 'Lagoon', 0.000),
+(180, 'Resident 180', 'Santa Teresita', 'Calumala', 'STA', 'Ronald Mendoza', 1, 0, 0, 0, 0, '13.885460675361998', '120.982314093077', 'Composting', 0.000),
+(181, 'Resident 181', 'Santa Teresita', 'Calumala', 'STA', 'Sylvia D. Bancoro', 8, 0, 0, 31, 0, '13.888335952034526', '120.977992049833', 'Ipa/Rice Hull', 0.000),
+(182, 'Resident 182', 'Santa Teresita', 'Calumala', 'STA', 'Teodoro A. Agno', 0, 0, 1, 0, 0, '13.888952714771248', '120.977326405367', 'N/A', 0.000),
+(183, 'Resident 183', 'Santa Teresita', 'Cuta East', 'STA', 'Alberto Atienza', 7, 0, 23, 0, 0, '13.864882745815', '120.992212587159', 'Composting', 0.000),
+(184, 'Resident 184', 'Santa Teresita', 'Cutang Cawayan', 'STA', 'Arnold V. Amores', 0, 0, 0, 0, 0, '13.868829977470815', '120.987615695768', 'N/A', 0.000),
+(185, 'Resident 185', 'Santa Teresita', 'Cutang Cawayan', 'STA', 'Edison Dimailig', 2, 0, 10, 0, 0, '13.86751696757775', '120.9850511754255', 'Septic Tank', 0.000),
+(186, 'Resident 186', 'Santa Teresita', 'Cutang Cawayan', 'STA', 'Ronaldo Oftial', 4, 0, 20, 10, 0, '13.866303046162407', '120.985446698463', 'Biogas', 0.000),
+(187, 'Resident 187', 'Santa Teresita', 'Poblacion 1', 'STA', 'Felipe B. Maranan', 0, 0, 3, 0, 0, '13.87186662048421', '120.972800640376', 'Composting', 0.000),
+(188, 'Resident 188', 'Santa Teresita', 'Poblacion 2', 'STA', 'Isagani N. Arenas', 6, 0, 0, 0, 0, '13.866846091677708', '120.976384071738', 'Lagoon', 0.000),
+(189, 'Resident 189', 'Santa Teresita', 'Poblacion 3', 'STA', 'Eden Perez/Ruelito Perez', 0, 0, 23, 9, 0, '13.900079727400446', '120.972889380003', 'Septic Tank', 0.000),
+(190, 'Resident 190', 'Santa Teresita', 'Saimsim', 'STA', 'Welbert Salazar', 0, 1, 0, 0, 0, '13.911231408542054', '120.98073680269505', 'N/A', 0.000),
+(191, 'Resident 191', 'Santa Teresita', 'Saimsim', 'STA', 'Renato Comia', 0, 0, 0, 10, 0, '13.900982070021428', '120.97748446966', 'Septic Tank', 0.000),
+(192, 'Resident 192', 'Santa Teresita', 'Saimsim', 'STA', 'Aljon Comia', 4, 3, 31, 0, 0, '13.900982070021428', '120.979261990312', 'N/A', 0.000),
+(193, 'Resident 193', 'Santa Teresita', 'Sampa', 'STA', 'Celso Clor', 0, 0, 9, 0, 0, '13.859847054137376', '120.964058296214', 'Septic Tank', 0.000),
+(194, 'Resident 194', 'Santa Teresita', 'Sampa', 'STA', 'Philip Mendoza', 0, 0, 9, 0, 0, '13.86396997581948', '120.96697850283', 'Septic Tank', 0.000),
 (195, 'Resident 195', 'Talisay', 'Aya', 'TAL', 'Gerry Cacao', 4, 0, 1, 0, 0, '14.092334500894', '121.050795002105', 'Lagoon', 0.000),
 (196, 'Resident 196', 'Talisay', 'Aya', 'TAL', 'Edwin De Leon', 0, 0, 2, 0, 0, '14.094777382284', '121.051386743873', 'Septic Tank', 0.000),
 (197, 'Resident 197', 'Talisay', 'Aya', 'TAL', 'Jr. Abante', 1, 0, 2, 0, 0, '14.100766745864', '121.051265360946', 'Free-flow', 6.900),
@@ -603,6 +603,98 @@ CREATE TABLE `rain_g` (
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tributaries`
+--
+
+CREATE TABLE `tributaries` (
+  `user` varchar(50) DEFAULT NULL,
+  `tributary` varchar(50) DEFAULT NULL,
+  `municipality_name` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tributaries`
+--
+
+INSERT INTO `tributaries` (`user`, `tributary`, `municipality_name`) VALUES
+('ADMIN', 'Calumala Creek 1', 'Santa Teresita'),
+('ADMIN', 'Calumala Creek 2', 'Santa Teresita'),
+('ADMIN', 'Bancoro Creek', 'San Nicolas'),
+('ADMIN', 'Tagudtod Creek', 'San Nicolas'),
+('ADMIN', 'Pansipit River', 'Agoncillo'),
+('ADMIN', 'Agoncillo Creek 1', 'Agoncillo'),
+('ADMIN', 'Agoncillo Creek 2', 'Agoncillo'),
+('ADMIN', 'Agoncillo Creek 3', 'Agoncillo'),
+('ADMIN', 'Bilibinwang Creek 1', 'Agoncillo'),
+('ADMIN', 'Bilibinwang Creek 2', 'Agoncillo'),
+('ADMIN', 'Buso-buso Stream 1', 'Laurel'),
+('ADMIN', 'Buso-buso Stream 2', 'Laurel'),
+('ADMIN', 'Buso-buso Stream 3', 'Laurel'),
+('ADMIN', 'Buso-buso Stream 4', 'Laurel'),
+('ADMIN', 'Gulod Stream 3', 'Laurel'),
+('ADMIN', 'Gulod Stream 4', 'Laurel'),
+('ADMIN', 'Gulod Stream 5', 'Laurel'),
+('ADMIN', 'Gulod Stream 6', 'Laurel'),
+('ADMIN', 'Gulod Stream 7', 'Laurel'),
+('ADMIN', 'Laurel River 1', 'Laurel'),
+('ADMIN', 'Molinete Creek 2', 'Laurel'),
+('ADMIN', 'Balakilong Creek', 'Laurel'),
+('ADMIN', 'Berinayan Creek', 'Laurel'),
+('ADMIN', 'Sampaloc Creek 1', 'Talisay'),
+('ADMIN', 'Sampaloc Creek 2', 'Talisay'),
+('ADMIN', 'Banga Creek', 'Talisay'),
+('ADMIN', 'Lambingan River', 'Talisay'),
+('ADMIN', 'Tumaway River', 'Talisay'),
+('ADMIN', 'Bignay Creek', 'Talisay'),
+('ADMIN', 'Ambulong Stream 2', 'Tanauan'),
+('ADMIN', 'Ambulong Stream 3', 'Tanauan'),
+('ADMIN', 'Wawa River', 'Tanauan'),
+('ADMIN', 'Balete River', 'Balete'),
+('ADMIN', 'Palsara River', 'Balete'),
+('ADMIN', 'Kinalaglagan River', 'MataasNaKahoy'),
+('ADMIN', 'Bulaklakan River', 'MataasNaKahoy'),
+('STATERESITA', 'Calumala Creek 1', 'Santa Teresita'),
+('STATERESITA', 'Calumala Creek 2', 'Santa Teresita'),
+('SANNICOLAS', 'Bancoro Creek', 'San Nicolas'),
+('SANNICOLAS', 'Tagudtod Creek', 'San Nicolas'),
+('AGONCILLO', 'Pansipit River', 'Agoncillo'),
+('AGONCILLO', 'Agoncillo Creek 1', 'Agoncillo'),
+('AGONCILLO', 'Agoncillo Creek 2', 'Agoncillo'),
+('AGONCILLO', 'Agoncillo Creek 3', 'Agoncillo'),
+('AGONCILLO', 'Bilibinwang Creek 1', 'Agoncillo'),
+('AGONCILLO', 'Bilibinwang Creek 2', 'Agoncillo'),
+('LAUREL', 'Buso-buso Stream 1', 'Laurel'),
+('LAUREL', 'Buso-buso Stream 2', 'Laurel'),
+('LAUREL', 'Buso-buso Stream 3', 'Laurel'),
+('LAUREL', 'Buso-buso Stream 4', 'Laurel'),
+('LAUREL', 'Gulod Stream 3', 'Laurel'),
+('LAUREL', 'Gulod Stream 4', 'Laurel'),
+('LAUREL', 'Gulod Stream 5', 'Laurel'),
+('LAUREL', 'Gulod Stream 6', 'Laurel'),
+('LAUREL', 'Gulod Stream 7', 'Laurel'),
+('LAUREL', 'Laurel River 1', 'Laurel'),
+('LAUREL', 'Molinete Creek 2', 'Laurel'),
+('LAUREL', 'Balakilong Creek', 'Laurel'),
+('LAUREL', 'Berinayan Creek', 'Laurel'),
+('TALISAY', 'Sampaloc Creek 1', 'Talisay'),
+('TALISAY', 'Sampaloc Creek 2', 'Talisay'),
+('TALISAY', 'Banga Creek', 'Talisay'),
+('TALISAY', 'Lambingan River', 'Talisay'),
+('TALISAY', 'Tumaway River', 'Talisay'),
+('TALISAY', 'Bignay Creek', 'Talisay'),
+('TANAUAN', 'Ambulong Stream 2', 'Tanauan'),
+('TANAUAN', 'Ambulong Stream 3', 'Tanauan'),
+('TANAUAN', 'Wawa River', 'Tanauan'),
+('BALETE', 'Balete River', 'Balete'),
+('BALETE', 'Palsara River', 'Balete'),
+('MATAASNAKAHOY', 'Kinalaglagan River', 'MataasNaKahoy'),
+('MATAASNAKAHOY', 'Bulaklakan River', 'MataasNaKahoy'),
+('ADMIN', 'Caloocan Creek', 'Talisay'),
+('TALLISAY', 'Caloocan Creek', 'Talisay');
+
 --
 -- Indexes for dumped tables
 --
@@ -645,7 +737,7 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `piggeries`
 --
 ALTER TABLE `piggeries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=271;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=279;
 
 --
 -- AUTO_INCREMENT for table `pig_farms`
@@ -657,7 +749,7 @@ ALTER TABLE `pig_farms`
 -- AUTO_INCREMENT for table `rain_g`
 --
 ALTER TABLE `rain_g`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

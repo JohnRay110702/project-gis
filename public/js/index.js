@@ -12,6 +12,17 @@ window.TimestampConverter = {
     }
 };
 
+//-----------------slider navigation bar---------------------//
+const tab = document.querySelector('.tabs'),
+    badges = tab.querySelectorAll('.tab');
+
+badges.forEach(badge => {
+    badge.addEventListener('click', () => {
+        tab.querySelector('.active').classList.remove('active');
+        badge.classList.add('active');
+    })
+});
+
 
 // Function to show only the dashboard content
 function showDashboardContent() {
@@ -198,6 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
  
 //============== ADD BUTTON =================//
  // Add event listener for 'addBtn' element
+ 
 
  document.getElementById('addBtn').addEventListener('click', function (event) {
     // Get rainfall value from input
@@ -957,15 +969,15 @@ document.addEventListener("DOMContentLoaded", function () {
 //============== MUNICIPALIY CHART =================//
 
 document.getElementById("municipalityFilter").addEventListener("click", function () {
-    const tributaryName = document.getElementById("municipality__select").value;
+    const selectedTributary = document.getElementById("municipality__select").value;
 
-    if (tributaryName === "") {
+    if (selectedTributary === "") {
         // alert("Please select a tributary first.");
         showTributaryAlert();
         return;
     }
 
-    fetchRainData(tributaryName);
+    fetchRainData(selectedTributary);
     
 });
 
@@ -984,62 +996,62 @@ document.getElementById("forecastButton").addEventListener("click", function () 
     
 });
 
-async function latestDataFetching(forecastTributary) {
+// async function latestDataFetching(forecastTributary) {
 
-    async function fetchLatestData() {
+//     async function fetchLatestData() {
 
-        const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(forecastTributary)}`;
+//         const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(forecastTributary)}`;
 
     
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
+//         try {
+//             const response = await fetch(url);
+//             const data = await response.json();
     
-            console.log("Fetched Data:", data); // Debugging line
+//             console.log("Fetched Data:", data); // Debugging line
     
-            if (!data || data.error) {
-                console.error("No valid latest data found:", data.error);
-                return;
-            }
+//             if (!data || data.error) {
+//                 console.error("No valid latest data found:", data.error);
+//                 return;
+//             }
     
-            updateUIWithLatestData(data);
-        } catch (error) {
-            console.error("Error fetching latest data:", error);
-        }
-    }
+//             updateUIWithLatestData(data);
+//         } catch (error) {
+//             console.error("Error fetching latest data:", error);
+//         }
+//     }
     
     
-    // Function to update the UI with the latest data
-    function updateUIWithLatestData(data) {
-        if (!data || typeof data.volume === "undefined") {
-            console.error("No valid latest data found.");
-            return;
-        }
+//     // Function to update the UI with the latest data
+//     function updateUIWithLatestData(data) {
+//         if (!data || typeof data.total_volume === "undefined") {
+//             console.error("No valid latest data found.");
+//             return;
+//         }
     
-        // Update the UI elements
-        const rainfallResultText = document.getElementById('rainfallResultText');
-        const locationResultText = document.getElementById('locationResultText');
+//         // Update the UI elements
+//         const rainfallResultText = document.getElementById('rainfallResultText');
+//         const locationResultText = document.getElementById('locationResultText');
     
-        if (rainfallResultText) {
-            rainfallResultText.textContent = data.volume + " mm";
-            console.log("Volume: ", data.volume)
-        } else {
-            console.log("Element 'rainfallResultText' not found.");
-        }
+//         if (rainfallResultText) {
+//             rainfallResultText.textContent = data.total_volume + " mm";
+//             console.log("Volume: ", data.total_volume)
+//         } else {
+//             console.log("Element 'rainfallResultText' not found.");
+//         }
     
-        if (locationResultText) {
-            locationResultText.textContent = forecastTributary || "Unknown Tributary";
-        } else {
-            console.warn("Element 'locationResultText' not found.");
-        }
-    }
+//         if (locationResultText) {
+//             locationResultText.textContent = forecastTributary || "Unknown Tributary";
+//         } else {
+//             console.warn("Element 'locationResultText' not found.");
+//         }
+//     }
     
-    // Call fetchLatestData() at regular intervals (e.g., every 5 seconds)
-    // setInterval(fetchLatestData, 5000);
+//     // Call fetchLatestData() at regular intervals (e.g., every 5 seconds)
+//     // setInterval(fetchLatestData, 5000);
     
-    // Initial call to load data when the page loads
-    fetchLatestData();
-}
+//     // Initial call to load data when the page loads
+//     fetchLatestData();
+// }
 
 //fetching the tributaries based on the logged in municipalities
 // Function to fetch user data and get municipality
@@ -1064,9 +1076,59 @@ async function fetchUserMunicipality() {
     }
 }
 
+//====================Get the list of Municipality=========//
+
+// Get the logged in user
+async function getMunicipalityTributary() {
+    const municipalityName = await fetchUserMunicipality();
+
+    if (!municipalityName) {
+        console.error("Municipality not found for the user.");
+        return;
+    }
+
+    const response = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(municipalityName)}`);
+    const municipalityData = await response.json();
+
+
+    return municipalityData;
+}
+
+//fetch the Municipality Names to the lists
+async function loadUserMunicipality() {
+    try {
+        const userLoggedIn = await fetchUserMunicipality();
+
+        // Fetch municipalities for the logged-in user
+        const response = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(userLoggedIn)}`);
+        const data = await response.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+            console.error("No municipality data found");
+            return {};
+        }
+
+        // Store municipality names in an object
+        const municipalities = {};
+        data.forEach(entry => {
+            municipalities[entry.municipality] = []; // Placeholder for discharge data
+        });
+
+        console.log("Municipalities under user:", municipalities);
+        return municipalities; // Return municipality list as an object
+
+    } catch (error) {
+        console.error("Error loading municipalities:", error);
+        return {};
+    }
+}
+
+
+//===================Tributary Chart===================//
 // Function to fetch tributaries based on municipality
 async function fetchTributaries() {
     try {
+        const municipalityList = await loadUserMunicipality();
         const municipalityName = await fetchUserMunicipality(); // Get municipality from user data
 
         if (!municipalityName) {
@@ -1075,38 +1137,67 @@ async function fetchTributaries() {
         }
 
         // Fetch tributaries based on municipality
-        const response = await fetch(`/public/php/getTributaries.php?municipality=${encodeURIComponent(municipalityName)}`);
+        const response = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(municipalityName)}`);
         const data = await response.json();
+        console.log("Fetched Tributaries:", data);
 
-        const tributarySelect = document.getElementById("forecast_tributary_select");
-        tributarySelect.innerHTML = "<option value='' selected hidden >Select tributary...</option>";
+        // if(data.municipality in municipalityList){
+        //     console.log("Municipality found in the list:", data.municipality);
+        // }
+
+
+        // const tributarySelect = document.getElementById("forecast_tributary_select");
+        // tributarySelect.innerHTML = "<option value='' selected hidden >Select tributary...</option>";
 
 
         const tributaryChart = document.getElementById("municipality__select");
         tributaryChart.innerHTML = "<option value='' selected hidden >Select tributary...</option>";
 
-        if (data.error) {
-            console.error("Error:", data.error);
-        } else {
-            data.forEach(tributary => {
-                let option = document.createElement("option");
-                option.value = tributary;
-                option.textContent = tributary;
-                tributarySelect.appendChild(option);
-                // tributaryChart.appendChild(option);
-            });
+        const tributaryList = {};
+
+        data.forEach(({ tributary, municipality }) => {
+            if (!tributaryList[municipality]) {
+                tributaryList[municipality] = new Set(); // Use a Set to store unique tributaries
+            }
+            tributaryList[municipality].add(tributary);
+        });
+
+        // Convert Set to an array if needed (JSON doesn't support Sets directly)
+        for (const key in tributaryList) {
+            tributaryList[key] = Array.from(tributaryList[key]);
         }
+
+        console.log("Formatted Tributary List:", tributaryList);
+
+
+        // for (const municipality in municipalityList){
+        //     municipalityList[municipality] = tributaryList[municipality];
+        // }
+        // if (data.error) {
+        //     console.error("Error:", data.error);
+        // } else {
+        //     data.forEach(tributary => {
+        //         console.log("each trib: ", tributary);
+        //         let option = document.createElement("option");
+        //         option.value = tributary.tributary;
+        //         option.textContent = tributary.tributary;
+        //         tributarySelect.appendChild(option);
+        //         // tributaryChart.appendChild(option);
+        //     });
+        // }
 
         if(data.error) {
             console.error("Error: ", data.error);
         } else {
             data.forEach(tributary => {
                 let option = document.createElement("option");
-                option.value = tributary;
-                option.textContent = tributary;
+                option.value = tributary.tributary;
+                option.textContent = tributary.tributary;
                 tributaryChart.appendChild(option);
             });
         }
+
+        return tributaryList; // Return the list of municipalities and their tributaries
     } catch (error) {
         console.error("Fetch Error (Tributaries):", error);
     }
@@ -1116,47 +1207,1196 @@ async function fetchTributaries() {
 document.addEventListener("DOMContentLoaded", fetchTributaries);
 
 
-async function fetchForecasting(tributaryName) {
-    fetch("http://localhost:5000/api/get_rain_data", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tributary: tributaryName })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Received Rain Data:", data);
-        if (data.length === 0) {
-            // alert("No historical data found for this tributary.");
-            showHistoricalDataAlert(tributaryName);
 
+
+//================Forecasting Dashboard================//
+
+// Get the total discharge of municipality per tributary
+async function getTotalDischarge() {
+    const userMunicipality = await fetchUserMunicipality();
+    const majorTributaries = new Set([
+        "Calumala Creek 1", "Calumala Creek 2", "Bancoro Creek", "Tagudtod Creek",
+        "Pansipit River", "Agoncillo Creek 1", "Agoncillo Creek 2", "Agoncillo Creek 3",
+        "Bilibinwang Creek 1", "Bilibinwang Creek 2", "Buso-buso Stream 1", "Buso-buso Stream 2",
+        "Buso-buso Stream 3", "Buso-buso Stream 4", "Gulod Stream 3", "Gulod Stream 4",
+        "Gulod Stream 5", "Gulod Stream 6", "Gulod Stream 7", "Laurel River 1",
+        "Molinete Creek 2", "Balakilong Creek", "Berinayan Creek", "Sampaloc Creek 1",
+        "Sampaloc Creek 2", "Banga Creek", "Lambingan River", "Tumaway River",
+        "Bignay Creek", "Caloocan Creek", "Ambulong Stream 2", "Ambulong Stream 3",
+        "Wawa River", "Balete River", "Palsara River", "Kinalaglagan River", "Bulaklakan River"
+    ]);
+
+    try {
+        // Load the GeoJSON file using fetch
+        const geojsonResponse = await fetch("http://localhost:3000/geojson_files/Waterways_updated.geojson");
+        const geojsonData = await geojsonResponse.json();
+
+        // Extract tributary coordinates
+        const tributaries = {};
+        geojsonData.features.forEach(feature => {
+            const name = feature.properties?.name || "Unknown";
+            const coordinates = feature.geometry?.coordinates || [];
+            if (majorTributaries.has(name)) {
+                tributaries[name] = coordinates;
+            }
+        });
+
+        // Fetch piggeries data
+        const piggeriesUrl = "http://localhost:3000/public/php/piggeries.php";
+        const piggeriesResponse = await fetch(piggeriesUrl);
+        const piggeriesData = await piggeriesResponse.json();
+
+        // Fetch tributaries with municipality data
+        const tributariesUrl = `http://localhost:3000/public/php/getTributaries.php?user=${encodeURIComponent(userMunicipality)}`;
+        const tributariesResponse = await fetch(tributariesUrl);
+        const tributariesData = await tributariesResponse.json();
+
+        console.log("Fetch tributaries Discharge: ", tributariesData);
+
+        // Filter piggeries and compute total discharge
+        const distanceThreshold = 40; // Meters
+        const tributaryDischarge = {};
+
+        piggeriesData.forEach(piggery => {
+            if (piggery.sanitation === "Free-flow" && parseFloat(piggery.discharge) > 0) {
+                const piggeryLocation = { latitude: parseFloat(piggery.latitude), longitude: parseFloat(piggery.longitude) };
+
+                for (const [tribName, tribCoords] of Object.entries(tributaries)) {
+                    for (const coord of tribCoords) {
+                        const tributaryLocation = { latitude: coord[1], longitude: coord[0] }; // Convert GeoJSON format
+                        const distance = getDistance(piggeryLocation, tributaryLocation);
+
+                        if (distance < distanceThreshold) {
+                            if (!tributaryDischarge[tribName]) {
+                                tributaryDischarge[tribName] = 0;
+                            }
+                            tributaryDischarge[tribName] += parseFloat(piggery.discharge);
+                            break; // Stop checking once assigned
+                        }
+                    }
+                }
+            }
+        });
+
+        // Group by municipality (ENSURE 0 DISCHARGE TRIBUTARIES ARE INCLUDED)
+        const municipalityDischarge = {};
+        tributariesData.forEach(({ tributary, municipality }) => {
+            if (!municipalityDischarge[municipality]) {
+                municipalityDischarge[municipality] = [];
+            }
+            municipalityDischarge[municipality].push({
+                tributary, 
+                discharge: tributaryDischarge[tributary] ?? 0 // Include 0 discharge tributaries
+            });
+        });
+
+        return municipalityDischarge;
+    } catch (error) {
+        console.error("❌ Error fetching data", error);
+        return {};
+    }
+}
+
+// Function to calculate distance using Haversine formula
+function getDistance(coord1, coord2) {
+    const toRad = x => (x * Math.PI) / 180;
+    const R = 6371000; // Earth's radius in meters
+    const dLat = toRad(coord2.latitude - coord1.latitude);
+    const dLon = toRad(coord2.longitude - coord1.longitude);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(toRad(coord1.latitude)) * Math.cos(toRad(coord2.latitude)) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+}
+
+getTotalDischarge().then(municipalityData => {
+    console.log("Discharge grouped by municipality:", municipalityData);
+});
+
+document.addEventListener("DOMContentLoaded", getMunicipalityTributary);
+
+
+
+// Get the percentage of discharge contribution per tributary
+async function computeDischargePercentage() {
+    const municipalityDischarge = await getTotalDischarge(); // Get discharge data
+    const municipalityList = await loadUserMunicipality(); // Get municipalities under user
+
+    console.log("Municipalities under user: ", municipalityList);
+
+    // Store percentages
+    const dischargePercentage = {};
+
+    for (const [municipality, tributaries] of Object.entries(municipalityDischarge)) {
+        // Calculate total discharge for the municipality
+        const totalDischarge = tributaries.reduce((sum, { discharge }) => sum + discharge, 0);
+
+        // Compute percentage for each tributary
+        dischargePercentage[municipality] = tributaries.map(({ tributary, discharge }) => ({
+            tributary,
+            discharge: parseFloat(discharge.toFixed(2)),
+            percentage: totalDischarge > 0 ? parseFloat(((discharge / totalDischarge) * 100).toFixed(2)) : 0
+        }));
+
+        // Attach computed data to the municipality list
+        if (municipality in municipalityList) {
+            municipalityList[municipality] = dischargePercentage[municipality];
+        }
+    }
+
+    console.log("Updated municipality list with discharge percentage:", municipalityList);
+    return municipalityList;
+}
+
+// Call the function and log the result
+computeDischargePercentage().then(data => {
+    console.log("Final Data:", data);
+});
+
+////
+async function updateMunicipalityTabs() {
+    try {
+        const municipalityData = await computeDischargePercentage();
+        const municipalitySanitationData = await getSanitation();
+        const municipalityTributaryData = await fetchTributaries()
+
+        console.log("municipalityTributaryData: ", municipalityTributaryData);
+
+        
+        const municipalityTabs = document.getElementById("municipalityTabs");
+        municipalityTabs.innerHTML = ""; // Clear existing tabs
+        // const tributaryMap = {}; // Object to store tributary data
+
+        let first = true; // Flag to track the first municipality
+
+        for (const municipality of Object.keys(municipalityData)) {
+            const dischargeData = municipalityData[municipality] || {};
+            const sanitationData = municipalitySanitationData[municipality] || {};
+            const tributaryData = municipalityTributaryData[municipality] || [];
+
+            // Create a tab for each municipality
+            const li = document.createElement("li");
+            li.className = "tab";
+            li.textContent = municipality;
+
+            if (first) {
+                li.classList.add("active"); // Mark the first tab as active
+                first = false;
+            }
+
+            // Attach data attributes for future reference
+            li.dataset.discharge = JSON.stringify(dischargeData);
+            li.dataset.sanitation = JSON.stringify(sanitationData);
+            li.dataset.tributary = JSON.stringify(tributaryData);
+
+            // Event listener to handle tab switching
+            li.addEventListener("click", () => {
+                document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+                li.classList.add("active");
+
+                console.log(`Data for ${municipality}:`, {
+                    dischargeData,
+                    sanitationData,
+                    tributaryData
+                });
+
+                updateTributaryDropdown(tributaryData);
+            });
+
+            // Append municipality tab
+            municipalityTabs.appendChild(li);
+        }
+
+        // If there's an active tab, populate the dropdown initially
+        const activeTab = document.querySelector(".tab.active");
+        if (activeTab) {
+            const initialTributaryData = JSON.parse(activeTab.dataset.tributary);
+            updateTributaryDropdown(initialTributaryData);
+        }
+
+    } catch (error) {
+        console.error("Error in updateMunicipalityTabs:", error);
+    }
+}
+
+// Function to update the tributary dropdown
+function updateTributaryDropdown(tributaryData) {
+    const tributarySelect = document.getElementById("forecast_tributary_select");
+    tributarySelect.innerHTML = "<option value='' selected hidden>Select tributary...</option>";
+
+    tributaryData.forEach(tributaryName => {
+        let option = document.createElement("option");
+        option.value = tributaryName;
+        option.textContent = tributaryName;
+        tributarySelect.appendChild(option);
+    });
+
+    console.log("Updated Tributary Dropdown:", tributarySelect);
+}
+
+// Call function to update the UI
+document.addEventListener("DOMContentLoaded", updateMunicipalityTabs);
+
+async function updateDischargeChart(selectedMunicipality = null) {
+    try {
+        // Step 1: Fetch logged-in user's municipalities
+        const userMunicipalities = await fetchUserMunicipality();
+        const municipalityResponse = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(userMunicipalities)}`);
+        const municipalityData = await municipalityResponse.json();
+
+        if (!municipalityData || municipalityData.length === 0) {
+            console.error("❌ No municipality data found!");
             return;
         }
 
-        // ✅ Extract tributary value (if needed)
-        const tributaryValue = data[0]?.tributary || tributaryName; 
+        // Step 2: Fetch discharge percentage data
+        const dischargeData = await computeDischargePercentage();
+        console.log("📊 Discharge Data:", dischargeData);
 
-        // ✅ Now call the forecast API using the same tributary
-        return fetch("http://localhost:5000/api/forecast", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ tributary: tributaryName})
-        });
-    })
-    .then(response => response.json())
-    .then(forecastData => {
-        console.log("Received Forecast Data:", forecastData);
-        if (forecastData.error) {
-            alert("Error generating forecast: " + forecastData.error);
+        // Step 3: Determine which municipality to show on the chart
+        let municipalityName = selectedMunicipality || municipalityData[0]?.municipality;
+
+        if (!municipalityName) {
+            console.warn("⚠ No municipality name available!");
+            return;
         }
-    })
-    .catch(error => console.error("Error:", error));
+
+        console.log("🔹 Displaying Data for:", municipalityName);
+
+        // Step 4: Check if discharge data exists for the selected municipality
+        let dischargeInfo = dischargeData[municipalityName];
+
+        let labels, data, backgroundColors, borderColors;
+
+        if (!dischargeInfo || dischargeInfo.length === 0) {
+            console.warn(`⚠ No discharge data available for ${municipalityName}`);
+
+            // Show a "No Data Available" segment filling 100%
+            labels = ["No Data Available"];
+            data = [100]; // Fill the entire chart
+            backgroundColors = ["rgba(200, 200, 200, 0.6)"];
+            borderColors = ["rgba(150, 150, 150,ta 1)"];
+        } else {
+            // Step 5: Extract labels (tributaries) and data (percentage contribution)
+            labels = dischargeInfo.map(item => item.tributary);
+            data = dischargeInfo.map(item => item.percentage);
+            
+            // Ensure the total percentage sums up to 100%
+            const totalPercentage = data.reduce((sum, val) => sum + val, 0);
+            if (totalPercentage < 100) {
+                labels.push("No Data Available");
+                data.push(100 - totalPercentage);
+            }
+
+            backgroundColors = [
+                'rgba(108, 229, 232, 0.9)',  // Light Cyan Blue
+                'rgba(65, 184, 219, 0.9)',   // Sky Blue
+                'rgba(45, 139, 186, 0.9)',   // Cerulean Blue
+                'rgba(47, 82, 152, 0.9)',    // Royal Blue
+                'rgba(16, 70, 135, 0.9)',    // Deep Blue
+                'rgba(0, 58, 128, 0.9)',     // Navy Blue
+                'rgba(0, 49, 108, 0.9)',     // Dark Navy
+                'rgba(75, 180, 225, 0.9)',   // Sky Blue Tint
+                'rgba(30, 144, 255, 0.9)',   // Dodger Blue
+                'rgba(0, 119, 190, 0.9)',    // Ocean Blue
+                'rgba(70, 130, 180, 0.9)',   // Steel Blue
+                'rgba(0, 153, 204, 0.9)',    // Bright Aqua Blue
+                'rgba(0, 102, 204, 0.9)'     // Vivid Blue
+            ];
+            borderColors = 'rgba(255, 255, 255, 1)'; // White border for all segments
+        }
+
+        const ctx = document.getElementById('doughnut').getContext('2d');
+
+        // Step 6: Destroy previous chart instance if it exists
+        if (window.dischargeChartInstance) {
+            window.dischargeChartInstance.destroy();
+        }
+
+        // Step 7: Create a new doughnut chart with updated data
+        window.dischargeChartInstance = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `Discharge Contribution for ${municipalityName}`,
+                    data: data,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: `Discharge Contribution for ${municipalityName}`, 
+                        font: {
+                            size: 12
+                        },
+                        color: '#000', // Set title color
+                        padding: {
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            font: {
+                                size: 12
+                            }
+                        },
+                        padding: {
+                            top: 20,
+                            bottom: 0
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return `${tooltipItem.label}: ${tooltipItem.raw}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+    } catch (error) {
+        console.error("❌ Error updating discharge chart:", error);
+    }
 }
 
+// ✅ Fetch discharge chart on page load
+document.addEventListener("DOMContentLoaded", () => {
+    updateDischargeChart();
+});
+
+// ✅ Add event listener to update chart when a user selects a municipality
+// document.getElementById("municipalityTabs").addEventListener("click", (event) => {
+//     if (event.target.tagName === "LI") {
+//         const selectedMunicipality = event.target.textContent;
+//         updateDischargeChart(selectedMunicipality);
+//     }
+// });
 
 
-async function fetchRainData(tributaryName) {
 
-    let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(tributaryName)}`;
+
+//Get Sanitation type of every municipality
+async function getSanitation() {
+    try {
+        // Fetch logged-in user's municipality
+        const userMunicipality = await fetchUserMunicipality();
+        const municipalityList = await loadUserMunicipality();
+
+        // Fetch tributary data to link tributaries to municipalities
+        // const sanitationResponse = await fetch(`http://localhost:3000/public/php/getTributaries.php?user=${encodeURIComponent(userMunicipality)}`);
+        // const sanitationData = await sanitationResponse.json();
+
+        // Fetch piggeries data
+        const response = await fetch("http://localhost:3000/public/php/piggeries.php");
+        const piggeriesData = await response.json();
+
+        // Extract all possible sanitation types from the dataset
+        const allSanitationTypes = new Set(piggeriesData.map(piggery => piggery.sanitation));
+
+        // Object to store sanitation counts per municipality
+        const sanitationCount = {};
+
+        // Process piggeries data
+        piggeriesData.forEach(piggery => {
+            const { municipality, sanitation } = piggery;
+
+            // Ensure municipality exists in the sanitationCount object
+            if (!sanitationCount[municipality]) {
+                sanitationCount[municipality] = {};
+                
+                // Initialize all sanitation types to 0
+                allSanitationTypes.forEach(type => {
+                    sanitationCount[municipality][type] = 0;
+                });
+            }
+
+            // Increment the sanitation count
+            sanitationCount[municipality][sanitation]++;
+            
+        });
+
+        // Ensure all municipalities have all sanitation types (even if missing)
+        for (const municipality in sanitationCount) {
+            allSanitationTypes.forEach(type => {
+                if (!sanitationCount[municipality].hasOwnProperty(type)) {
+                    sanitationCount[municipality][type] = 0;
+                }
+            });
+
+            if(municipality in municipalityList){
+                municipalityList[municipality] = sanitationCount[municipality];
+            }
+        }
+
+        console.log("Sanitation count per municipality: ", sanitationCount);
+        return sanitationCount;
+
+    } catch (error) {
+        console.error("❌ Error fetching sanitation data:", error);
+        return {};
+    }
+}
+
+// Call function and log result
+getSanitation().then(data => {
+    console.log("Total sanitation count per municipality: ", data);
+});
+
+
+// Function to update the bar chart
+async function updateSanitationChart(selectedMunicipality = null) {
+    try {
+        // Fetch logged-in user's municipality from getTributaries.php
+        const userMunicipalities = await fetchUserMunicipality();
+        const userMunicipalityResponse = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(await fetchUserMunicipality())}`);
+        const userMunicipalityData = await userMunicipalityResponse.json();
+
+        // Check if valid municipality data is received
+        if (!userMunicipalityData || userMunicipalityData.length === 0) {
+            console.warn("⚠ No municipality data found for the logged-in user.");
+            return;
+        }
+
+        // Fetch sanitation data
+        const sanitationData = await getSanitation();
+
+        // Extract the municipality name (assuming the user is associated with one municipality)
+        const municipalityName = selectedMunicipality || userMunicipalityData[0].municipality; 
+
+
+
+        // Get sanitation counts for the fetched municipality
+        const sanitationCounts = sanitationData[municipalityName];
+
+        console.log("sanitation counts: ", sanitationCounts);
+
+        // Check if sanitation data exists for the user's municipality
+        if (!sanitationCounts) {
+            console.warn(`⚠ No sanitation data available for ${municipalityName}`);
+            return;
+        }
+
+        const ctx = document.getElementById('barchart').getContext('2d');
+
+        // Extract sanitation types and counts
+        const labels = Object.keys(sanitationCounts); // Sanitation types
+        const data = labels.map(type => sanitationCounts[type]); // Corresponding counts
+
+        // Destroy previous chart instance if it exists (to prevent duplicates)
+        if (window.sanitationChartInstance) {
+            window.sanitationChartInstance.destroy();
+        }
+
+        // Create new bar chart
+        window.sanitationChartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `Sanitation Count for ${municipalityName}`,
+                    data: data,
+                    backgroundColor: [
+                        'rgb(108, 229, 232)',
+                        'rgb(65, 184, 219)',
+                        'rgb(45, 139, 186)',
+                        'rgb(47, 82, 152)',
+                        'rgb(16, 70, 135)',
+                        'rgb(0, 58, 128)',
+                        'rgb(0, 49, 108)',
+                        'rgb(0, 37, 83)'
+                    ],
+                    borderColor: [
+                        'rgb(108, 229, 232)',
+                        'rgb(65, 184, 219)',
+                        'rgb(45, 139, 186)',
+                        'rgb(47, 82, 152)',
+                        'rgb(16, 70, 135)',
+                        'rgb(0, 58, 128)',
+                        'rgb(0, 49, 108)',
+                        'rgb(0, 37, 83)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'x', // Flip chart to horizontal bars
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Sanitation Type' },
+                        font: { weight: "bold", color: "black" }
+                    },
+                    y: {
+                        title: { display: true, text: 'Sanitation Count' }
+                    }
+                }
+            }
+        });
+
+    } catch (error) {
+        console.error("❌ Error updating sanitation chart:", error);
+    }
+}
+
+// Call function to update chart
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateSanitationChart();
+});
+
+// ✅ Add event listener to update chart when a user selects a municipality
+document.getElementById("municipalityTabs").addEventListener("click", (event) => {
+    if (event.target.tagName === "LI") {
+        const selectedMunicipality = event.target.textContent;
+        updateDischargeChart(selectedMunicipality);
+        updateSanitationChart(selectedMunicipality);
+    }
+});
+
+
+
+//Request to Server Flas API
+document.addEventListener("DOMContentLoaded", async function () {
+    const dropdown = document.getElementById("forecast_tributary_select");
+    const forecastPeriodInput = document.getElementById("forecastPeriod");
+    const forecastButton = document.getElementById("forecastButton");
+    const chartCanvas = document.getElementById("forecastChart");
+    let chartInstance = null; // Store Chart.js instance
+    let tributaryMap = {}; // Store tributary-to-encoded_tributary mapping
+    let cachedForecasts = {}; // Store fetched forecast data per tributary
+
+    /** ✅ Fetch Tributaries & Populate Dropdown */
+    async function fetchTributaries() {
+        try {
+            const response = await fetch("http://127.0.0.1:5000/api/tributaries");
+            if (!response.ok) throw new Error("Failed to fetch tributaries");
+
+            const tributaries = await response.json();
+
+            dropdown.innerHTML = "<option value='' selected hidden>Select tributary...</option>";
+            tributaries.forEach(entry => {
+                let option = document.createElement("option");
+                option.value = entry.tributary;
+                option.textContent = `${entry.tributary} (${entry.municipality_name})`;
+                dropdown.appendChild(option);
+                tributaryMap[entry.tributary] = entry.encoded_tributary;
+            });
+        } catch (error) {
+            console.error("Error fetching tributaries:", error);
+        }
+    }
+
+    /** 🔍 Fetch Forecast */
+    async function fetchForecast() {
+        const selectedTributary = dropdown.value;
+        const forecastPeriod = parseInt(forecastPeriodInput.value) || 10;
+
+        if (!selectedTributary) {
+            console.warn("Invalid tributary selection.");
+            return;
+        }
+
+        console.log(`📡 Fetching forecast for: ${selectedTributary}, Period: ${forecastPeriod} days`);
+
+        try {
+            const url = `http://127.0.0.1:5000/api/forecast?periods=${forecastPeriod}&tributary=${selectedTributary}`;
+            const forecastResponse = await fetch(url);
+            if (!forecastResponse.ok) throw new Error(`HTTP error! Status: ${forecastResponse.status}`);
+
+            const forecastData = await forecastResponse.json();
+            console.log("Fetched Forecast Data:", forecastData);
+
+            if (forecastData.forecasts?.length) {
+                let forecastEntries = forecastData.forecasts.find(entry => entry.tributary === selectedTributary);
+                if (forecastEntries?.forecastV) {
+                    cachedForecasts[selectedTributary] = forecastEntries.forecastV;
+                    updateChart(forecastEntries.forecastV, selectedTributary, forecastPeriod);
+                } else {
+                    console.warn("⚠ No forecastV data found for selected tributary.");
+                    clearChart();
+                }
+            } else {
+                console.warn("⚠ No forecast data found.");
+                clearChart();
+            }
+        } catch (error) {
+            console.error("❌ Error fetching forecast data:", error);
+        }
+    }
+
+    /** 📈 Update Chart */
+    function updateChart(forecastData, tributaryName, period) {
+        const ctx = chartCanvas.getContext("2d");
+        const labels = forecastData.slice(0, period).map(entry => entry.date);
+        const values = forecastData.slice(0, period).map(entry => entry.forecast);
+
+        if (chartInstance) chartInstance.destroy();
+
+        chartInstance = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels,
+                datasets: [{
+                    label: `Forecast for ${tributaryName}`,
+                    data: values,
+                    borderColor: "rgb(45, 139, 186)",
+                    backgroundColor: "rgba(108, 229, 232,0.2)",
+                    fill: true,
+                    tension: 0.4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: "Date" } },
+                    y: { title: { display: true, text: "Forecasted Value" } }
+                }
+            }
+        });
+    }
+
+    /** 🗑 Clear Chart */
+    function clearChart() {
+        if (chartInstance) {
+            chartInstance.destroy();
+            chartInstance = null;
+        }
+    }
+
+    /** 🎯 Fetch Latest Data */
+    async function latestDataFetching() {
+        const selectedTributary = dropdown.value;
+        if (!selectedTributary) {
+            console.warn("No tributary selected.");
+            return;
+        }
+
+        const url = `/public/php/getVolume.php?tributary=${encodeURIComponent(selectedTributary)}`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log("Fetched Data:", data);
+
+            if (data?.error) {
+                console.error("No valid latest data found:", data.error);
+                return;
+            }
+
+            updateUIWithLatestData(data, selectedTributary);
+        } catch (error) {
+            console.error("Error fetching latest data:", error);
+        }
+    }
+
+    function updateUIWithLatestData(data, selectedTributary) {
+        if (!data?.total_volume) {
+            console.error("No valid latest data found.");
+            return;
+        }
+
+        const rainfallResultText = document.getElementById('rainfallResultText');
+        const dischargeVolumeText = document.getElementById('dischargeVolumeText');
+        const rainfallIntensityText = document.getElementById('rainfallIntensityText');
+
+        let rainfallIntensity = data.total_volume < 2.5 ? "Light" :
+                                data.total_volume < 7.5 ? "Moderate" :
+                                data.total_volume < 15 ? "Heavy" :
+                                data.total_volume < 30 ? "Intense" : "Torrential";
+
+        if (rainfallResultText) rainfallResultText.textContent = `${data.total_volume.toFixed(2)} msm`;
+        if (rainfallIntensityText) rainfallIntensityText.innerHTML = `${rainfallIntensity}`;
+
+        getTotalDischarge().then(dischargeData => {
+            if (!dischargeVolumeText) return;
+            let totalDischarge = Object.values(dischargeData).flat().find(entry => entry.tributary === selectedTributary)?.discharge || 0;
+            dischargeVolumeText.textContent = `${totalDischarge.toFixed(2)} kg`;
+        });
+    }
+
+    // ✅ Load tributaries on page load
+    await fetchTributaries();
+
+    // ✅ Add event listener ONCE
+    forecastButton.addEventListener("click", async () => {
+        await fetchForecast();
+        await latestDataFetching();
+    });
+});
+
+
+
+//////////////////////////////////////////
+
+// async function getMunicipality() {
+//     try {
+//         // Step 1: Get the username
+//         const username = await fetchUserMunicipality();
+
+//         if (!username) {
+//             console.error("Username not found");
+//             return null;
+//         }
+
+//         console.log("Fetched Username:", username); // Debugging output
+
+//         // Step 2: Fetch municipality_name based on username
+//         const userResponse = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(username)}`);
+//         const userData = await userResponse.json();
+
+//         console.log("User Data from API:", userData); // Debugging output
+
+//         if (!userData || !Array.isArray(userData) || userData.length === 0) {
+//             console.error("No municipality found for user");
+//             return null;
+//         }
+
+//         // Extract municipality_name
+//         const municipalities = [...new Set(userData.map(item => item.municipality_name))];
+
+//         if (municipalities.length === 0) {
+//             console.error("No valid municipalities found");
+//             return null;
+//         }
+
+//         console.log("Extracted Municipalities:", municipalities);
+
+//         let allTributaries = [];
+
+//         // Step 3: Fetch tributaries for each municipality_name
+//         for (const municipality of municipalities) {
+//             console.log(`Fetching tributaries for: ${municipality}`);
+//             const muniResponse = await fetch(`/public/php/getTributaries.php?municipality_name=${encodeURIComponent(municipality)}`);
+//             const municipalityData = await muniResponse.json();
+
+//             console.log(`Municipality Data for ${municipality}:`, municipalityData);
+
+//             if (municipalityData && Array.isArray(municipalityData)) {
+//                 allTributaries.push({
+//                     municipality_name: municipality,
+//                     tributaries: municipalityData.map(item => item.tributary),
+//                 });
+//             }
+//         }
+
+//         console.log("Collected Tributaries by Municipality:", allTributaries);
+        
+//         // for (const municipality of municipalities) {
+//         //     console.log(`Fetching tributaries for: ${municipality}`);
+//         //     const muniResponse = await fetch(`/public/php/getTributaries.php?municipality_name=${encodeURIComponent(municipality)}`);
+//         //     const municipalityData = await muniResponse.json();
+
+//         //     console.log(`Municipality Data for ${municipality}:`, municipalityData); // ✅ Moved inside loop
+
+//         //     if (municipalityData && Array.isArray(municipalityData)) {
+//         //         allTributaries = [...allTributaries, ...municipalityData.map(item => item.tributary)];
+//         //     }
+//         // }
+
+//         // console.log("Flattened Lists of Tributaries:", allTributaries);
+
+
+//         localStorage.setItem("allTributaries", JSON.stringify(allTributaries));
+
+        
+
+//         fetchForecasting(allTributaries);
+//         return allTributaries;  
+
+//         return allTributaries; // ✅ Returning structured data
+
+//     } catch (error) {
+//         console.error("Fetch Error (Municipality & Tributaries):", error);
+//         return null;
+//     }
+// }
+
+// getMunicipality();
+
+// document.addEventListener("DOMContentLoaded", async function () {
+//     try {
+//         const username = await fetchUserMunicipality();
+
+//         if (!username) {
+//             console.error("Username not found");
+//             return null;
+//         }
+
+//         console.log("Fetched Username:", username); // Debugging output
+
+//         // Step 2: Fetch municipality_name based on username
+//         const userResponse = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(username)}`);
+//         const userData = await userResponse.json();
+
+//         console.log("User Data from API:", userData); // Debugging output
+
+//         if (!userData || !Array.isArray(userData) || userData.length === 0) {
+//             console.error("No municipality found for user");
+//             return null;
+//         }
+
+//         // Extract municipality_name
+//         const municipalities = [...new Set(userData.map(item => item.municipality_name))];
+
+//         if (municipalities.length === 0) {
+//             console.error("No valid municipalities found");
+//             return null;
+//         }
+
+//         console.log("Extracted Municipalities:", municipalities);
+
+//         let tributaryDict = [];
+
+//         // Step 3: Fetch tributaries for each municipality_name
+//         for (const municipality of municipalities) {
+//             console.log(`Fetching tributaries for: ${municipality}`);
+//             const muniResponse = await fetch(`/public/php/getTributaries.php?municipality_name=${encodeURIComponent(municipality)}`);
+//             const municipalityData = await muniResponse.json();
+
+//             console.log(`Municipality Data for ${municipality}:`, municipalityData);
+
+//             if (municipalityData && Array.isArray(municipalityData)) {
+//                 tributaryDict.push({
+//                     municipality_name: municipality,
+//                     tributaries: municipalityData.map(item => item.tributary),
+//                 });
+//             }
+//         }
+
+//         console.log("Collected Tributaries by Municipality:", tributaryDict);
+
+//         return tributaryDict;
+//     } catch (error) {
+//         console.error("❌ Error initializing forecast fetch:", error);
+//     }
+// });
+
+
+// document.addEventListener("DOMContentLoaded", async function () {
+//     try {
+//         const username = await fetchUserMunicipality();
+
+//         if (!username) {
+//             console.error("Username not found");
+//             return null;
+//         }
+
+//         console.log("Fetched Username:", username); // Debugging output
+
+//         // Step 2: Fetch municipality_name based on username
+//         const userResponse = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(username)}`);
+//         const userData = await userResponse.json();
+
+//         console.log("User Data from API:", userData); // Debugging output
+
+//         if (!userData || !Array.isArray(userData) || userData.length === 0) {
+//             console.error("No municipality found for user");
+//             return null;
+//         }
+
+//         // Extract municipality_name
+//         const municipalities = [...new Set(userData.map(item => item.municipality_name))];
+
+//         if (municipalities.length === 0) {
+//             console.error("No valid municipalities found");
+//             return null;
+//         }
+
+//         console.log("Extracted Municipalities:", municipalities);
+
+//         let tributaryDict = [];
+
+//         // Step 3: Fetch tributaries for each municipality_name
+//         for (const municipality of municipalities) {
+//             console.log(`Fetching tributaries for: ${municipality}`);
+//             const muniResponse = await fetch(`/public/php/getTributaries.php?municipality_name=${encodeURIComponent(municipality)}`);
+//             const municipalityData = await muniResponse.json();
+
+//             console.log(`Municipality Data for ${municipality}:`, municipalityData);
+
+//             if (municipalityData && Array.isArray(municipalityData)) {
+//                 tributaryDict.push({
+//                     municipality_name: municipality,
+//                     tributaries: municipalityData.map(item => item.tributary),
+//                 });
+//             }
+//         }
+
+//         console.log("Collected Tributaries by Municipality:", tributaryDict);
+
+//         return tributaryDict;
+//     } catch (error) {
+//         console.error("❌ Error initializing forecast fetch:", error);
+//     }
+// });
+
+// async function fetchForecastData(tributaryDict) {
+//     const allTributaries = [
+//         "Calumala Creek 1", "Calumala Creek 2", "Bancoro Creek", "Tagudtod Creek",
+//         "Pansipit River", "Agoncillo Creek 1", "Agoncillo Creek 2", "Agoncillo Creek 3",
+//         "Bilibinwang Creek 1", "Bilibinwang Creek 2", "Buso-buso Stream 1", "Buso-buso Stream 2",
+//         "Buso-buso Stream 3", "Buso-buso Stream 4", "Gulod Stream 3", "Gulod Stream 4",
+//         "Gulod Stream 5", "Gulod Stream 6", "Gulod Stream 7", "Laurel River 1",
+//         "Molinete Creek 2", "Balakilong Creek", "Berinayan Creek", "Sampaloc Creek 1",
+//         "Sampaloc Creek 2", "Banga Creek", "Lambingan River", "Tumaway River",
+//         "Bignay Creek", "Caloocan Creek", "Ambulong Stream 2", "Ambulong Stream 3",
+//         "Wawa River", "Balete River", "Palsara River", "Kinalaglagan River", "Bulaklakan River"
+//     ];
+
+//     fetch("/api/forecast", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ tributary: allTributaries })  // Send all tributary names
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         if (!data.forecasts || data.forecasts.length === 0) {
+//             alert("No forecast data available.");
+//             return;
+//         }
+
+//     })
+//     .catch(error => console.error("Error fetching forecast:", error));
+// }
+
+// function updateWindInfo(tributary, windSpeed, windDirection) {
+//     const windInfoContainer = document.getElementById("wind-info");
+
+//     if (!windInfoContainer) {
+//         console.error("❌ Error: 'wind-info' container not found.");
+//         return;
+//     }
+
+//     // Clear previous data
+//     windInfoContainer.innerHTML = `<p><strong>${tributary}:</strong> Speed: ${windSpeed} km/h, Direction: ${windDirection}°</p>`;
+// }
+
+// function updateForecastChart(forecastData) {
+//     const canvas = document.getElementById("forecastChart");
+
+//     if (!canvas) {
+//         console.error("❌ Error: 'forecastChart' not found in the DOM.");
+//         return;
+//     }
+
+//     const ctx = canvas.getContext("2d");
+
+//     // Destroy previous chart if it exists
+//     if (window.myChart) {
+//         window.myChart.destroy();
+//     }
+
+//     // Format date labels to show only Month & Day
+//     const labels = forecastData.map(entry => {
+//         const date = new Date(entry.ds);
+//         return date.toLocaleDateString("en-US", { month: "short", day: "numeric" }); // Example: "Mar 15"
+//     });
+
+//     const predictions = forecastData.map(entry => entry.yhat);
+
+//     window.myChart = new Chart(ctx, {
+//         type: "line",
+//         data: {
+//             labels: labels,
+//             datasets: [{
+//                 label: "Forecasted Values",
+//                 data: predictions,
+//                 borderColor: "#000080",
+//                 borderWidth: 2,
+//                 fill: true, // Light fill color
+//                 pointBorderColor: "#000080", // Change the border color of the dots
+//                 pointRadius: 3, // Adjust the size of the dots
+//             }]
+//         },
+//         options: {
+//             responsive: true,
+//             maintainAspectRatio: false
+//         }
+//     });
+// }
+
+// function updateWindInfo(tributary, windSpeed, windDirection) {
+//     const windInfoContainer = document.getElementById("wind-info");
+
+//     if (!windInfoContainer) {
+//         console.error("❌ Error: 'wind-info' container not found.");
+//         return;
+//     }
+
+//     // Clear previous data
+//     windInfoContainer.innerHTML = `<p><strong>${tributary}:</strong> Speed: ${windSpeed} km/h, Direction: ${windDirection}°</p>`;
+// }
+
+// function updateForecastChart(forecastData) {
+//     const canvas = document.getElementById("forecastChart");
+
+//     if (!canvas) {
+//         console.error("❌ Error: 'forecastChart' not found in the DOM.");
+//         return;
+//     }
+
+//     const ctx = canvas.getContext("2d");
+
+//     // Destroy previous chart if it exists
+//     if (window.myChart) {
+//         window.myChart.destroy();
+//     }
+
+//     // Format date labels to show only Month & Day
+//     const labels = forecastData.map(entry => {
+//         const date = new Date(entry.ds);
+//         return date.toLocaleDateString("en-US", { month: "short", day: "numeric" }); // Example: "Mar 15"
+//     });
+
+//     const predictions = forecastData.map(entry => entry.yhat);
+
+//     window.myChart = new Chart(ctx, {
+//         type: "line",
+//         data: {
+//             labels: labels,
+//             datasets: [{
+//                 label: "Forecasted Values",
+//                 data: predictions,
+//                 borderColor: "#000080",
+//                 borderWidth: 2,
+//                 fill: true, // Light fill color
+//                 pointBorderColor: "#000080", // Change the border color of the dots
+//                 pointRadius: 3, // Adjust the size of the dots
+//             }]
+//         },
+//         options: {
+//             responsive: true,
+//             maintainAspectRatio: false
+//         }
+//     });
+// }
+
+
+
+// 
+// try {
+
+    
+//     // Step 1: Get the username
+//     const username = await fetchUserMunicipality();
+//     if (!username) {
+//         console.error("❌ Username not found");
+//         return null;
+//     }
+//     console.log("✅ Fetched Username:", username);
+
+//     // Step 2: Fetch municipality_name based on username
+//     const userResponse = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(username)}`);
+//     const userData = await userResponse.json();
+//     if (!userData || !Array.isArray(userData) || userData.length === 0) {
+//         console.error("❌ No municipality found for user");
+//         return null;
+//     }
+    
+//     // Extract unique municipality names
+//     const municipalities = [...new Set(userData.map(item => item.municipality_name))];
+//     console.log("✅ Extracted Municipalities:", municipalities);
+
+//     if (municipalities.length === 0) {
+//         console.error("❌ No valid municipalities found");
+//         return null;
+//     }
+
+//     let allTributaries = [];
+
+//     // Step 3: Fetch tributaries for each municipality
+//     for (const municipality of municipalities) {
+//         console.log(`📡 Fetching tributaries for: ${municipality}`);
+//         const muniResponse = await fetch(`/public/php/getTributaries.php?municipality_name=${encodeURIComponent(municipality)}`);
+//         const municipalityData = await muniResponse.json();
+
+//         if (municipalityData && Array.isArray(municipalityData)) {
+//             allTributaries.push(...municipalityData.map(item => item.tributary));
+//         }
+//     }
+
+//     // Remove duplicates
+//     allTributaries = [...new Set(allTributaries)];
+//     console.log("✅ Collected Tributaries:", allTributaries);
+
+//     if (allTributaries.length === 0) {
+//         console.error("❌ No tributaries found");
+//         return null;
+//     }
+
+//     // Step 4: Send tributary list to Flask API
+//     const forecastResponse = await fetch("http://127.0.0.1:5000/api/get_forecast", {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify({ tributaries: allTributaries }) // Send as JSON object
+//     });
+
+//     const forecastData = await forecastResponse.json();
+//     console.log("✅ Forecast Response:", forecastData);
+
+//     if (forecastData.error) {
+//         console.error(`❌ Error from Flask API:`, forecastData.error);
+//         alert(`⚠️ ${forecastData.error}`);
+//         return;
+//     }
+
+//     // Step 5: Handle multiple tributaries
+//     for (const tributary in forecastData) {
+//         if (!forecastData[tributary].forecast) {
+//             console.error(`❌ No forecast data for ${tributary}`);
+//             alert(`⚠️ No forecast data available for ${tributary}.`);
+//             continue;
+//         }
+
+//         // Extract wind data
+//         const windSpeed = forecastData[tributary].wind_speed || "N/A";
+//         const windDirection = forecastData[tributary].wind_direction || "N/A";
+//         console.log(`🌬️ Wind Data for ${tributary} - Speed: ${windSpeed}, Direction: ${windDirection}`);
+
+//         // Update chart and UI
+//         updateForecastChart(forecastData[tributary].forecast, tributary);
+//         updateWindInfo(tributary, windSpeed, windDirection);
+//     }
+
+// } catch (error) {
+//     console.error(`❌ Error fetching forecast:`, error);
+//     alert(`⚠️ Failed to fetch forecast. Check console for details.`);
+// }
+
+
+
+
+
+
+// //////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+// //======================================================//
+async function fetchRainData(selectedTributary) {
+
+    let url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(selectedTributary)}`;
 
     try {
         const response = await fetch(url);
@@ -1167,19 +2407,19 @@ async function fetchRainData(tributaryName) {
             return;
         }
 
-        plotRainChart(data.rain_data, tributaryName);
+        plotRainChart(data.rain_data, selectedTributary);
     } catch (error) {
         console.error("Fetch error:", error);
     }
 }
 
-function showRainAlert(tributaryName) {
-    document.getElementById("rainTributaryName").textContent = tributaryName;
+function showRainAlert(selectedTributary) {
+    document.getElementById("rainTributaryName").textContent = selectedTributary;
     document.getElementById("rainAlertPopup").style.display = "flex";
 }
 
-function showHistoricalDataAlert(tributaryName){
-    document.getElementById("historicalTributaryName").textContent = tributaryName;
+function showHistoricalDataAlert(selectedTributary) {
+    document.getElementById("historicalTributaryName").textContent = selectedTributary;
     document.getElementById("historicalDataAlertPopup").style.display = "flex";
 }
 
@@ -1198,10 +2438,10 @@ function closePopup() {
 
 
 
-function plotRainChart(rainData, tributaryName) {
+function plotRainChart(rainData, selectedTributary) {
     if (!rainData || rainData.length === 0) {
         // alert(`No rain data available for ${tributaryName}.`);
-        showRainAlert(tributaryName);
+        showRainAlert(selectedTributary);
         return;
     }
 
@@ -1219,15 +2459,17 @@ function plotRainChart(rainData, tributaryName) {
         data: {
             labels: labels,
             datasets: [{
-                label: `Rainfall Data for ${tributaryName}`,
+                label: `Rainfall Data for ${selectedTributary}`,
                 data: values,
-                borderColor: "#000080",
-                borderWidth: 2,
-                fill: true
+                borderColor: "rgb(45, 139, 186)",
+                backgroundColor: "rgba(108, 229, 232,0.2)",
+                fill: true,
+                tension: 0.4, // Adjust tension for curve
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: { title: { display: true, text: "Timestamp", font: {weight: "bold", size: 14} } },
                 y: { title: { display: true, text: "Rainfall (mm)", font: {weight: "bold", size: 14} } }
@@ -1863,188 +3105,188 @@ function formatDateTime(date) {
     };
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    // const rightTitle = document.getElementsByClassName("rightTitle");
+    // if(rightTitle === "Ngayong araw"){
+    //     document.getElementsByClassName("rightTitle").style.fontSize = "1rem";
+    // }
 
+    fetch("/public/php/accuweather_api.php")
+        .then(response => response.json()) // Convert to JSON
+        .then(data => {
+            let dataList = document.getElementById("dataList");
+            dataList.innerHTML = ""; // Clear previous content
 
-function fetchAllRainfallData() {
-    fetch('/public/php/get_rainfall_monitoring.php')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json();
-        })
-        .then(result => {
-            if (!Array.isArray(result) || result.length === 0) {
-                document.getElementById('dataList').innerHTML = `
-                    <li>
-                        <div>No Rainfall data available.</div>
-                    </li>
-                    <hr>
-                `;
-                return;
-            }
+            Object.keys(data).forEach(location => {
+                let weather = data[location];
+                let listItem = document.createElement("li");
 
-            processRainfallData(result);
-        })
-        .catch(error => console.error('Error fetching rainfall data:', error));
-}
-
-function processRainfallData(data) {
-    if (data.length === 0) return;
-
-    data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-
-    let now = new Date();
-
-    let currentIntervalEnd = new Date(now);
-    let currentIntervalStart = new Date(currentIntervalEnd);
-    currentIntervalStart.setHours(currentIntervalStart.getHours() - 6);
-
-    let intervals = [];
-    let intervalData = [];
-
-    let firstTimestamp = new Date(data[0].timestamp);
-
-    while (currentIntervalEnd >= firstTimestamp) {
-        let tempData = data.filter(entry => {
-            let entryTime = new Date(entry.timestamp);
-            return entryTime >= currentIntervalStart && entryTime < currentIntervalEnd;
-        });
-
-        intervals.push({
-            start: new Date(currentIntervalStart),
-            end: new Date(currentIntervalEnd),
-            data: tempData
-        });
-
-        // Move to the previous 6-hour interval
-        currentIntervalEnd = new Date(currentIntervalStart);
-        currentIntervalStart.setHours(currentIntervalStart.getHours() - 6);
-    }
-
-    displayIntervals(intervals);
-}
-
-async function displayIntervals(intervals) {
-    try {
-        const municipalityName = await fetchUserMunicipality(); // Get municipality from user data
-
-        if (!municipalityName) {
-            console.error("Municipality not found for the user.");
-            return []; // Return an empty array instead of undefined
-        }
-
-        // Fetch tributaries based on municipality
-        const response = await fetch(`/public/php/getTributaries.php?municipality=${encodeURIComponent(municipalityName)}`);
-        const data = await response.json();
-
-        if (data.error) {
-            console.error("Error:", data.error);
-            return []; // Return an empty array in case of an error
-        }
-
-        // Store tributaries in an array and sort them alphabetically
-        let tributariesArray = data.sort((a, b) => a.localeCompare(b));
-
-        // Log the sorted array
-        console.log("Sorted Tributaries:", tributariesArray);
-
-        // return tributariesArray; // ✅ Now it explicitly returns an array\
-        document.getElementById('dataList').innerHTML = '';
-        intervals.forEach((interval, index) => {
-            let intervalStart = formatDateTime(interval.start);
-            let intervalEnd = formatDateTime(interval.end);
-    
-            document.getElementById('dataList').innerHTML += `
-                <h5>Rainfall Data From: </h5>
-                <h6>${intervalStart.date} ${intervalStart.time}
-                    To 
-                    ${intervalEnd.date} ${intervalEnd.time}
-                </h6>
-                <hr>
-            `;
-    
-            tributariesArray.forEach(tributary => {
-                let tribData = interval.data.filter(entry => entry.tributary === tributary);
-    
-                if (tribData.length === 0) {
-                    document.getElementById('dataList').innerHTML += `
-                        <li>
-                            <div>No Rainfall data for the last 6 hours.</div>
-                            <div><strong>Date:</strong> ${formatDateTime(interval.end).date}</div>
-                            <div><strong>Tributary:</strong> ${tributary}</div>
-                        </li>
-                        <hr>
-                    `;
+                if (weather.error) {
+                    listItem.textContent = `${location}: ERROR - ${weather.error}`;
                 } else {
-                    tribData.forEach(entry => {
-                        let timestamp = new Date(entry.timestamp); // Ensure it's a Date object
-                        let formattedTimestamp = formatDateTime(timestamp);
-                        document.getElementById('dataList').innerHTML += `
-                            <li>
-                                <div>Date: ${formattedTimestamp.date}</div>
-                                <div>Time: ${formattedTimestamp.time}</div>
-                                <div><strong>Rainfall Value:</strong> ${entry.rainfall_value} mm</div>
-                                <div><strong>Tributary:</strong> ${entry.tributary}</div>
-                            </li>
-                            <hr>
-                        `;
-                    });
+                    listItem.innerHTML = `
+                    <b>${location}:</b><br>
+                    Temperature: ${weather.temperature}<br>
+                    Wind Speed: ${weather.wind_speed !== "N/A" ? weather.wind_speed : "No data"} 
+                    (${weather.wind_direction !== "N/A" ? weather.wind_direction : "No direction"})<br>
+                    Weather: ${weather.weather_text}
+                `;
                 }
+
+                dataList.appendChild(listItem);
             });
-        });
+        })
+        .catch(error => console.error("Error fetching weather data:", error));
+});
+///////////////////////
+
+// function fetchAllRainfallData() {
+//     fetch('/public/php/get_rainfall_monitoring.php')
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error("Network response was not ok");
+//             }
+//             return response.json();
+//         })
+//         .then(result => {
+//             if (!Array.isArray(result) || result.length === 0) {
+//                 document.getElementById('dataList').innerHTML = `
+//                     <li>
+//                         <div>No Rainfall data available.</div>
+//                     </li>
+//                     <hr>
+//                 `;
+//                 return;
+//             }
+
+//             processRainfallData(result);
+//         })
+//         .catch(error => console.error('Error fetching rainfall data:', error));
+// }
+
+// function processRainfallData(data) {
+//     if (data.length === 0) return;
+
+//     data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+//     let now = new Date();
+
+//     let currentIntervalEnd = new Date(now);
+//     let currentIntervalStart = new Date(currentIntervalEnd);
+//     currentIntervalStart.setHours(currentIntervalStart.getHours() - 6);
+
+//     let intervals = [];
+//     let intervalData = [];
+
+//     let firstTimestamp = new Date(data[0].timestamp);
+
+//     while (currentIntervalEnd >= firstTimestamp) {
+//         let tempData = data.filter(entry => {
+//             let entryTime = new Date(entry.timestamp);
+//             return entryTime >= currentIntervalStart && entryTime < currentIntervalEnd;
+//         });
+
+//         intervals.push({
+//             start: new Date(currentIntervalStart),
+//             end: new Date(currentIntervalEnd),
+//             data: tempData
+//         });
+
+//         // Move to the previous 6-hour interval
+//         currentIntervalEnd = new Date(currentIntervalStart);
+//         currentIntervalStart.setHours(currentIntervalStart.getHours() - 6);
+//     }
+
+//     displayIntervals(intervals);
+// }
+
+// async function displayIntervals(intervals) {
+//     try {
+//         const municipalityName = await fetchUserMunicipality(); // Get municipality from user data
+
+//         if (!municipalityName) {
+//             console.error("Municipality not found for the user.");
+//             return []; // Return an empty array instead of undefined
+//         }
+
+//         // Fetch tributaries based on municipality
+//         const response = await fetch(`/public/php/getTributaries.php?municipality=${encodeURIComponent(municipalityName)}`);
+//         const data = await response.json();
+
+//         if (data.error) {
+//             console.error("Error:", data.error);
+//             return []; // Return an empty array in case of an error
+//         }
+
+//         // Store tributaries in an array and sort them alphabetically
+//         let tributariesArray = data.sort((a, b) => a.localeCompare(b));
+
+//         // Log the sorted array
+//         console.log("Sorted Tributaries:", tributariesArray);
+
+//         // return tributariesArray; // ✅ Now it explicitly returns an array\
+//         document.getElementById('dataList').innerHTML = '';
+//         intervals.forEach((interval, index) => {
+//             let intervalStart = formatDateTime(interval.start);
+//             let intervalEnd = formatDateTime(interval.end);
+    
+//             document.getElementById('dataList').innerHTML += `
+//                 <h5>Rainfall Data From: </h5>
+//                 <h6>${intervalStart.date} ${intervalStart.time}
+//                     To 
+//                     ${intervalEnd.date} ${intervalEnd.time}
+//                 </h6>
+//                 <hr>
+//             `;
+    
+//             tributariesArray.forEach(tributary => {
+//                 let tribData = interval.data.filter(entry => entry.tributary === tributary);
+    
+//                 if (tribData.length === 0) {
+//                     document.getElementById('dataList').innerHTML += `
+//                         <li>
+//                             <div>No Rainfall data for the last 6 hours.</div>
+//                             <div><strong>Date:</strong> ${formatDateTime(interval.end).date}</div>
+//                             <div><strong>Tributary:</strong> ${tributary}</div>
+//                         </li>
+//                         <hr>
+//                     `;
+//                 } else {
+//                     tribData.forEach(entry => {
+//                         let timestamp = new Date(entry.timestamp); // Ensure it's a Date object
+//                         let formattedTimestamp = formatDateTime(timestamp);
+//                         document.getElementById('dataList').innerHTML += `
+//                             <li>
+//                                 <div>Date: ${formattedTimestamp.date}</div>
+//                                 <div>Time: ${formattedTimestamp.time}</div>
+//                                 <div><strong>Rainfall Value:</strong> ${entry.rainfall_value} mm</div>
+//                                 <div><strong>Tributary:</strong> ${entry.tributary}</div>
+//                             </li>
+//                             <hr>
+//                         `;
+//                     });
+//                 }
+//             });
+//         });
 
 
         
-    } catch (error) {
-        console.error("Fetch Error (Tributaries):", error);
-        return []; // Return an empty array if an error occurs
-    }
+//     } catch (error) {
+//         console.error("Fetch Error (Tributaries):", error);
+//         return []; // Return an empty array if an error occurs
+//     }
 
-    console.log("Rainfall data displayed in 6-hour intervals.");
+//     console.log("Rainfall data displayed in 6-hour intervals.");
 
-}
+// }
 
-// Example usag
-document.addEventListener("DOMContentLoaded", displayIntervals);
+// // Example usag
+// document.addEventListener("DOMContentLoaded", displayIntervals);
 
-    
 
-// $(document).ready(function () {
-//     // Fetch user data
-//     $.ajax({
-//         url: './php/userdata.php',
-//         method: 'GET',
-//         dataType: 'json',
-//         success: function (response) {
-//             if (!response.error) {
-//                 $("#userDropdown").text(response.username);
-//             } else {
-//                 $("#userDropdown").text("Guest");
-//             }
-//         },
-//         error: function () {
-//             $("#userDropdown").text("Error fetching user");
-//         }
-//     });
-
-//     // Toggle dropdown on click
-//     $("#userDropdown").click(function () {
-//         $(".dropdown-content").toggle();
-//     });
-
-//     // Close dropdown when clicking outside
-//     $(document).click(function (event) {
-//         if (!$(event.target).closest(".dropdown").length) {
-//             $(".dropdown-content").hide();
-//         }
-//     });
-// });
+//////////////////////////////////////////////////////////////////
 
 $(document).ready(function () {
-    // Function to format text to sentence case
-    
-
     // Fetch user data
     $.ajax({
         url: './php/userdata.php',
@@ -2052,10 +3294,10 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (response) {
             if (!response.error) {
-                $("#userDropdown").text(response.username); // No formatting applied
                 if(response.username === "MATAASNAKAHOY") {
                     document.getElementById("userDropdown").style.fontSize = "1.3rem";
                 }
+                $("#userDropdown").text(response.username);
             } else {
                 $("#userDropdown").text("Guest");
             }
@@ -2064,8 +3306,6 @@ $(document).ready(function () {
             $("#userDropdown").text("Error fetching user");
         }
     });
-
-    
 
     // Toggle dropdown on click
     $("#userDropdown").click(function () {
@@ -2089,8 +3329,6 @@ $(document).ready(function () {
             }
         });
     });
-
-    
 });
 
 
