@@ -178,7 +178,7 @@
     
     <main>
       <aside class="side">
-        <div class="sidebar">
+        <div class="sidebar notranslate">
           <a href="#dashboardContent" class="sidebar-link active">
             <span class="material-icons-sharp">dashboard</span>
             <h4>Dashboard</h4>
@@ -204,71 +204,132 @@
             <button id="userDropdown">Loading...</button>
             <div class="dropdown-content">
                 <!-- <a href="profile.php">Profile</a> -->
-                <a href="php/logout.php" class="logout-bttn" target="_blank">
+                <a href="php/logout.php" class="logout-bttn">
                   <span class="material-icons-sharp">logout</span>
                   <h4>Logout</h4>
                 </a>
             </div>
+          </div>
+          <div class="sidebar-footer">
+            <p>PROJECT GIS by</p>
+            <a href="https://batstateu.edu.ph/" target="_blank" rel="noopener noreferrer">
+                BATANGAS STATE UNIVERSITY - TNEU
+            </a>
+            
+            <div>
+              <a href="privacyPolicy.html">Privacy Policy</a> |
+            <a href="mailto:rainfallwebanalyzer@gmail.com">Send us Feedback</a>
+            </div> 
           </div>
         </div>
       </aside> 
       
       
       
+      <!--  ALERT POPUP-->
+      <div id="rainAlertPopup" class="rainAlertPopup">
+        <div class="rainAlertPopup-content">
+            <p>No rain data available for <span id="rainTributaryName"></span>.</p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+      </div>
+
+      <div id="historicalDataAlertPopup" class="historicalDataAlertPopup">
+        <div class="historicalDataAlert-content">
+            <p>No historical data found in <span id="historicalTributaryName"></span>.</p>
+            <button onclick="closePopup()">OK</button>
+        </div>
+      </div>
+
+      <div id="tributarySelectAlertPopup" class="tributarySelectAlertPopup">
+        <div class="tributaryAlertPopup-content">
+          <p>Please select a tributary first</p>
+          <button onclick="closePopup()">OK</button>
+        </div>
+      </div>
 
 
         <!-- Content for DASHBOARD -->
 
     
-        <div id="dashboardContent" class="middle content-section dashboardContent">
-          <div class="calendar">
+      <div id="dashboardContent" class="middle content-section dashboardContent">
+        <div class="slider">
+          <ul class="tabs notranslate" id="municipalityTabs">
+            <!-- <li class="tab active">AGONCILLO</li>
+            <li class="tab">BALETE</li>
+            <li class="tab">LAUREL</li>
+            <li class="tab">MATAAS NA KAHOY</li>
+            <li class="tab">SAN NICOLAS</li>
+            <li class="tab">SANTA TERESITA</li>
+            <li class="tab">TALISAY</li>
+            <li class="tab">TANAUAN</li> -->
+          </ul>
+        </div>
+        <div class="charts-content">
+          <!-- <div class="calendar">
             <input type="text" id="datePicker" name="date" placeholder="Select Date" class="custom-date-picker">
-          </div>
-
-          <div class="flex-container">
-            <div class="flex-box" id="rainfallResult">
-              <h1>Rainfall</h1>
-              <p id="rainfallResultText"></p>
-              <img src="img_src\rain-water-svgrepo-com.png">
+          </div> -->
+          <div class="dashboard-forecast-section">
+            <!-- Tributary Dropdown for Forecast Section -->
+            <div class="tributary-forecast-section">
+              <!-- <h2>Select Tributary</h2> -->
+              <!-- <div class="row"> -->
+                <div class="tributary-dropdown-content">
+                  <select class="form-control" name="forecast_tributary_select" id="forecast_tributary_select">
+                    <option value="-" selected hidden>Select a tributary</option>
+                  </select>
+                  <div class="input-container">
+                    <label for="forecastPeriod">Enter Forecast Period (days):</label>
+                    <input type="number" id="forecastPeriod" min="1" value="30">
+                    <button id="forecastButton">Generate Forecast</button>
+                  </div>
+                </div>
+              <!-- </div> -->
             </div>
-  
-            <div class="flex-box" id="locationResult">
-              <h1>Tributary</h1>
-              <p id="locationResultText"></p>
-              <img src="img_src\tributary-icon.png">
+          
+            <div class="forecast-section">
+              <div class="chart-container">
+                  <canvas id="forecastChart"></canvas>
+              </div>
             </div>
-          </div>
-        
 
-
-                <!-- Tributary Dropdown for Forecast Section -->
-          <div class="tributary-forecast-section">
-            <!-- <h2>Select Tributary</h2> -->
-            <div class="row">
-              <div class="tributary-dropdown-content">
-                <select class="form-control" name="forecast_tributary_select" id="forecast_tributary_select">
-                  <option value="-" selected hidden>Select a tributary</option>
-              </select>
-
+            <div class="flex-container">
+              <div class="flex-box" id="rainfallResult">
+                <h1>Rainfall Volume (3 Days)</h1>
+                <div class="rainfallResultContainer">
+                  <h5 id="rainfallIntensityText">Light</h5>
+                  <h5 id="rainfallResultText">0.00mm</h5>
+                </div>
+                <img src="img_src\rain-water-svgrepo-com.png">
+              </div>
+    
+              <div class="flex-box" id="dischargeVolume">
+                <h1>Discharge Volume (Free FLow)</h1>
+                <div class="dischargeVolumeContainer">
+                  <p id="dischargeVolumeText">0kg</p>
+                </div>
+                <img class="pigDischarge" src="img_src\baboyDischarge.png">
               </div>
             </div>
           </div>
-          <div class="input-container">
-            <label for="forecastPeriod">Enter Forecast Period (days):</label>
-            <input type="number" id="forecastPeriod" min="1" value="30">
-            <button id="forecastButton">Generate Forecast</button>
-          </div>
-          <div class="forecast-section">
-            <div class="chart-container">
-                <h2>Forecast Data</h2>
-                <canvas id="forecastChart"></canvas>
+          <div class="dashboard-municipality-section">
+            <div class="municipality-charts-container">
+              <div class="doughnut-container">
+                <canvas id="doughnut" width="300px" height="400px"></canvas>
+              </div>
+              <div class="barchart-container">
+                <canvas id="barchart" width="340px" height="250px"></canvas>
+              </div>
             </div>
-
           </div>
-
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="js/script.js"></script> <!-- External JavaScript -->
+
+        
+
+
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="js/script.js"></script> <!-- External JavaScript -->
           
           
 
@@ -289,26 +350,7 @@
       
     
         <!--Content for MUNICIPALITIES-->
-        <div id="rainAlertPopup" class="rainAlertPopup">
-          <div class="rainAlertPopup-content">
-              <p>No rain data available for <span id="rainTributaryName"></span>.</p>
-              <button onclick="closePopup()">OK</button>
-          </div>
-        </div>
-
-        <div id="historicalDataAlertPopup" class="historicalDataAlertPopup">
-          <div class="historicalDataAlert-content">
-              <p>No historical data found in <span id="historicalTributaryName"></span>.</p>
-              <button onclick="closePopup()">OK</button>
-          </div>
-        </div>
-
-        <div id="tributarySelectAlertPopup" class="tributarySelectAlertPopup">
-          <div class="tributaryAlertPopup-content">
-            <p>Please select a tributary first</p>
-            <button onclick="closePopup()">OK</button>
-          </div>
-        </div>
+        
 
         <div id="municipalitiesContent" class="middle content-section municipalitiesContent">
           <h2>Tributary Chart</h2>
@@ -337,6 +379,7 @@
           <h1>Settings</h1>
           <div class="setting_container"></div>
           <div class="setting_content">
+            <div id="google_translate_element"></div>
             <h3>Privacy</h3>
             <span>View our <a href="privacyPolicy.html"  target="_blank">Privacy Policy</a></span>
             <h3>Feedback</h3>
@@ -366,7 +409,7 @@
               
                 <div class="municipality-container row mb-2">
                   <div class="col-lg-6">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-body-secondary align-items-stretch">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-white bg-success bg-opacity-75 align-items-stretch">
                       <div class="col p-4 pe-3 pb-2 d-flex flex-column position-static flex-grow-1">
                         <strong class="d-inline-block mb-2 text-primary-emphasis">PROJECT GIS</strong>
                         <h3 class="mb-0 municipality"><a class="custom-font municipality-link" href="https://www.agoncillo.gov.ph/" target="_blank" rel="noopener noreferrer">AGONCILLO</a></h3>
@@ -384,7 +427,7 @@
                   </div>
 
                   <div class="col-lg-6">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-body-secondary align-items-stretch">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-white bg-success bg-opacity-75 align-items-stretch">
                       <div class="col p-4 pe-3 pb-2 d-flex flex-column position-static flex-grow-1">
                         <strong class="d-inline-block mb-2 text-success-emphasis">PROJECT GIS</strong>
                         <h3 class="mb-0 municipality"><a class="custom-font municipality-link" href="https://www.alitagtag.gov.ph/" target="_blank" rel="noopener noreferrer">ALITAGTAG</a></h3>
@@ -404,7 +447,7 @@
               
                 <div class="municipality-container row mb-2">
                   <div class="col-lg-6">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-body-secondary align-items-stretch">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-white bg-success bg-opacity-75 align-items-stretch">
                       <div class="col p-4 pe-3 pb-2 d-flex flex-column position-static flex-grow-1">
                         <strong class="d-inline-block mb-2 text-primary-emphasis">PROJECT GIS</strong>
                         <h3 class="mb-0 municipality"><a class="custom-font municipality-link" href="https://www.baletebatangas.gov.ph/" target="_blank" rel="noopener noreferrer">BALETE</a></h3>
@@ -426,7 +469,7 @@
                   </div>
               
                   <div class="col-lg-6">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-body-secondary align-items-stretch">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-white bg-success bg-opacity-75 align-items-stretch">
                       <div class="col p-4 pe-3 pb-2 d-flex flex-column position-static flex-grow-1">
                         <strong class="d-inline-block mb-2 text-success-emphasis">PROJECT GIS</strong>
                         <h3 class="mb-0 municipality"><a class="custom-font municipality-link" href="https://www.philatlas.com/luzon/r04a/batangas/cuenca.html" target="_blank" rel="noopener noreferrer">CUENCA</a></h3>
@@ -446,7 +489,7 @@
               
                 <div class="municipality-container row mb-2">
                   <div class="col-lg-6">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-body-secondary align-items-stretch">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-white bg-success bg-opacity-75 align-items-stretch">
                       <div class="col p-4 pe-3 pb-2 d-flex flex-column position-static flex-grow-1">
                         <strong class="d-inline-block mb-2 text-primary-emphasis">PROJECT GIS</strong>
                         <h3 class="mb-0 municipality"><a class="custom-font municipality-link" href="https://www.laurelbatangas.gov.ph/" target="_blank" rel="noopener noreferrer">LAUREL</a></h3>
@@ -464,7 +507,7 @@
                   </div>
                   
                   <div class="col-lg-6">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-body-secondary align-items-stretch">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-white bg-success bg-opacity-75 align-items-stretch">
                       <div class="col p-4 pe-3 pb-2 d-flex flex-column position-static flex-grow-1">
                         <strong class="d-inline-block mb-2 text-success-emphasis">PROJECT GIS</strong>
                         <h3 class="mb-0 municipality"><a class="custom-font municipality-link" href="https://www.philatlas.com/luzon/r04a/batangas/mataasnakahoy.html" target="_blank" rel="noopener noreferrer">MATAAS NA KAHOY</a></h3>
@@ -483,7 +526,7 @@
               
                 <div class="municipality-container row mb-2">
                   <div class="col-lg-6">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-body-secondary align-items-stretch">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-white bg-success bg-opacity-75 align-items-stretch">
                       <div class="col p-4 pe-3 pb-2 d-flex flex-column position-static flex-grow-1">
                         <strong class="d-inline-block mb-2 text-primary-emphasis">PROJECT GIS</strong>
                         <h3 class="mb-0 municipality"><a class="custom-font municipality-link" href="https://www.philatlas.com/luzon/r04a/batangas/san-nicolas.html" target="_blank" rel="noopener noreferrer">SAN NICOLAS</a></h3>
@@ -501,7 +544,7 @@
                     </div>
                   </div>
                   <div class="col-lg-6">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-body-secondary align-items-stretch">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-white bg-success bg-opacity-75 align-items-stretch">
                       <div class="col p-4 pe-3 pb-2 d-flex flex-column position-static flex-grow-1">
                         <strong class="d-inline-block mb-2 text-success-emphasis">PROJECT GIS</strong>
                         <h3 class="mb-0 municipality"><a class="municipality-link" href="https://stateresitabatangas.gov.ph/" target="_blank" rel="noopener noreferrer">SANTA TERESITA</a></h3>
@@ -522,7 +565,7 @@
               
                 <div class="municipality-container row mb-2">
                   <div class="col-lg-6">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-body-secondary align-items-stretch">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-white bg-success bg-opacity-75 align-items-stretch">
                       <div class="col p-4 pe-3 pb-2 d-flex flex-column position-static flex-grow-1">
                         <strong class="d-inline-block mb-2 text-primary-emphasis">PROJECT GIS</strong>
                         <h3 class="mb-0 municipality"><a class="custom-font municipality-link" href="https://www.talisaybatangas.gov.ph/" target="_blank" rel="noopener noreferrer">TALISAY</a></h3>
@@ -540,7 +583,7 @@
                     </div>
                   </div>
                   <div class="col-lg-6">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-body-secondary align-items-stretch">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative bg-white bg-success bg-opacity-75 align-items-stretch">
                       <div class="col p-4 pe-3 pb-2 d-flex flex-column position-static flex-grow-1">
                         <strong class="d-inline-block mb-2 text-success-emphasis">PROJECT GIS</strong>
                         <h3 class="mb-0 municipality"><a class="custom-font municipality-link" href="https://tanauancity.gov.ph/" target="_blank" rel="noopener noreferrer">TANAUAN</a></h3>
@@ -664,7 +707,7 @@
           </div>
     
           <div class="aboutContainer">
-            <div class="p-4 mb-4 rounded text-body-emphasis bg-body-secondary text-center ">
+            <div class="p-4 mb-4 rounded text-body-emphasis bg-body-secondary text-center shadow-lg">
               
               <h1 class="custom-font display-4 fst-italic">BATANGAS STATE UNIVERSITY - TNEU</h1>
               <p class="lead my-3"><strong>About Us</strong></p>
@@ -674,7 +717,7 @@
             
               <div class="row mb-2">
                 <div class="col-md-6">
-                  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative bg-body-secondary" style="--bs-bg-opacity: .5;">
+                  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative bg-body-secondary" style="--bs-bg-opacity: .9;">
                     <div class="col p-4 d-flex flex-column position-static">
                       <strong class="d-inline-block mb-2 text-primary-emphasis">Project Map</strong>
                       <h3 class="custom-font mb-0 text-grey">VISION</h3>
@@ -683,7 +726,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative bg-body-secondary" style="--bs-bg-opacity: .5;">
+                  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-200 position-relative bg-body-secondary" style="--bs-bg-opacity: .9;">
                     <div class="col p-4 d-flex flex-column position-static">
                       <strong class="d-inline-block mb-2 text-primary-emphasis">Project Map</strong>
                       <h3 class="custom-font mb-0 text-grey">MISSION</h3>
@@ -693,7 +736,7 @@
                 </div>
               </div>
             
-              <div class="container-fluid">
+              <div>
                 <div class="row justify-content-center align-items-center">
                   <div class="col-12 row justify-content-center">
                       <h2 class="mb-3 text-dark">Proponents</h2>
@@ -709,52 +752,122 @@
                           </div>
                       </div>
                   </div>
-                        <div class="col-md-6 col-lg-4 custom-card h-50 d-flex justify-content-center">
-                            <div class="card my-3">
-                                <img src="./images/Dr_Delmo.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
-                                <div class="card-body">
-                                    <h3 class="card-title"><p class="custom-font text-secondary fs-4">Dr. Jen Aldwayne B. Delmo</p></h3>
-                                    <p class="card-text fs-6">Project Staff</p>
-                                </div>
-                            </div>
+                  <div class="staff-container">
+                    <div class="custom-card">
+                      <div class="card">
+                        <img src="./images/Dr_Delmo.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                        <div class="card-body">
+                          <h3 class="card-title"><p class="custom-font text-secondary fs-4">Dr. Jen Aldwayne B. Delmo</p></h3>
+                          <p class="card-text fs-6">Project Staff</p>
                         </div>
-                        <div class="col-md-6 col-lg-4 mb-2 custom-card h-50 d-flex justify-content-center">
-                            <div class="card my-3">
-                                <img src="./images/Dr_Sarmiento.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
-                                <div class="card-body">
-                                    <h3 class="card-title"><p class="custom-font text-secondary fs-4">Dr. Jeffrey S. Sarmiento</p></h3>
-                                    <p class="card-text fs-6">Project Staff</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 mb-2 custom-card h-50 d-flex justify-content-center">
-                            <div class="card my-3">
-                                <img src="./images/ENGMARV.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
-                                <div class="card-body">
-                                    <h3 class="card-title"><p class="custom-font text-secondary fs-4">Engr. Marvin S. Benedicto</p></h3>
-                                    <p class="card-text fs-6">Project Staff</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 mb-2 custom-card h-50 d-flex justify-content-center">
-                            <div class="card my-3">
-                                <img src="./images/Engr_Laila_Contreras.png" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
-                                <div class="card-body">
-                                    <h3 class="card-title"><p class="custom-font text-secondary fs-4">Engr. Laila A. Contreras</p></h3>
-                                    <p class="card-text fs-6">Project Staff</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 mb-2 custom-card  h-50 d-flex justify-content-center">
-                            <div class="card my-3">
-                                <img src="./images/Engr_Anthony_Hernandez.png" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
-                                <div class="card-body">
-                                    <h3 class="card-title"><p class="custom-font text-secondary fs-4">Engr. Anthony G. Hernandez</p></h3>
-                                    <p class="card-text fs-6">Project Staff</p>
-                                </div>
-                            </div>
-                        </div>
+                      </div>
                     </div>
+                    <div class="custom-card">
+                      <div class="card">
+                        <img src="./images/Dr_Sarmiento.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                        <div class="card-body">
+                          <h3 class="card-title"><p class="custom-font text-secondary fs-4">Dr. Jeffrey S. Sarmiento</p></h3>
+                          <p class="card-text fs-6">Project Staff</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="custom-card">
+                      <div class="card">
+                        <img src="./images/ENGMARV.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                        <div class="card-body">
+                          <h3 class="card-title"><p class="custom-font text-secondary fs-4">Engr. Marvin S. Benedicto</p></h3>
+                          <p class="card-text fs-6">Project Staff</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="custom-card">
+                      <div class="card">
+                        <img src="./images/Engr_Laila_Contreras.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                        <div class="card-body">
+                          <h3 class="card-title"><p class="custom-font text-secondary fs-4">Engr. Laila C. Hernandez</p></h3>
+                          <p class="card-text fs-6">Project Staff</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="custom-card">
+                      <div class="card">
+                          <img src="./images/Engr_Anthony_Hernandez.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                          <div class="card-body">
+                            <h3 class="card-title"><p class="custom-font text-secondary fs-4">Engr. Anthony G. Hernandez</p></h3>
+                            <p class="card-text fs-6">Project Staff</p>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="staff-container">
+                    <div class="custom-card">
+                      <div class="card">
+                          <img src="./images/Ray_Hernandez.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                          <div class="card-body">
+                            <h3 class="card-title"><p class="custom-font text-secondary fs-4">Dr. John Ray P. Hernandez</p></h3>
+                            <p class="card-text fs-6">Developer</p>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="custom-card">
+                      <div class="card">
+                          <img src="./images/Nino_Villena.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                          <div class="card-body">
+                            <h3 class="card-title"><p class="custom-font text-secondary fs-4">Dr. Niño Gerard C. Villena</p></h3>
+                            <p class="card-text fs-6">Developer</p>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="custom-card">
+                      <div class="card">
+                          <img src="./images/Harlene_Magtibay.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                          <div class="card-body">
+                            <h3 class="card-title"><p class="custom-font text-secondary fs-4">Harlene R. Magtibay</p></h3>
+                            <p class="card-text fs-6">Developer</p>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="staff-container">
+                    <div class="custom-card">
+                      <div class="card">
+                          <img src="./images/Dylan_Manuel.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                          <div class="card-body">
+                            <h3 class="card-title"><p class="custom-font text-secondary fs-4">Dr. Laurent Dylan Manuel</p></h3>
+                            <p class="card-text fs-6">Labor</p>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="custom-card">
+                      <div class="card">
+                          <img src="./images/Paul_Magboo.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                          <div class="card-body">
+                            <h3 class="card-title"><p class="custom-font text-secondary fs-4">Dr. Paul Noriel Magboo</p></h3>
+                            <p class="card-text fs-6">Labor</p>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="custom-card">
+                      <div class="card">
+                          <img src="./images/Eloisa_Roco.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                          <div class="card-body">
+                            <h3 class="card-title"><p class="custom-font text-secondary fs-4">Dr. Eloisa John Roco</p></h3>
+                            <p class="card-text fs-6">Labor</p>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="custom-card">
+                      <div class="card">
+                          <img src="./images/Royet_Agoncillo.jpg" class="card-img-top card-img h-300px w-auto rounded" alt="thumbnail">
+                          <div class="card-body">
+                            <h3 class="card-title"><p class="custom-font text-secondary fs-4">Dr. Royet Agoncillo</p></h3>
+                            <p class="card-text fs-6">Labor</p>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
                 </div>
             </div>
           
@@ -762,23 +875,23 @@
       <!-- </div> -->
       
   
-     <div class="rightContent-container">
-       <!-- RIGHT CONTENT -->
-       <div class="rightContainer">
-        <div class="rightBox">
-          <h1 class="rightTitle">Today</h1>
-          <img src="img_src\sun-svgrepo-com.png">
-        </div>
-        <div class="listContent">
-          <ul id="dataList"></ul>
+      <div class="rightContent-container">
+        <!-- RIGHT CONTENT -->
+        <div class="rightContainer">
+          <div class="rightBox">
+            <h1 class="rightTitle">Today</h1>
+            <img src="img_src\sun-svgrepo-com.png">
+          </div>
+          <div class="listContent">
+            <ul id="dataList"></ul>
+          </div>
         </div>
       </div>
-     </div>
   
       
   
     </main>
-    <div class="footer-container">
+    <!-- <div class="footer-container">
       <footer class="footerContent py-5 text-center text-body-secondary bg-body-secondary">
           <p>PROJECT GIS by 
               <a href="https://batstateu.edu.ph/" target="_blank" rel="noopener noreferrer">
@@ -791,7 +904,7 @@
               <a href="#">Back to top</a>
           </p>
       </footer>
-  </div>
+    </div> -->
   
   
   <!-- Your other scripts -->
@@ -804,13 +917,115 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en', 
+            includedLanguages: 'en,tl', // Restrict to English and Filipino
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+      }
+
+      function modifyDropdown() {
+        setTimeout(() => {
+            let select = document.querySelector(".goog-te-combo"); 
+            if (select) {
+                for (let i = select.options.length - 1; i >= 0; i--) {
+                    let lang = select.options[i].value;
+                    if (lang !== "en" && lang !== "tl") { // Keep only English & Filipino
+                        select.remove(i);
+                    }
+                }
+            }
+        }, 500); // Delay to ensure Google Translate loads first
+      }
+
+    window.onload = modifyDropdown;
+
+      document.addEventListener("DOMSubtreeModified", function () {
+      console.log("DOM modified by Google Translate");
+          
+          // Fix layout styles after translation
+          fixLayoutStyles();
+
+          // Reapply any event listeners or JavaScript functions
+          reinitializeUI();
+      });
+
+      // Function to fix broken layout styles
+      function fixLayoutStyles() {
+          document.querySelectorAll('.notranslate').forEach(el => {
+              el.style.whiteSpace = "nowrap"; // Prevents text wrapping issues
+              el.style.display = "inline-block"; // Keeps the layout intact
+          });
+
+          document.querySelectorAll('.goog-te-menu-frame').forEach(el => {
+              el.style.zIndex = "9999"; // Ensures the translate dropdown is visible
+          });
+      }
+
+      // Function to reinitialize UI components (if you have charts, buttons, etc.)
+      function reinitializeUI() {
+          // Example: Reapply JavaScript-dependent features
+          if (typeof initCharts === "function") {
+              initCharts(); // Example: Reinitialize charts if they break
+          }
+          
+          if (typeof setupEventListeners === "function") {
+              setupEventListeners(); // Rebind event listeners to buttons
+          }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+      setTimeout(function () {
+          let frame = document.querySelector(".goog-te-banner-frame");
+          if (frame) {
+              frame.style.display = "none";
+          }
+      }, 500);
+      });
+
+
+      window.addEventListener("load", function() {
+          setTimeout(function() {
+              var elements = document.getElementsByTagName("iframe");
+              for (var i = 0; i < elements.length; i++) {
+                  if (elements[i].className.includes("goog-te-banner-frame")) {
+                      elements[i].parentNode.removeChild(elements[i]);
+                  }
+              }
+              document.body.style.top = "0px"; // Ensure no extra margin
+          }, 1000); // Slightly longer delay to ensure the bar is loaded before removing
+      });
+
+
+      window.addEventListener("load", function() {
+          var observer = new MutationObserver(function(mutations) {
+              var banner = document.querySelector(".goog-te-banner-frame");
+              if (banner) {
+                  banner.style.display = "none";
+              }
+          });
+
+          observer.observe(document.body, { childList: true, subtree: true });
+      });
+
+
+
+
+      
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
     <script src="./js/index.js"></script>
+    <script scr="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     <!-- <script src="'.js/map.js" defer type="module"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
 
 </html>

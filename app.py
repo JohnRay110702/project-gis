@@ -1,169 +1,212 @@
 from flask import Flask, request, jsonify
 import pickle
 import pandas as pd
-from prophet import Prophet
+import requests  
 from flask_cors import CORS
-import mysql.connector
+import pymysql
 from datetime import datetime
+import json
+import requests
+from geopy.distance import geodesic
 
-# Initialize Flask app
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
-# Path to the trained model
-PICKLE_FILE_PATH = "prophet_model.pkl"
+# OpenWeatherMap API Key
+API_KEY = "73e7b15a19439a739559b0bf8a3aff43"
 
-# Load the trained Prophet model
-def load_model():
+# Municipality encoding mapping
+encoding = {
+    "Agoncillo": 0, "Balete": 1, "Laurel": 2, "Mataasnakahoy": 3,
+    "San Nicolas": 4, "SantaTeresita": 5, "Talisay": 6, "Tanauan": 7
+}
+
+# Load models at startup
+models = {}
+for i in range(8):
     try:
-        with open(PICKLE_FILE_PATH, 'rb') as f:
-            model = pickle.load(f)
-            print("✅ Model loaded successfully!")
-            return model
+        with open(f"{i}.pkl", 'rb') as f:
+            models[i] = pickle.load(f)
+            print(f"✅ Model {i}.pkl loaded successfully!")
     except FileNotFoundError:
-        print(f"❌ Error: Model file not found at {PICKLE_FILE_PATH}.")
+        print(f"❌ Error: Model file {i}.pkl not found.")
     except Exception as e:
-        print(f"❌ Error loading model: {str(e)}")
-    return None
+        print(f"❌ Error loading model {i}: {str(e)}")
 
-model = load_model()
+# Database connection
+DB_CONFIG = {
+    "host": "localhost", "user": "root", "password": "",
+    "database": "pagdaloy", "cursorclass": pymysql.cursors.DictCursor
+}
 
-# Database connection function
 def get_db_connection():
     try:
-        conn = mysql.connector.connect(
-            host="localhost",  
-            user="root",
-            password="",
-            database="pagdaloy"
-        )
-        print("✅ MySQL connected successfully!")  # Debugging
-        return conn
-    except mysql.connector.Error as e:
-        print(f"❌ Database connection error: {str(e)}")
+        return pymysql.connect(**DB_CONFIG)
+    except pymysql.MySQLError as e:
+        print(f"❌ MySQL Connection Error: {e}")
         return None
 
-# 📌 API: Fetch Rain Data
-@app.route("/api/get_rain_data", methods=["POST"])
-def get_rain_data():
-    data = request.get_json()
-    print("Raw request data:", request.data)
-    print("Parsed JSON:", data)
-
-    selected_tributary = data.get("tributary")
-    print("Extracted tributary:", selected_tributary)
-
+# Fetch wind data from OpenWeather API
+def fetch_wind_data(municipality_name):
+    lat_lon_map = {
+        "San Nicolas": {"lat": 13.9165, "lon": 120.9328},
+        "Agoncillo": {"lat": 13.9333, "lon": 120.9333},
+        "Laurel": {"lat": 14.0500, "lon": 120.8833},
+        "Tanauan": {"lat": 14.0833, "lon": 121.1500},
+        "Mataasnakahoy": {"lat": 13.9667, "lon": 121.1000},
+        "Balete": {"lat": 13.8833, "lon": 121.0333},
+        "Talisay": {"lat": 14.0917, "lon": 120.9750},
+        "Cuenca": {"lat": 13.9000, "lon": 121.0500},
+        "SantaTeresita": {"lat": 13.8806, "lon": 120.9750}
+    }
     
-    if not selected_tributary:
-        return jsonify({"error": "No tributary selected"}), 400
-
-    conn = get_db_connection()
-    if not conn:
-        return jsonify({"error": "Database connection failed"}), 500
-
+    location = lat_lon_map.get(municipality_name)
+    if not location:
+        return 0, 180  # Default values
+    
+    url = f"https://api.openweathermap.org/data/2.5/weather?lat={location['lat']}&lon={location['lon']}&appid={API_KEY}&units=metric"
+    
     try:
-        cursor = conn.cursor(dictionary=True)
-        query = """
-            SELECT volume AS precip, timestamp 
-            FROM rain_g 
-            WHERE tributary = %s 
-            ORDER BY timestamp DESC
-        """
-        cursor.execute(query, (selected_tributary,))
-        results = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return jsonify(results)
-    except mysql.connector.Error as e:
-        return jsonify({"error": f"Database query failed: {str(e)}"}), 500
+        response = requests.get(url)
+        data = response.json()
+        return data.get("wind", {}).get("speed", 0), data.get("wind", {}).get("deg", 180)
+    except requests.RequestException:
+        return 0, 180
     
-    
+def getTotalDisharge(tributaryName):
+    # Load the GeoJSON file from the correct folder
+    geojson_file = "geojson_files/Waterways_updated.geojson"
 
-@app.route('/api/forecast', methods=['POST'])
-def get_forecast():
-    """API Endpoint to get forecast data using the trained Prophet model."""
-    
-    if model is None:
-        return jsonify({"error": "Model not loaded"}), 500
+    with open(geojson_file, "r", encoding="utf-8") as file:
+        geojson_data = json.load(file)
+        # ✅ Extract tributary coordinates
+    tributaries = {}
+    coords = None
+    for feature in geojson_data["features"]:
+        name = feature["properties"].get("name", "Unknown")
+        coordinates = feature["geometry"].get("coordinates", [])
+        print(name, tributaryName)
+        if name == tributaryName:
+            coords = coordinates  # Store tributary coordinates
 
-    # Ensure the request contains JSON data
-    if not request.is_json:
-        return jsonify({"error": "Invalid request. JSON data required."}), 400
+    # ✅ Step 3: Fetch piggeries data from piggeries.php
+    piggeries_url = "http://localhost/project-gis/public/php/piggeries.php"  # Adjust URL if needed
+    response = requests.get(piggeries_url)
 
-    data = request.get_json()
-    print("Raw request data:", request.data)
-    print("Parsed JSON:", data)
-
-    selected_tributary = data.get("tributary")
-    print("Extracted tributary:", selected_tributary)
-
-    periods = data.get("periods", 30)
-
-    if not isinstance(periods, int) or periods <= 0:
-        return jsonify({"error": "Number of periods must be a positive integer"}), 400
-
-    # 📌 Generate future dates
-    future_dates = pd.date_range(start=datetime.today(), periods=periods, freq='D')
-    future = pd.DataFrame({'ds': future_dates})
-
-    # 📌 Fetch `precip` from database
-    conn = get_db_connection()
-    if conn:
-        cursor = conn.cursor(dictionary=True)
-        query = """
-            SELECT timestamp AS ds, volume AS precip  
-            FROM rain_g 
-            WHERE tributary = %s
-            ORDER BY timestamp DESC
-            LIMIT %s
-        """
-
-        print("Executing query with parameters:", selected_tributary, periods)
-
-
-        cursor.execute(query, (selected_tributary, int(periods)))
-        db_results = cursor.fetchall()
-        cursor.close()
-        conn.close()
-
-        print("db_results: ", db_results)
-
-        # 📌 Convert fetched data to DataFrame
-        if db_results:
-            regressor_df = pd.DataFrame(db_results)
-            regressor_df["ds"] = pd.to_datetime(regressor_df["ds"])
-
-            # print("db result: ", db_results)
-
-            if db_results:
-                print("data fetched: ", db_results)
-            else:
-                print("no data returned from database.")
-
-            # 📌 Merge with future dates and handle missing values
-            future = future.merge(regressor_df, on="ds", how="left")
-            future["precip"] = future["precip"].ffill()  # Forward fill missing values
-            future["precip"] = future["precip"].fillna(0.8)  # Fill any remaining NaN with default value
-
-        else:
-            print("⚠ No historical data found. Using default fallback for `precip`.")
-            future["precip"] = 0.8  # Default fallback value
-
+    if response.status_code == 200:
+        piggeries_data = response.json()
     else:
-        print("⚠ No database connection. Using default fallback for `precip`.")
-        future["precip"] = 0.8  # Default fallback value
+        print("❌ Error fetching piggeries data")
+        exit()
 
-    # 📌 Assign fallback values for other regressors
-    for reg in ['windspeed', 'winddir', 'winddir_sin', 'winddir_cos',
-                'rel_angle', 'rel_angle_sin', 'rel_angle_cos', 'effluentVolume']:
-        future[reg] = 0.8  # Default fallback value
+    # ✅ Step 4: Filter piggeries (Sanitation = Free-flow, Distance < 40m)
+    distance_threshold = 40  # Meters
+    tributary_discharge = 0  # Store only total discharge
 
-    # 📌 Generate forecast
-    forecast = model.predict(future)
-    response = forecast[['ds', 'yhat']].to_dict(orient='records')
+    for piggery in piggeries_data:
+        if piggery["sanitation"] == "Free-flow" and float(piggery["discharge"]) > 0:
+            piggery_location = (float(piggery["latitude"]), float(piggery["longitude"]))
+            # for trib_name, trib_coords in tributaries.items():
+            if coords == None:
+                return 0.8
+            
+            for coord in coords:
+                tributary_location = (coord[1], coord[0])  # Convert GeoJSON format
+                distance = geodesic(piggery_location, tributary_location).meters
+                if distance < distance_threshold:
+                    tributary_discharge += float(piggery["discharge"])
+                    break  # Stop checking once assigned
+    
+    # Convert result to list of tuples
+    return tributary_discharge
+    # return [(trib_name, discharge) for trib_name, discharge in tributary_discharge.items()]
 
-    return jsonify({"forecast": response})
 
+# discharge_data = getTotalDisharge()
+
+# for tributary, discharge in discharge_data:
+#     print(f"Tributary: {tributary}, Total discharge: {round(discharge, 2)}kg")
+
+@app.route('/api/forecast', methods=['GET', 'POST'])
+def get_forecast():
+    connection = get_db_connection()
+    if not connection:
+        return jsonify({"error": "Database connection failed"}), 500
+    
+    try:
+        cursor = connection.cursor()
+
+        # Get tributary-municipality mapping
+        cursor.execute("SELECT tributary, municipality_name FROM tributaries")
+        mappings = cursor.fetchall()
+        municipality_map = {entry["tributary"]: entry["municipality_name"] for entry in mappings}
+        tributary_names = list(municipality_map.keys())
+        
+        # Get precipitation data
+        cursor.execute("""
+            SELECT tributary, SUM(volume) AS precip 
+            FROM rain_g 
+            WHERE timestamp >= DATE_SUB(NOW(), INTERVAL 3 DAY) 
+            GROUP BY tributary
+        """)
+        rain_data = cursor.fetchall()
+        
+        rain_df = pd.DataFrame(rain_data) if rain_data else pd.DataFrame(columns=["tributary", "precip"])
+        if not rain_df.empty:
+            rain_df.set_index("tributary", inplace=True)
+    
+    finally:
+        cursor.close()
+        connection.close()
+    
+    # Get user-defined forecast periods (default: 10)
+    periods = request.args.get("periods", default=10, type=int)
+    selectedTributary = request.args.get('tributary', default="", type=str)
+    print(selectedTributary)
+    
+    forecast_results = []
+    # for tributary_name in tributary_names:
+    municipality_name = municipality_map.get(selectedTributary, "Unknown")
+    windspeed, winddir = fetch_wind_data(municipality_name)
+    precip = rain_df.loc[selectedTributary, "precip"] if selectedTributary in rain_df.index else 0.8
+    encoded_value = encoding.get(municipality_name, 0)
+    model = models.get(encoded_value)
+    
+    # if model is None:
+    #     continue
+
+    tributaryDischarge = getTotalDisharge(selectedTributary)
+    print("tributaryDischarge", tributaryDischarge)
+    
+    # Adjust the forecast periods dynamically based on user input
+    future_df = pd.DataFrame({
+        "ds": pd.date_range(start=datetime.now(), periods=periods, freq="D"),
+        "wind_speed": windspeed,
+        "wind_direction": winddir,
+        "precip": precip,
+        "effluentVolume": tributaryDischarge,
+        "encoded_tributary": encoded_value
+    })
+    
+    forecast = model.predict(future_df)
+    
+    forecast_results.append({
+        "tributary": selectedTributary,
+        "municipality_name": municipality_name,
+        "wind_speed": float(windspeed),
+        "wind_direction": float(winddir),
+        "precip": float(precip),
+        "effluentVolume": 0.8,
+        "encoded_tributary": encoded_value,
+        "forecastV": [
+            {
+                "date": pd.to_datetime(entry["ds"], errors="coerce").strftime("%Y-%m-%d"),
+                "forecast": entry["yhat"]
+            } for entry in forecast[["ds", "yhat"]].to_dict(orient="records")
+        ]  
+    })
+    
+    return jsonify({"forecasts": forecast_results})
 
 if __name__ == "__main__":
     app.run(debug=True)

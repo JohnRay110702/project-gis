@@ -11,22 +11,17 @@ if ($con->connect_error) {
     exit;
 }
 
-// Check if municipality is received
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['municipality'])) {
-    $municipality = $_GET['municipality'];
+// Check if user is provided
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['user'])) {
+    $user = $_GET['user'];
 
     // Debugging output
-    error_log("Received municipality: " . $municipality);
+    error_log("Received user: " . $user);
 
-    $sql = "SELECT tributary FROM tributaries WHERE municipality = ?";
+    // Fetch tributary and municipality_name for the given user
+    $sql = "SELECT tributary, municipality_name FROM tributaries WHERE user = ?";
     $stmt = $con->prepare($sql);
-
-    if (!$stmt) {
-        echo json_encode(["error" => "SQL Prepare failed: " . $con->error]);
-        exit;
-    }
-
-    $stmt->bind_param("s", $municipality);
+    $stmt->bind_param("s", $user);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -35,15 +30,18 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['municipality'])) {
         exit;
     }
 
-    $tributaries = [];
+    $tributaryList = [];
     while ($row = $result->fetch_assoc()) {
-        $tributaries[] = $row['tributary'];
+        $tributaryList[] = [
+            "tributary" => $row['tributary'],
+            "municipality" => $row['municipality_name']
+        ];
     }
 
     // Return as JSON
-    echo json_encode($tributaries);
+    echo json_encode($tributaryList);
 } else {
-    echo json_encode(["error" => "No municipality provided"]);
+    echo json_encode(["error" => "No user provided"]);
 }
 
 $con->close();

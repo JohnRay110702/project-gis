@@ -162,7 +162,7 @@ opacity: 0.5;
 #custom-modal,
 #clearme,
 #flow-acc { /* Apply margin and adjust size to all items */
-  margin-bottom: 20px; /* Add more margin to the bottom of each item */
+  margin-bottom: 10px; /* Add more margin to the bottom of each item */
   height: 60px; /* Increase the height of the logos */
   width: auto; /* Ensure the logos maintain their aspect ratio */
   border-radius: 50%;
