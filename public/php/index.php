@@ -112,12 +112,12 @@ include('database.php');
       
       <div class="tooltip">
         <div id="modal"><img id="custom-modal" src="../img/add_icon.png" alt="add"></div>
-        <span class="tooltiptext">Add</span>
+        <span class="tooltiptext">Add Piggery</span>
       </div>
       <!-- <div id="modal"><img id="custom-modal" src="../img/add_icon.png" alt="add"></div> -->
       <div class="tooltip">
         <img id="flow-acc" src="../img/summary_icon.png" alt="">
-        <span class="tooltiptext">Summary</span>
+        <span class="tooltiptext">Lists of Barangays</span>
       </div>
       <div class="tooltip">
       <div id="clearmarker"><img id="clearme" src="../img/refresh_icon.png" alt="clearmarker"></div>

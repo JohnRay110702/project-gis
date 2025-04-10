@@ -212,39 +212,6 @@ var map = L.map('map', {
                 
             });
 
-            // filteredFeatures.forEach(markerData => {
-            //     const markerIcon = L.icon({
-            //         iconUrl: '../img/orange-round-pushpin.png',
-            //         iconSize: [30, 30],
-            //         iconAnchor: [15, 30],
-            //         popupAnchor: [3.5, -21.5]
-            //     });
-            //     const marker = L.marker([markerData.latitude, markerData.longitude], { icon: markerIcon }).addTo(map);
-            //     marker.options.markerData = markerData; // Attach markerData to marker options
-
-            //     const popupContent = `
-            //         <b>Farm Name:</b> ${markerData.resident_id}<br>
-            //         <b>Sow Count:</b> ${markerData.sow_count}<br>
-            //         <b>Boar Count:</b> ${markerData.boar_count}<br>
-            //         <b>Fattener Count:</b> ${markerData.fattener_count}<br>
-            //         <b>Piglet Count:</b> ${markerData.piglet_count}<br>
-            //         <b>Native Count:</b> ${markerData.native_count}<br>
-            //         <b>Latitude:</b> ${markerData.latitude}<br>
-            //         <b>Longitude:</b> ${markerData.longitude}<br>
-            //         <b>Sanitation:</b> ${markerData.sanitation}<br>
-            //     `;
-
-            //     marker.bindPopup(popupContent);
-
-            //     // marker.on('popupopen', function(event) {
-            //     //     const markerLatLng = marker.getLatLng();
-            //     //     highlightNearbyWaterways(markerLatLng, markerData);
-            //     // });
-
-            //     // marker.on('popupclose', function(event) {
-            //     //     resetNearbyWaterways();
-            //     // });
-            // });
     
             // Clear existing barangay layer group
             barangayLayerGroup.clearLayers();
@@ -275,79 +242,6 @@ var map = L.map('map', {
     }
 
 
-    //////////////////////////////////////////////////
-    // function fetchAndDisplayBarangayShape(municipality_code, barangay, map) {
-    //     // Clear only barangay shape layers (do not clear markers)
-    //     clearBarangayShapes();
-    
-    //     const geojsonURL = `../../geojson_files/Shapefiles.geojson`;
-    //     fetch(geojsonURL)
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error('Network response was not ok ' + response.statusText);
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(geojsonData => {
-    //             console.log('GeoJSON data:', geojsonData); // Debugging statement
-    
-    //             // Filter the GeoJSON data based on municipality and barangay
-    //             const filteredFeatures = geojsonData.features.filter(feature => {
-    //                 console.log('Checking feature:', feature.properties); // Debugging
-    //                 return (
-    //                     feature.properties.ADM4_EN === barangay &&
-    //                     feature.properties.Municipality_Code === municipality_code
-    //                 );
-    //             });
-    
-    //             console.log('Filtered Features:', filteredFeatures); // Debugging
-    
-    //             if (filteredFeatures.length === 0) {
-    //                 console.warn(`No matching barangay found for ${barangay} in municipality ${municipality_code}`);
-    //                 return;
-    //             }
-    
-    //             // Keep existing markers and just add the filtered barangay shape
-    //             filteredFeatures.forEach(feature => {
-    //                 // Highlight selected barangay instead of assigning random colors
-    //                 const barangayLayer = L.geoJSON(feature, {
-    //                     style: {
-    //                         fillColor: 'yellow', // Highlight color
-    //                         color: 'orange', // Border color
-    //                         weight: 4,
-    //                         fillOpacity: 0.5
-    //                     }
-    //                 });
-    
-    //                 barangayLayer.addTo(barangayLayerGroup);
-    //                 shapeLayers[barangay] = barangayLayer; // Store the reference
-    //             });
-    
-    //             // Add the barangay shape layer group to the map
-    //             barangayLayerGroup.addTo(map);
-    
-    //             // Ensure markers remain visible
-    //             showAllMarkers();
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching and displaying barangay shape:', error);
-    //         });
-    // }
-    
-
-    // function showAllMarkers() {
-    //     pigFarmMarkers.forEach(marker => {
-    //         if (!map.hasLayer(marker)) {
-    //             marker.addTo(map);
-    //         }
-    //     });
-    
-    //     barangayMarkers.forEach(marker => {
-    //         if (!map.hasLayer(marker)) {
-    //             marker.addTo(map);
-    //         }
-    //     });
-    // }
     
 
     //////////////////////////////////////
@@ -875,10 +769,15 @@ var map = L.map('map', {
         margin-bottom: 3px; /* Adjust margin to reduce spacing */
         padding: 5px 10px;
         border: none;
-        background-color: #f2f2f2;
+        background-color:#5eade6;
         cursor: pointer;
         opacity: 0; /* Set opacity to 0 initially */
         transition: opacity 0.3s ease-in-out; /* Smooth transition for opacity */
+    }
+
+    .active-barangays .barangay-list-item:hover {
+        color: #ffffff;
+        text-decoration: underline;
     }
     
     .active-barangays .barangay-list-item {
@@ -1684,15 +1583,7 @@ var map = L.map('map', {
             weight: 3 // Default weight
         });
     }
-    //   if (legendName.textContent !== 'Discharge Path' && legendName.textContent !== 'Waterways' && legendName.textContent !== 'Pig Farm' && legendName.textContent !== 'Closest Point' && legendName.textContent !== 'Barangay' && legendName.textContent !== 'Degraded Waterways' && legendName.textContent !== 'Volcanic Stream' ) {
-    //     legendIcon.src = '../img/effluentflowlegend.png'; // Change this to your default icon path
-    //     legendName.textContent = 'Discharge Path';
-    
-    //     waterwaysLayer.setStyle({
-    //       color: '#0000CD', // Default blue color
-    //       weight: 3 // Default weight
-    //   });
-    //   }
+
     }
     
     
