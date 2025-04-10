@@ -981,19 +981,19 @@ async function updateDischargeChart(selectedMunicipality = null) {
             }
 
             backgroundColors = [
-                'rgba(108, 229, 232, 0.9)',  // Light Cyan Blue
-                'rgba(65, 184, 219, 0.9)',   // Sky Blue
-                'rgba(45, 139, 186, 0.9)',   // Cerulean Blue
-                'rgba(47, 82, 152, 0.9)',    // Royal Blue
-                'rgba(16, 70, 135, 0.9)',    // Deep Blue
-                'rgba(0, 58, 128, 0.9)',     // Navy Blue
-                'rgba(0, 49, 108, 0.9)',     // Dark Navy
-                'rgba(75, 180, 225, 0.9)',   // Sky Blue Tint
-                'rgba(30, 144, 255, 0.9)',   // Dodger Blue
-                'rgba(0, 119, 190, 0.9)',    // Ocean Blue
-                'rgba(70, 130, 180, 0.9)',   // Steel Blue
-                'rgba(0, 153, 204, 0.9)',    // Bright Aqua Blue
-                'rgba(0, 102, 204, 0.9)'     // Vivid Blue
+                "rgba(255, 99, 132, 0.8)",   // Red
+                "rgba(54, 162, 235, 0.8)",   // Blue
+                "rgba(255, 206, 86, 0.8)",   // Yellow
+                "rgba(75, 192, 192, 0.8)",   // Teal
+                "rgba(153, 102, 255, 0.8)",  // Purple
+                "rgba(255, 159, 64, 0.8)",   // Orange
+                "rgba(199, 199, 199, 0.8)",  // Gray
+                "rgba(255, 99, 255, 0.8)",   // Pink
+                "rgba(99, 255, 132, 0.8)",   // Mint Green
+                "rgba(255, 220, 99, 0.8)",   // Light Orange
+                "rgba(99, 132, 255, 0.8)",   // Soft Blue
+                "rgba(132, 255, 255, 0.8)",  // Cyan
+                "rgba(255, 132, 99, 0.8)"    // Coral
             ];
             borderColors = 'rgba(255, 255, 255, 1)'; // White border for all segments
         }
@@ -1037,7 +1037,7 @@ async function updateDischargeChart(selectedMunicipality = null) {
                         position: 'right',
                         labels: {
                             font: {
-                                size: 12
+                                size: 11
                             }
                         },
                         padding: {
@@ -1186,24 +1186,34 @@ async function updateSanitationChart(selectedMunicipality = null) {
                     label: `Sanitation Count for ${municipalityName}`,
                     data: data,
                     backgroundColor: [
-                        'rgb(108, 229, 232)',
-                        'rgb(65, 184, 219)',
-                        'rgb(45, 139, 186)',
-                        'rgb(47, 82, 152)',
-                        'rgb(16, 70, 135)',
-                        'rgb(0, 58, 128)',
-                        'rgb(0, 49, 108)',
-                        'rgb(0, 37, 83)'
+                        "rgba(255, 99, 132, 0.8)",   // Red
+                        "rgba(54, 162, 235, 0.8)",   // Blue
+                        "rgba(255, 206, 86, 0.8)",   // Yellow
+                        "rgba(75, 192, 192, 0.8)",   // Teal
+                        "rgba(153, 102, 255, 0.8)",  // Purple
+                        "rgba(255, 159, 64, 0.8)",   // Orange
+                        "rgba(199, 199, 199, 0.8)",  // Gray
+                        "rgba(255, 99, 255, 0.8)",   // Pink
+                        "rgba(99, 255, 132, 0.8)",   // Mint Green
+                        "rgba(255, 220, 99, 0.8)",   // Light Orange
+                        "rgba(99, 132, 255, 0.8)",   // Soft Blue
+                        "rgba(132, 255, 255, 0.8)",  // Cyan
+                        "rgba(255, 132, 99, 0.8)"    // Coral
                     ],
                     borderColor: [
-                        'rgb(108, 229, 232)',
-                        'rgb(65, 184, 219)',
-                        'rgb(45, 139, 186)',
-                        'rgb(47, 82, 152)',
-                        'rgb(16, 70, 135)',
-                        'rgb(0, 58, 128)',
-                        'rgb(0, 49, 108)',
-                        'rgb(0, 37, 83)'
+                        "rgba(255, 99, 132, 0.8)",   // Red
+                        "rgba(54, 162, 235, 0.8)",   // Blue
+                        "rgba(255, 206, 86, 0.8)",   // Yellow
+                        "rgba(75, 192, 192, 0.8)",   // Teal
+                        "rgba(153, 102, 255, 0.8)",  // Purple
+                        "rgba(255, 159, 64, 0.8)",   // Orange
+                        "rgba(199, 199, 199, 0.8)",  // Gray
+                        "rgba(255, 99, 255, 0.8)",   // Pink
+                        "rgba(99, 255, 132, 0.8)",   // Mint Green
+                        "rgba(255, 220, 99, 0.8)",   // Light Orange
+                        "rgba(99, 132, 255, 0.8)",   // Soft Blue
+                        "rgba(132, 255, 255, 0.8)",  // Cyan
+                        "rgba(255, 132, 99, 0.8)"    // Coral
                     ],
                     borderWidth: 1
                 }]
@@ -1341,7 +1351,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 maintainAspectRatio: false,
                 scales: {
                     x: { title: { display: true, text: "Date" } },
-                    y: { title: { display: true, text: "Forecasted Value" } }
+                    y: { title: { display: true, text: "Distance Travelled by the Effluents (m)" } }
                 }
             }
         });
@@ -1396,7 +1406,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 data.total_volume < 15 ? "Heavy" :
                                 data.total_volume < 30 ? "Intense" : "Torrential";
 
-        if (rainfallResultText) rainfallResultText.textContent = `${data.total_volume.toFixed(2)} msm`;
+        if (rainfallResultText) rainfallResultText.textContent = `${data.total_volume.toFixed(2)} mm`;
         if (rainfallIntensityText) rainfallIntensityText.innerHTML = `${rainfallIntensity}`;
 
         getTotalDischarge().then(dischargeData => {

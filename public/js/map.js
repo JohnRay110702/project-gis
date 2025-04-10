@@ -769,10 +769,15 @@ var map = L.map('map', {
         margin-bottom: 3px; /* Adjust margin to reduce spacing */
         padding: 5px 10px;
         border: none;
-        background-color: #f2f2f2;
+        background-color:#5eade6;
         cursor: pointer;
         opacity: 0; /* Set opacity to 0 initially */
         transition: opacity 0.3s ease-in-out; /* Smooth transition for opacity */
+    }
+
+    .active-barangays .barangay-list-item:hover {
+        color: #ffffff;
+        text-decoration: underline;
     }
     
     .active-barangays .barangay-list-item {

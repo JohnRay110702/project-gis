@@ -597,17 +597,17 @@ main aside .sidebar-link.active:hover span{
 
 .dashboardContent .flex-box img {
   position: absolute;
-  top: 38px;
+  top: 32px;
   margin-right: 0.5rem;
-  width: 24%; 
+  width: 22%; 
   height: auto; 
   /* flex: 1; */
 }
 
 .dashboardContent .flex-box .pigDischarge {
   position: absolute;
-  top: 36px;
-  width: 32%; 
+  top: 33px;
+  width: 30%; 
   height: auto;
   right: 16rem;
   flex: 1;
