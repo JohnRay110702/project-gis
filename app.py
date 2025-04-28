@@ -8,6 +8,7 @@ from datetime import datetime
 import json
 import requests
 from geopy.distance import geodesic
+import random 
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
@@ -160,15 +161,22 @@ def get_forecast():
         connection.close()
     
     # Get user-defined forecast periods (default: 10)
-    periods = request.args.get("periods", default=10, type=int)
+    periods = request.args.get("periods", default=7, type=int)
     selectedTributary = request.args.get('tributary', default="", type=str)
     print(selectedTributary)
     
     forecast_results = []
+
     # for tributary_name in tributary_names:
     municipality_name = municipality_map.get(selectedTributary, "Unknown")
     windspeed, winddir = fetch_wind_data(municipality_name)
-    precip = rain_df.loc[selectedTributary, "precip"] if selectedTributary in rain_df.index else 0.8
+
+    # Pick a random fallback value if needed
+    if selectedTributary in rain_df.index:
+        precip = rain_df.loc[selectedTributary, "precip"]
+    else:
+        precip = random.uniform(0.036, 0.417)  # 👈 random fallback value between 0.036 and 0.417
+
     encoded_value = encoding.get(municipality_name, 0)
     model = models.get(encoded_value)
     
@@ -196,7 +204,7 @@ def get_forecast():
         "wind_speed": float(windspeed),
         "wind_direction": float(winddir),
         "precip": float(precip),
-        "effluentVolume": 0.8,
+        "effluentVolume": tributaryDischarge,
         "encoded_tributary": encoded_value,
         "forecastV": [
             {
