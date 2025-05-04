@@ -9,31 +9,19 @@ $response = array();
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['tributary'])) { 
     $tributary = $_GET['tributary'];
 
-    // Fetch the latest timestamp for the given tributary
-    $sql = "SELECT volume, timestamp 
+    // Fetch volume data and compute the total sum within the last 3 days
+    $sql = "SELECT SUM(volume) AS total_volume 
             FROM rain_g 
             WHERE tributary = ? 
-            ORDER BY timestamp DESC 
-            LIMIT 1";
+            AND timestamp >= NOW() - INTERVAL 1 HOUR";
 
     $stmt = $con->prepare($sql);
     $stmt->bind_param("s", $tributary);
     $stmt->execute();
     $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
 
-    if ($result && $row = $result->fetch_assoc()) {
-        $latestTimestamp = strtotime($row['timestamp']);
-        $today = strtotime(date('Y-m-d'));
-
-        if ($latestTimestamp >= $today) {
-            $response['volume'] = floatval($row['volume']);
-
-        } else {
-            $response['volume'] = 0; // No recent rainfall data
-        }
-    } else {
-        $response['volume'] = 0;
-    }
+    $response['total_volume'] = $row['total_volume'] !== null ? floatval($row['total_volume']) : 0;
 
     echo json_encode($response);
 } else {

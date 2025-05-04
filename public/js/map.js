@@ -1102,7 +1102,7 @@ var map = L.map('map', {
     
         if (feature.properties.status && feature.properties.status.toLowerCase() === 'degraded') {
             // Fetch Rainfall Data
-            return fetch(`../php/getVolume.php?tributary=${encodeURIComponent(feature.properties.name)}`)
+            return fetch(`../php/rain_dischargeCalculation.php?tributary=${encodeURIComponent(feature.properties.name)}`)
                 .then(response => response.json())
                 .then(rainfallData => {
                     console.log("Rainfall Data:", rainfallData);
@@ -1270,13 +1270,28 @@ var map = L.map('map', {
                 const filteredData = (municipality_code === 'ADMIN') ? data : data.filter(markerData => markerData.municipality_code === municipality_code);
     
                 filteredData.forEach(markerData => {
+                    const sanitationTypes = {
+                        "Septic Tank": "septicTank",
+                        "Composting": "composting",
+                        "Compost": "composting",
+                        "Free-flow": "freeFlow",
+                        "Biogas": "biogas",
+                        "Ipa/Rice Hull": "ipa",
+                        "Lagoon": "lagoon",
+                        "N/A": "na"
+                    };
+
+                    // Get the corresponding color for the sanitation type
+                    const sanitationType = sanitationTypes[markerData.sanitation] || "undefined"; // Default to N/A if not found
+
                     const markerIcon = L.icon({
-                        iconUrl: '../img/orange-round-pushpin.png',
+                        iconUrl: `../img/${sanitationType}-marker.png`,
                         iconSize: [30, 30],
                         iconAnchor: [15, 30],
                         popupAnchor: [3.5, -21.5]
                     });
                     const marker = L.marker([markerData.latitude, markerData.longitude], { icon: markerIcon }).addTo(map);
+                    marker.setOpacity(0);
                     marker.options.markerData = markerData; // Attach markerData to marker options
     
                     const popupContent = `

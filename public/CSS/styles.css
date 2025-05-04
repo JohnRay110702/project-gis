@@ -702,6 +702,10 @@ main aside .sidebar-link.active:hover span{
   height: 34px;
 }
 
+.no-caret {
+  caret-color: transparent;
+}
+
 .tributary-dropdown-content select {
   width: 460px; /* Adjust the width of the dropdown */
   align-items: center;
