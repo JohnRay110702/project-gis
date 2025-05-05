@@ -155,7 +155,7 @@
                   </select>
                   <div class="input-container">
                     <label for="forecastPeriod">Enter Forecast Period (days):</label>
-                    <input type="number" id="forecastPeriod" min="1" value="7">
+                    <input type="number" id="forecastPeriod" min="1" max="60" value="7" onkeydown="return false" onpaste="return false" class="no-caret">
                     <button id="forecastButton">Generate Forecast</button>
                   </div>
                 </div>
@@ -170,7 +170,7 @@
 
             <div class="flex-container">
               <div class="flex-box" id="rainfallResult">
-                <h1>Rainfall Volume (3 Days)</h1>
+                <h1>Rainfall Volume (per hour)</h1>
                 <div class="rainfallResultContainer">
                   <h5 id="rainfallIntensityText">Light</h5>
                   <h5 id="rainfallResultText">0.00mm</h5>
