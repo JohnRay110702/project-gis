@@ -18,8 +18,8 @@ API_KEY = "73e7b15a19439a739559b0bf8a3aff43"
 
 # Municipality encoding mapping
 encoding = {
-    "Agoncillo": 0, "Balete": 1, "Laurel": 2, "Mataasnakahoy": 3,
-    "San Nicolas": 4, "SantaTeresita": 5, "Talisay": 6, "Tanauan": 7
+    "Agoncillo": 0, "Balete": 1, "Laurel": 2, "MataasNaKahoy": 3,
+    "San Nicolas": 4, "Santa Teresita": 5, "Talisay": 6, "Tanauan": 7
 }
 
 # Load models at startup
