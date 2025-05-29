@@ -603,7 +603,7 @@ async function getMunicipalityTributary() {
         return;
     }
 
-    const response = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(municipalityName)}`);
+    const response = await fetch(`/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(municipalityName)}`);
     const municipalityData = await response.json();
 
 
@@ -616,7 +616,7 @@ async function loadUserMunicipality() {
         const userLoggedIn = await fetchUserMunicipality();
 
         // Fetch municipalities for the logged-in user
-        const response = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(userLoggedIn)}`);
+        const response = await fetch(`/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(userLoggedIn)}`);
         const data = await response.json();
 
         if (!Array.isArray(data) || data.length === 0) {
@@ -653,7 +653,7 @@ async function fetchTributaries() {
         }
 
         // Fetch tributaries based on municipality
-        const response = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(municipalityName)}`);
+        const response = await fetch(`/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(municipalityName)}`);
         const data = await response.json();
         console.log("Fetched Tributaries:", data);
 
@@ -733,12 +733,12 @@ async function getTotalDischarge() {
         });
 
         // Fetch piggeries data
-        const piggeriesUrl = "http://localhost:3000/public/php/piggeries.php";
+        const piggeriesUrl = "/project-gis/public/php/piggeries.php";
         const piggeriesResponse = await fetch(piggeriesUrl);
         const piggeriesData = await piggeriesResponse.json();
 
         // Fetch tributaries with municipality data
-        const tributariesUrl = `http://localhost:3000/public/php/getTributaries.php?user=${encodeURIComponent(userMunicipality)}`;
+        const tributariesUrl = `/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(userMunicipality)}`;
         const tributariesResponse = await fetch(tributariesUrl);
         const tributariesData = await tributariesResponse.json();
 
@@ -1009,7 +1009,7 @@ async function updateDischargeChart(selectedMunicipality = null) {
     try {
         // Step 1: Fetch logged-in user's municipalities
         const userMunicipalities = await fetchUserMunicipality();
-        const municipalityResponse = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(userMunicipalities)}`);
+        const municipalityResponse = await fetch(`/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(userMunicipalities)}`);
         const municipalityData = await municipalityResponse.json();
 
         if (!municipalityData || municipalityData.length === 0) {
@@ -1153,7 +1153,7 @@ async function getSanitation() {
 
 
         // Fetch piggeries data
-        const response = await fetch("http://localhost:3000/public/php/piggeries.php");
+        const response = await fetch("/project-gis/public/php/piggeries.php");
         const piggeriesData = await response.json();
 
         // Extract all possible sanitation types from the dataset
@@ -1214,7 +1214,7 @@ async function updateSanitationChart(selectedMunicipality = null) {
     try {
         // Fetch logged-in user's municipality from getTributaries.php
         const userMunicipalities = await fetchUserMunicipality();
-        const userMunicipalityResponse = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(await fetchUserMunicipality())}`);
+        const userMunicipalityResponse = await fetch(`/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(await fetchUserMunicipality())}`);
         const userMunicipalityData = await userMunicipalityResponse.json();
 
         // Check if valid municipality data is received
@@ -1456,7 +1456,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         };
         
         const mappedTributary = tributaryMap[selectedTributary] || selectedTributary;
-        const url = `/public/php/getRainfallperHour.php?tributary=${encodeURIComponent(mappedTributary)}`;
+        const url = `/project-gis/public/php/getRainfallperHour.php?tributary=${encodeURIComponent(mappedTributary)}`;
         try {
             const response = await fetch(url);
             const data = await response.json();
@@ -1520,7 +1520,7 @@ async function fetchRainData(selectedTributary) {
     };
     
     const mappedTributary = tributaryMap[selectedTributary] || selectedTributary;
-    const url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(mappedTributary)}`;
+    const url = `/project-gis/public/php/get_rain_data.php?tributary=${encodeURIComponent(mappedTributary)}`;
 
     try {
         const response = await fetch(url);
@@ -1637,7 +1637,7 @@ function formatDateTime(date) {
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    fetch("/public/php/accuweather_api.php")
+    fetch("/project-gis/public/php/accuweather_api.php")
         .then(response => response.json()) // Convert to JSON
         .then(data => {
             let dataList = document.getElementById("dataList");
