@@ -603,7 +603,7 @@ async function getMunicipalityTributary() {
         return;
     }
 
-    const response = await fetch(`/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(municipalityName)}`);
+    const response = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(municipalityName)}`);
     const municipalityData = await response.json();
 
 
@@ -616,7 +616,7 @@ async function loadUserMunicipality() {
         const userLoggedIn = await fetchUserMunicipality();
 
         // Fetch municipalities for the logged-in user
-        const response = await fetch(`/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(userLoggedIn)}`);
+        const response = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(userLoggedIn)}`);
         const data = await response.json();
 
         if (!Array.isArray(data) || data.length === 0) {
@@ -653,7 +653,7 @@ async function fetchTributaries() {
         }
 
         // Fetch tributaries based on municipality
-        const response = await fetch(`/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(municipalityName)}`);
+        const response = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(municipalityName)}`);
         const data = await response.json();
         console.log("Fetched Tributaries:", data);
 
@@ -893,6 +893,79 @@ async function updateMunicipalityTabs() {
                 });
 
                 updateTributaryDropdown(tributaryData);
+
+        
+                ///////////////////////////START OF CODE for zooming into the active Municipality in the map////////////////////////////////
+                const activeTab = document.querySelector(".tab.active");
+                if (activeTab) {        
+                    const activeTabMunicipality = activeTab.textContent;
+                    console.log("Active TabElement HEEEERRRREEEEE!!!!: ", activeTab);
+                    console.log("Active Tab HEEEERRRREEEEE!!!!: ", activeTabMunicipality);
+
+                    const municipalityCodes = {
+                        'Agoncillo': 'AGON',
+                        'Alitagtag': 'ALI',
+                        'Balete': 'BAL',
+                        'Cuenca': 'CUE',
+                        'Laurel': 'LAU',
+                        'MataasNaKahoy': 'MNK',
+                        'San Nicolas': 'SAN',
+                        'Santa Teresita': 'STA',
+                        'Tanauan': 'TAN',
+                        'Talisay': 'TAL'
+                        // Add more mappings as needed
+                    };
+                    
+                    const municipality_code = municipalityCodes[activeTabMunicipality];
+                    console.log("Municipality Code HEEEERRRREEEE!!!!: ", municipality_code);
+                    // Call function to show shape layer based on municipality code
+                    // showShapeLayerBasedOnMunicipalityCode(municipality_code);
+
+                    var municipalityCoordinates = {
+                        "BAL": [14.03193, 121.095428],
+                        "AGON" : [13.963389, 120.925484],
+                        "ALI": [13.862914, 121.016121],
+                        "CUE": [13.90461431313024, 121.05597251881868],
+                        "LAU": [14.05213019982489, 120.90732456456205],
+                        "MNK": [13.979085952016785, 121.09739159746668],
+                        "SAN": [13.919965859758854, 120.94770603976525],
+                        "STA": [13.875449936908929, 120.97140159298453],
+                        "TAL": [14.106513571117576, 121.01920986439174],
+                        "TAN": [14.09888862387092, 121.09632379483912]
+                    };
+
+                    var coordinates = municipalityCoordinates[municipality_code]; // Retrieve coordinates for the municipality
+                    console.log("Coordinates HEEEERRRREEEE!!!!: ", coordinates);
+
+                    if (coordinates) {
+                        console.log("ISA PAAAAA Coordinates HEEEERRRREEEE!!!!: ", coordinates);
+                        // map.flyTo(coordinates, 13); // Fly to the specified coordinates
+
+                        console.log("LOOOOOKKKKK!!! Sending coordinates to map.js: ", coordinates);
+                        // Send the coordinates to map.js via postMessage
+                        const mapIframe = document.querySelector('.iframe');
+                        if (mapIframe && mapIframe.contentWindow) {
+                            // Send the coordinates to map.js
+                            mapIframe.contentWindow.postMessage({ type: "zoom", coordinates: coordinates }, '*');
+
+                            // Send the active municipality to show markers
+                            mapIframe.contentWindow.postMessage({ 
+                                type: "showMunicipalityMarkers", 
+                                municipality: activeTabMunicipality 
+                            }, '*');
+                        }
+                    }
+
+                    // Send the active municipality to map.js
+                    window.dispatchEvent(new CustomEvent("municipalityChanged", {
+                        detail: { municipality: activeTabMunicipality }
+                    }));
+
+
+                    showShapeLayerBasedOnMunicipalityCode(municipality_code);
+                }
+                ///////////////////////////END OF CODE for zooming into the active Municipality in the map////////////////////////////////
+
             });
 
             // Append municipality tab
@@ -901,6 +974,7 @@ async function updateMunicipalityTabs() {
 
         // If there's an active tab, populate the dropdown initially
         const activeTab = document.querySelector(".tab.active");
+
         if (activeTab) {
             const initialTributaryData = JSON.parse(activeTab.dataset.tributary);
             updateTributaryDropdown(initialTributaryData);
@@ -910,6 +984,8 @@ async function updateMunicipalityTabs() {
         console.error("Error in updateMunicipalityTabs:", error);
     }
 }
+
+
 
 // Function to update the tributary dropdown
 function updateTributaryDropdown(tributaryData) {
@@ -933,7 +1009,7 @@ async function updateDischargeChart(selectedMunicipality = null) {
     try {
         // Step 1: Fetch logged-in user's municipalities
         const userMunicipalities = await fetchUserMunicipality();
-        const municipalityResponse = await fetch(`/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(userMunicipalities)}`);
+        const municipalityResponse = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(userMunicipalities)}`);
         const municipalityData = await municipalityResponse.json();
 
         if (!municipalityData || municipalityData.length === 0) {
@@ -1138,7 +1214,7 @@ async function updateSanitationChart(selectedMunicipality = null) {
     try {
         // Fetch logged-in user's municipality from getTributaries.php
         const userMunicipalities = await fetchUserMunicipality();
-        const userMunicipalityResponse = await fetch(`/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(await fetchUserMunicipality())}`);
+        const userMunicipalityResponse = await fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(await fetchUserMunicipality())}`);
         const userMunicipalityData = await userMunicipalityResponse.json();
 
         // Check if valid municipality data is received
@@ -1380,7 +1456,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         };
         
         const mappedTributary = tributaryMap[selectedTributary] || selectedTributary;
-        const url = `/project-gis/public/php/getVolume.php?tributary=${encodeURIComponent(mappedTributary)}`;
+        const url = `/public/php/getRainfallperHour.php?tributary=${encodeURIComponent(mappedTributary)}`;
         try {
             const response = await fetch(url);
             const data = await response.json();
@@ -1444,7 +1520,7 @@ async function fetchRainData(selectedTributary) {
     };
     
     const mappedTributary = tributaryMap[selectedTributary] || selectedTributary;
-    const url = `/project-gis/public/php/getVolume.php?tributary=${encodeURIComponent(mappedTributary)}`;
+    const url = `/public/php/get_rain_data.php?tributary=${encodeURIComponent(mappedTributary)}`;
 
     try {
         const response = await fetch(url);
@@ -1561,7 +1637,7 @@ function formatDateTime(date) {
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    fetch("/project-gis/public/php/accuweather_api.php")
+    fetch("/public/php/accuweather_api.php")
         .then(response => response.json()) // Convert to JSON
         .then(data => {
             let dataList = document.getElementById("dataList");
@@ -1636,8 +1712,29 @@ $(document).ready(function () {
 });
 
 
+////////////////hide/show tributary markers//////////////////////
+// Listen for changes in the tributary dropdown
+const tributarySelect = document.getElementById("forecast_tributary_select");
 
+tributarySelect.addEventListener("change", function() {
+    const selectedTributary = tributarySelect.value;
+    console.log("Selected Tributary: ", selectedTributary);
+
+    // Send the selected tributary name to map.js via postMessage
+    const mapIframe = document.querySelector('.iframe');
+    if (mapIframe && mapIframe.contentWindow) {
+        mapIframe.contentWindow.postMessage({
+            type: "showSelectedTributary",
+            tributaryName: selectedTributary
+        }, '*');
+    }
+}); 
 
 
 // Run the function when the page loads
 document.addEventListener("DOMContentLoaded", fetchAllRainfallData);
+
+
+
+
+
