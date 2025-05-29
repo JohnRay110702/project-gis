@@ -76,7 +76,7 @@ def fetch_wind_data(municipality_name):
     
 def getTotalDisharge(tributaryName):
     # Load the GeoJSON file from the correct folder
-    geojson_file = "geojson_files/Waterways_updated.geojson"
+    geojson_file = "/project-gis/geojson_files/Waterways_updated.geojson"
 
     with open(geojson_file, "r", encoding="utf-8") as file:
         geojson_data = json.load(file)
@@ -91,7 +91,7 @@ def getTotalDisharge(tributaryName):
             coords = coordinates  # Store tributary coordinates
 
     # ✅ Step 3: Fetch piggeries data from piggeries.php
-    piggeries_url = "http://localhost/project-gis/public/php/piggeries.php"  # Adjust URL if needed
+    piggeries_url = "/project-gis/public/php/piggeries.php"  # Adjust URL if needed
     response = requests.get(piggeries_url)
 
     if response.status_code == 200:

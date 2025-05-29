@@ -1732,7 +1732,7 @@ function updateMunicipalityTributaries(activeMunicipality) {
     activeMunicipality = activeMunicipality.toUpperCase();
 
     // Fetch the tributaries belonging to the active municipality from the server
-    fetch(`/public/php/getTributaries.php?user=${encodeURIComponent(activeMunicipality)}`)
+    fetch(`/project-gis/public/php/getTributaries.php?user=${encodeURIComponent(activeMunicipality)}`)
         .then(response => response.json())
         .then(tributaryList => {
             // Extract tributary names from the fetched data
